@@ -5,13 +5,13 @@
   "start_hash": "93c1d72a59a3802fd8c7",
   "original_session_hash": "e3076df5dc16af509ffb",
   "data_version": "3763906a35ea9667",
-  "turn_count": 3,
-  "in_world_date": "1988-09-27",
-  "pass_id": "session1-0004",
-  "state_hash": "c5068f93446a80510c1c",
+  "turn_count": 4,
+  "in_world_date": "1988-10-04",
+  "pass_id": "session1-0005",
+  "state_hash": "3a790583a773b1347a06",
   "replay": {
-    "commands": 7,
-    "checked": 7,
+    "commands": 9,
+    "checked": 9,
     "ok": true,
     "mismatches": []
   },
@@ -42,7 +42,7 @@
             }
           ]
         },
-        "packet": "/tmp/tmpl828zr04/session1/packets/pass_0002.md"
+        "packet": "/tmp/tmp2ch53f5m/session1/packets/pass_0002.md"
       }
     },
     {
@@ -64,7 +64,7 @@
           "days": 3,
           "interrupts": []
         },
-        "packet": "/tmp/tmpl828zr04/session1/packets/pass_0003.md"
+        "packet": "/tmp/tmp2ch53f5m/session1/packets/pass_0003.md"
       }
     },
     {
@@ -94,7 +94,29 @@
             }
           ]
         },
-        "packet": "/tmp/tmpl828zr04/session1/packets/pass_0004.md"
+        "packet": "/tmp/tmp2ch53f5m/session1/packets/pass_0004.md"
+      }
+    },
+    {
+      "turn": "0004.json",
+      "report": {
+        "decisions": [],
+        "proposals": [
+          {
+            "type": "introduce_person",
+            "status": "accepted",
+            "summary": "Marianne Collins (lawyer) now exists in the world as person:n00002.",
+            "person": "person:n00002",
+            "event": 22014
+          }
+        ],
+        "advance": {
+          "from": "1988-09-27",
+          "to": "1988-10-04",
+          "days": 7,
+          "interrupts": []
+        },
+        "packet": "/tmp/tmp2ch53f5m/session1/packets/pass_0005.md"
       }
     }
   ]
