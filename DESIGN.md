@@ -1,41 +1,50 @@
-# Music Industry Simulator — Technical Design (v0.1, pre-code)
+# Music Industry Simulator — Technical Design (v0.2, pre-code)
 
-A persistent, historically grounded, autonomous music-industry career simulation
-(1980–2026, multi-country). The Python engine owns every consequential fact; an AI
-narrator (initially ChatGPT, used manually) turns engine output into immersive
-story and can *propose* developments, which the engine validates, resolves and records.
+A universal, historically grounded, international music-industry world simulation
+(1980–2026). You can start a campaign in any supported country and date, as any
+kind of artist in any circumstances, and live through that era against a populated,
+autonomous industry that includes real historical artists, labels and institutions.
 
-This document covers the architecture, world-state schema, simulation systems,
-narrator–engine interface, data acquisition, chart calculation, calibration and
-phased roadmap. Nothing here is implemented yet.
+The Python engine owns every consequential fact. An AI narrator (initially ChatGPT,
+used manually) turns engine output into immersive story and can *propose*
+developments, which the engine validates, resolves and records.
+
+**What changed in v0.2.** v0.1 implicitly privileged late-1990s South Korea and a
+specific protagonist. v0.2 makes the engine country-, era-, genre- and
+protagonist-neutral (§2, §3). It makes the US a first-class market from the start,
+treats real artists as full autonomous agents (§6), adds cross-market careers (§7)
+and validates the core with two equal scenarios, US late-1980s/early-1990s and South
+Korea late-1990s, built on the same engine (§14).
 
 **Conventions**
-- `[P0]`…`[P7]`: the phase in which a feature is planned (§12).
-- `T` = hidden true value. `O` = an observation of it (noisy, biased, dated; §3.12).
-- **Evidence tiers** for every data value and parameter (§9.1):
-  `A` verified from a primary/authoritative source · `B` sourced estimate ·
-  `C` model estimate (documented rubric) · `S` simulated (never presented as history).
-- Historical facts in this document that still need primary-source verification are
-  marked *(verify)*. Nothing marked *(verify)* may be hard-coded as tier `A`.
+- `T` = hidden true value; `O` = an observation of it (noisy, biased, dated).
+- **Evidence tiers** for all data (§11.1): `A` verified primary source · `B` sourced
+  estimate · `C` model estimate · `S` simulated.
+- *(verify)* marks historical facts still awaiting primary-source confirmation. Such facts
+  live in data files with their tier, never in code.
 
 ---
 
 ## Table of contents
 1. Design principles → engineering rules
-2. Architecture, time, determinism, persistence, campaigns
-3. World-state schema
-4. Creative model: songs as creative products
-5. Hit formation and consumption
-6. Industry systems (labels, media, retail, live, awards, careers, NPC behaviour)
-7. Economics
-8. Chart and ranking engine
-9. Historical data, evidence and acquisition
-10. Narrator–engine interface
-11. Calibration and testing
-12. Phased roadmap (first test: South Korea late 1990s; second: US early 1990s)
-13. Compatibility with the acting engine
-14. Failure modes from previous roleplays → structural fixes
-15. Decisions needed before Phase 0 code
+2. Layered architecture: universal core, market packs, era data, scenarios
+3. Campaigns: creating any start
+4. World-state schema
+5. Creative model: songs as creative products
+6. Real historical participants as autonomous agents
+7. Cross-market careers and international structure
+8. Hit formation and consumption
+9. Industry systems
+10. Economics
+11. Historical data, evidence and acquisition
+12. Chart and ranking engine
+13. Narrator–engine interface
+14. Validation scenarios
+15. Calibration, reports and testing
+16. Phased roadmap
+17. Compatibility with the acting engine
+18. Failure modes from previous roleplays → structural fixes
+19. Decisions needed before Phase 0 code
 
 ---
 
@@ -43,1034 +52,866 @@ phased roadmap. Nothing here is implemented yet.
 
 | Principle | Engineering rule |
 |---|---|
-| **Engine owns the truth** | Sales, streams, airplay, chart positions, money, contracts, relationships, calendars and canonical events exist only in engine state. The narrator reads a fact packet and submits proposals; it can never write state directly. |
-| **The player is an NPC with a human controller** | Player and NPC artists go through identical code paths. No outcome function receives `is_player`. A statistical fairness test enforces this (§11.5). Player control differs only in *who makes the decisions*, never in how decisions resolve. |
-| **No ceilings, no floors** | No rule caps an act's sales, chart position or fame relative to historical stars. No rule guarantees success either. Fat-tailed outcomes are calibrated so unprecedented success is rare but reachable through causes. |
-| **Causal randomness** | Randomness enters only as logged shocks on top of causes (reception, a viral moment, a stage mistake, an illness). Every number has a provenance chain (`why <fact>`). |
-| **History as prior, not script** | Real artists, labels, releases and industry structures seed the world and its future *intentions*. Every outcome after the start date is simulated, so real stars can over- or under-perform history. |
-| **No future knowledge** | NPC decisions use only observations dated at or before "now". Structural history (e.g. the MP3) arrives as an event; nobody anticipates it. A lint test forbids decision code from reading the history-intent tables (§11.5). |
-| **Era- and country-correct measurement** | Charts, music shows and certifications are versioned *methodology objects* with validity dates per country. A chart cannot exist outside its validity window (§8). |
-| **Separate signals stay separate** | Physical sales, singles purchases, downloads, streams, airplay, TV exposure, karaoke, public recognition, fandom activity and music-show results are distinct state variables. They influence each other through explicit, logged mechanisms, never by aliasing. |
-| **No single quality score** | Songs carry a creative attribute vector; appeal is computed per audience segment; critical and commercial reception are separate processes (§4). |
-| **No single popularity score** | Artist status is a vector of recognition, fandom, singles power, album power, live demand, leverage, prestige, reach and momentum (§3.4). |
-| **Imperfect information** | Labels, programmers, media and the player decide from observations (A&R ears, call-out research, shipments, charts, gossip). This produces believable misjudgements. |
-| **Configurable, not hard-coded** | All coefficients live in versioned YAML, per era and country where needed. Code holds structure only. |
+| **Universal engine** | Core and system code contain no country codes, years, genre names, chart names, institution names or people. Everything specific lives in market packs, era data and scenarios (§2). A lint test enforces this (§15.6). |
+| **Engine owns the truth** | Sales, streams, airplay, positions, money, contracts, relationships, calendars and canonical events exist only in engine state. The narrator reads packets and submits proposals. |
+| **The player is an NPC with a human controller** | Player-controlled and autonomous artists go through identical code paths. No outcome function receives `is_player`. A fairness test enforces this. |
+| **Real people are full agents** | Real artists have careers, catalogues, contracts, teams, identities, goals and decision-making, not static popularity ratings (§6). |
+| **No ceilings, no floors** | Nothing caps anyone's success relative to history, and nothing guarantees it. Fat tails are calibrated so unprecedented success is rare but reachable through causes. |
+| **History as prior, not script** | History supplies initial state, structural conditions and soft future intentions. All outcomes after the start date are simulated. |
+| **No future knowledge** | Decisions use only observations dated at or before "now". |
+| **Era- and country-correct institutions** | Charts, formats, media, awards, certifications and contract norms are dated data objects per market. They exist only within their validity windows. |
+| **Separate signals stay separate** | Physical album sales, singles sales, downloads, streams, airplay, TV exposure, public recognition, fandom activity and ranking-show results are distinct variables linked by explicit mechanisms. |
+| **No single quality or popularity score** | Songs have creative attribute vectors and artists have status vectors. Appeal is per audience segment, and critical and commercial reception are separate. |
+| **Imperfect information** | Every organisation decides from its own observations. |
+| **Configurable** | Coefficients live in versioned YAML, layered by universal → market → era → scenario. |
 | **Reproducible** | `state(t) = f(scenario, data_version, config_version, seed, ordered_command_log)`. |
+| **Manageable depth** | Level-of-detail simulation: markets the campaign touches run at full detail, the rest run coarsely, and detail is promoted on demand (§2.5). |
 
 ---
 
-## 2. Architecture
+## 2. Layered architecture
 
-### 2.1 Repository layout
+### 2.1 Four layers
+```
+┌─────────────────────────────────────────────────────────────────────┐
+│ Scenario / campaign  start date, markets, protagonist, circumstances │  data/scenarios, saves
+├─────────────────────────────────────────────────────────────────────┤
+│ Era data             dated tables & events: prices, formats, media   │  data/markets/<cc>/eras
+│                      audiences, institutions' validity, real people  │
+├─────────────────────────────────────────────────────────────────────┤
+│ Market packs         institutions & rules instantiated from generic  │  data/markets/<cc>/ (+ optional
+│                      archetypes; plug-in hooks only where data can't │  engine/markets/<cc>/hooks.py)
+├─────────────────────────────────────────────────────────────────────┤
+│ Universal core       entities, creative model, listener dynamics,    │  engine/
+│                      agents, contracts, ledger, charts-from-spec...  │
+└─────────────────────────────────────────────────────────────────────┘
+```
+The rule is to **prefer data over code**. A market pack is mostly declarative: which
+institution archetypes exist, with what parameters and validity dates. Python hooks
+are allowed only for genuinely unusual mechanics that the generic archetypes cannot
+express, and they must implement a core interface.
+
+### 2.2 Generic institution archetypes (core)
+Markets instantiate these. They never subclass the engine for a whole country.
+
+| Archetype | Parameters (examples) | Instances (illustrative) |
+|---|---|---|
+| `RecordCompany` | structure (major group/label/imprint/indie), A&R capacity, distribution, strategy | Major groups and indies in any market |
+| `IntegratedAgency` | training, production, management and publishing under one roof; contract norms | Korean and Japanese entertainment agencies |
+| `Management` | commission, roster capacity, network | US/UK managers |
+| `Publisher`, `CollectionSociety` | splits, rates, payout lag | ASCAP/BMI, PRS, KOMCA, JASRAC |
+| `Distributor`, `RetailChannel` | reach, terms, panel membership | Chains, indies, department stores, online retail |
+| `RadioStation` | format, audience by segment, playlist size, research method | US formats (CHR, Urban, AC...), national broadcasters |
+| `TVProgram` | kind (music performance, ranking show, variety, awards), slots, booking policy, optional ranking | Network TV appearances, broadcast music shows |
+| `MusicVideoChannel` | rotation tiers, audience, programming policy | Music-TV channels where and when they existed |
+| `MediaOutlet` | readership, taste, sensationalism | Trades, tabloids, critics' magazines, fanzines |
+| `ChartPublisher` + `Methodology` | measurement inputs, formula, windows, rules (§12) | Any chart or ranking show |
+| `CertificationBody` | thresholds by date, shipment vs sales basis | RIAA, BPI, RIAJ... |
+| `AwardsBody` | voting model, categories by year | Grammys, BRITs, year-end broadcaster awards... |
+| `Promoter`, `Venue` | capacity, city tier, terms | Tours, festivals, events |
+| `Platform` | download/stream/recommendation behaviour | Digital eras |
+| `Brand` | endorsement budget, image preferences | Endorsements/CFs |
+| `RegulatoryRule` | content restrictions, quotas, foreign-content limits, censorship | Broadcast standards, import rules |
+
+### 2.3 Repository layout
 ```
 music-industry-sim/
   engine/
-    core/                 # mirrors the acting engine's core (§13); no cross-repo imports
-      clock.py            # dates, daily/weekly scheduling, event queue
-      rng.py              # named deterministic RNG streams
-      events.py           # append-only event log + provenance
-      state.py            # WorldState, registries, indexes
-      commands.py         # command & proposal schemas, validation pipeline
-      ledger.py           # double-entry accounts, multi-currency
-      observe.py          # observation layer (who knows what, with what noise)
-      config.py           # YAML loading, era/country interpolation, hashing
-      memory.py           # relationship edges + episodic memories
-    models/               # dataclasses: Person, Act, Composition, Recording, Release...
-    markets/              # country rule packs (one sub-package per country)
-      base.py             # MarketRules interface
-      kr/  us/  uk/  jp/  # formats, media, retail, charts, awards, contract norms
-    systems/              # one module per simulation process (§4–§7)
-      culture.py  creative.py  anr.py  release.py  promotion.py  media.py
-      exposure.py  demand.py  retail.py  digital.py  live.py  fandom.py
-      reception.py  charts.py  awards.py  careers.py  groups.py  contracts.py
-      finance.py  labels_ai.py  npc_ai.py  news.py  history.py  opportunities.py
-    narrator/
-      factpacket.py       # builds narrator packets (§10)
-      proposals.py        # validates/resolves narrator proposals
-      checker.py          # number/claim consistency checker
+    core/          # clock, rng, events/provenance, state, commands, ledger, observe,
+                   # memory, config layering (universal→market→era→scenario), lod
+    models/        # Person, Act, Composition, Recording, Release, Product, Org, ...
+    archetypes/    # generic institution behaviours (§2.2)
+    systems/       # culture, creative, anr, release, promotion, exposure, demand,
+                   # retail, digital, live, fandom, reception, charts, awards, careers,
+                   # groups, contracts, finance, agents, opportunities, international,
+                   # news, history
+    markets/<cc>/hooks.py   # optional, rare
+    narrator/      # factpacket, proposals, checker
+    campaign/      # builder, validation, character import/export
   data/
-    raw/                  # cached downloads (gitignored), keyed by source+hash
-    curated/              # tiered CSV/YAML with source references (committed)
-    reference/            # calibration targets (historical distributions)
-    scenarios/            # campaign definitions (start date, country, protagonist)
-  config/
-    default.yaml  eras/  countries/
-  pipeline/               # staged, restartable data collection (§9)
-  cli/                    # play loop for manual narrator exchange
-  api/                    # [P6] HTTP/OpenAPI wrapper (ChatGPT Actions / MCP)
-  tools/                  # batch runs, calibration, replay, inspect, divergence report
-  tests/
+    universal/     # style space, segment templates, default coefficients
+    markets/<cc>/  # institutions.yaml, methodologies/, eras/, audiences/, contracts/
+    people/        # real people/acts (tiered), catalogues, intents
+    characters/    # saved player characters (portable, optional)
+    scenarios/     # campaign presets (examples, not special-cased)
+    reference/     # calibration targets
+    raw/           # pipeline cache (gitignored)
+  pipeline/        # staged, restartable data collection
+  cli/  api/  tools/  tests/  docs/
 ```
 
-### 2.2 Time model
-- **Date resolution: one day.** Consumption (listening, purchases, airplay,
-  TV exposure) is simulated **daily** with vectorised maths. That makes every chart
-  tracking window, release weekday and broadcast day exact, without special cases
-  for the many different chart weeks around the world.
-- **Decision cadence: weekly.** Labels, programmers, managers and other NPCs make
-  decisions once per simulated week, plus event-driven decisions such as offers,
-  deadlines and crises.
-- **Scheduled-event queue:** a priority queue keyed by `(date, seq)` carries releases,
-  broadcasts, chart publications, contract expiries, award ceremonies and recording sessions.
-- **Narrative pacing is independent of the tick.** The player advances by
-  `advance 3d | 2w | 4m | until <event>`. The engine stops early at an **interrupt**:
-  a decision needing player approval (§10.6), a major event, or an opportunity
-  above a salience threshold. One narrative pass can cover a day of a
-  music-show taping or four quiet months in the studio.
+### 2.4 Time model
+- **Date resolution: one day.** Consumption and exposure are simulated daily with
+  vectorised maths. Any tracking window, release weekday or broadcast day is therefore
+  exact. Release-day conventions are market/era data, e.g. US Tuesday releases from
+  1989 and the global Friday release day from July 2015 *(verify per market)*.
+- **Decision cadence: weekly** for agents, plus event-driven decisions (offers, deadlines, crises).
+- **Scheduled-event queue** for releases, broadcasts, chart publications, expiries, ceremonies and sessions.
+- **Narrative pacing is independent of ticks:** `advance 3d | 2w | 4m | until <event>`,
+  stopping at interrupts (decisions needing approval, major events, salient opportunities).
 
-### 2.3 Determinism and RNG
-- Each draw uses `rng(seed, system, entity_id, purpose, date)`, a hash-derived
-  stream. Adding an NPC or a system never shifts other outcomes.
-- Entities are always iterated in sorted-ID order. There are no parallel
-  reductions in the canonical path.
-- Every draw is logged with its inputs in the event log.
+### 2.5 Level of detail (keeps the world manageable)
+| LOD | Applies to | Simulation |
+|---|---|---|
+| **Full** | Markets where the campaign is active, and acts competing there | Daily listener dynamics per segment, all institutions, all agents |
+| **Coarse** | Other supported markets | Weekly aggregate demand per act/release from a reduced model; key institutions only |
+| **Statistical** | Unsupported markets | Era tables for export income/recognition; no individual institutions |
 
-### 2.4 Persistence and audit
-- **Save = SQLite snapshot + event log + command log + proposal log + config hash
-  + data version.**
-- Event rows: `{event_id, date, system, type, entities, inputs_digest, draws, outputs, causes[]}`.
-  `causes[]` links to upstream events, which gives the provenance graph.
-- `tools/inspect why <fact>` walks that graph. For example, `why song:812.kr.miak.1999-03.rank`
-  shows the monthly sales, the main days behind them, and the exposure sources behind those days.
-- **Replay test:** snapshot + command log must reproduce the saved state hash.
+Promotion from coarse to full is seamless: coarse state stores enough (recognition, fandom,
+catalogue strength) to initialise full state. Cross-market careers (§7) trigger promotion.
 
-### 2.5 Campaigns and worlds
-A **campaign** is an independent world: `{scenario, seed, data_version,
-config_version, saves/, logs/}`. Scenarios are data files, not code:
-```yaml
-# data/scenarios/kr_1997_debut.yaml (example; the protagonist is data, not hard-coded)
-id: kr_1997_debut
-start_date: 1997-03-01
-markets_active: [KR]            # full simulation
-markets_background: [JP, US]    # coarse simulation (export, influence)
-protagonist:
-  kind: new_person              # or: existing_person (play a real/fictional NPC)
-  template: data/scenarios/protagonists/bae_yeora.yaml
-  start_role: trainee           # trainee | soloist | group_member | producer | ...
-  affiliations: [org:kr.dsp]
-structural_history: on          # technology, macro, policy events
-contingent_history: intents     # real releases/debuts as soft intents (§9.5)
-real_person_policy: default     # §9.7
-```
-Several campaigns can coexist, each with its own save directory and divergent history.
+### 2.6 Determinism and persistence
+- RNG streams: `rng(seed, system, entity_id, purpose, date)`. Iteration in sorted-ID order.
+- Save = SQLite snapshot + event log (with `causes[]` provenance) + command log +
+  proposal log + config hash + data version. `inspect why <fact>` walks provenance.
+- Replay test: snapshot + commands → identical state hash.
 
 ---
 
-## 3. World-state schema
+## 3. Campaigns: creating any start
 
-Scales are 0–100 unless noted. Vectors are keyed dicts. Every attribute is stored
-with its evidence tier, and with `estimation_confidence` when seeded from history.
-
-### 3.1 Shared base entities (kept compatible with the acting engine, §13)
+### 3.1 Campaign builder
+A campaign is created from choices, validated against the data available for that date and place:
+```yaml
+campaign:
+  start_date: 1986-09-01
+  home_market: US
+  active_markets: [US]              # full LOD; others coarse automatically
+  protagonist:
+    source: new                     # new | saved_character | existing_npc
+    character: null                 # e.g. data/characters/<name>.yaml when importing
+    identity: {name, birth_date, gender, origin_city, languages, background}
+    abilities: preset|custom        # vocal, songwriting, performance... (§4.2)
+    artistic_identity: {style_position or genre tags, persona}
+    act: {kind: solo|group, members?: [...], name}
+  career_stage: aspiring | trainee | unsigned_local | indie_signed | major_signed
+                | established | veteran | comeback
+  circumstances:
+    location: Los Angeles           # city → local scenes, venues, cost of living
+    affiliations: []                # label/agency/manager if any (must exist at date)
+    contracts: generated|custom     # typical terms for stage & market
+    finances: {cash, debts}
+    connections: []                 # people the protagonist already knows
+    catalogue: []                   # prior releases for established starts
+    reputation: {...}               # optional overrides for established starts
+  world:
+    seed: 41
+    structural_history: on
+    contingent_history: intents     # real careers as soft intents (§6.3)
+    real_person_policy: default
+    divergence_from: start_date     # or import an existing divergent world
+  player_policy: default            # approval/delegation (§13.6)
 ```
-Person
-  id ("person:<slug-or-uuid>"), names {native, romanised, stage[]}, birth_date,
-  gender, nationality, languages {lang: fluency}, is_historical, evidence
-  roles: set{performer, songwriter, producer, manager, executive, a&r, ...}
-  personality: ambition, risk_tolerance, artistic_vs_commercial (−1..1), loyalty,
-               temperament, discipline, ego, sociability, resilience
-  goals: weighted {money, fame, artistry, stability, power, approval, freedom}
-  wellbeing (T): energy, health, stress, morale (burnout and illness hazards)
-  finances → Account; calendar → Commitment[]; memories → Memory[]
-Org
-  id, kind {label, imprint, agency, management, publisher, distributor, broadcaster,
-            radio_station, tv_program, retailer, platform, promoter, venue,
-            media_outlet, chart_publisher, awards_body, trade_body, brand},
-  country, parent_org, people (roles), finances → Account, strategy (AI params)
-Relationship (directed edge person/org → person/org)
-  affinity (−100..100), trust, respect, debt_of_favour, rivalry, history[event_id]
-Memory (episodic, for continuity and narration)
-  owner, about[], event_id, date, gist (short structured text), valence,
-  salience (decays; refreshed when recalled or reinforced), public|private
-Commitment: owner, kind, start, end, location, org, mandatory, conflicts_with[]
-Contract (generic envelope; terms are typed per contract kind, §7)
+**Validation:** institutions, formats and people named in the config must exist at the
+start date. Unsupported markets can be a home market only once their pack reaches full
+LOD readiness. Established-artist starts get a **back-filled history** (prior releases,
+relationships, fandom) consistent with the stage chosen.
+
+### 3.2 Characters are portable data
+A protagonist is a saved character file (identity, abilities, history, relationships by
+reference). Any character, including one imported from an earlier roleplay, can be
+dropped into a compatible campaign or started fresh. No character is built in.
+
+### 3.3 Scenario presets
+Presets are just saved campaign configs, for example:
+`us_1986_aspiring_singer`, `us_1991_rnb_newcomer`, `uk_1995_britpop_or_pop_act`,
+`kr_1998_agency_soloist`, `us_2003_hip_hop_artist`. They carry no special-case code.
+
+### 3.4 Player roles
+The architecture defines a **role** as a control surface over the same world:
+`artist` (solo/member/trainee) first; later `songwriter`, `producer`, `manager`,
+`label_executive`. A role defines the commands available, the information sources
+attached and the default delegation policy. The world simulation is identical across roles.
+
+---
+
+## 4. World-state schema
+
+Scales 0–100 unless noted; every seeded value stores its evidence tier and confidence.
+
+### 4.1 Shared base (kept compatible with the acting engine, §17)
+```
+Person   id, names {native, romanised, stage[]}, birth_date, gender, nationality,
+         languages {lang: fluency}, home_city, is_historical, evidence,
+         roles {performer, songwriter, producer, manager, executive, a&r, ...},
+         personality {ambition, risk_tolerance, artistic_vs_commercial, loyalty,
+                      temperament, discipline, ego, sociability, resilience},
+         goals {money, fame, artistry, stability, power, approval, freedom},
+         wellbeing (T) {energy, health, stress, morale}, account, calendar, memories
+Org      id, archetype (§2.2), market, parent, people, account, strategy params
+Relationship  affinity, trust, respect, favour_balance, rivalry, history[]
+Memory   owner, about[], event_id, gist, valence, salience (decays/refreshes), public|private
+Commitment, Contract (typed terms, §10)
 ```
 
-### 3.2 Music professional profiles (attached to Person)
+### 4.2 Music professional profile (per Person)
 | Field | T/O | Meaning |
 |---|---|---|
-| `vocal` | T | vector `{technique, tone_distinctiveness, range, stamina, live_stability}` |
-| `dance_performance` | T | choreography execution, stage power |
-| `stage_presence` | T | charisma in performance; drives TV and live impact |
-| `variety_skill` | T | talk/variety/radio-host ability (critical in KR/JP promotion) |
-| `visual_market_value` | T | how *the market* currently values the person's image. It follows configurable era/country/gender curves; this models industry bias and is not a judgement. |
-| `songwriting` | T | vector `{melody, lyrics, structure, hook_craft}` + `style_skill` over the style space |
+| `vocal` | T | `{technique, tone_distinctiveness, range, stamina, live_stability, style_fluency}` |
+| `performance` | T | `{stage_presence, dance, live_band_leadership, crowd_work}` |
+| `media_skill` | T | interviews, talk/variety, radio, controversy handling |
+| `visual_market_value` | T | market's current valuation of image. Era/market/gender curves model industry bias, not a judgement. |
+| `songwriting` | T | `{melody, lyrics, structure, hook_craft}` + `style_skill(style region)` |
 | `production` | T | `{arrangement, sound_design, mixing, vocal_direction}` + style skill |
-| `musicianship` | T | instruments, theory (affects self-sufficiency and credibility) |
-| `craft_growth` | T | learning rate; grows with training, work and strong collaborators |
-| `artistic_identity` | T | position in style space + persona tags (§4.2) |
-| `reputation_professional` | O | reliability, as rumoured in the industry |
-| `scandal_hazard` | T | disabled for real living people by default (§9.7) |
+| `musicianship` | T | instruments, theory |
+| `craft_growth` | T | learning rate |
+| `artistic_identity` | T | style position, persona tags |
+| `reputation_professional` | O | reliability as rumoured |
+| `scandal_hazard` | T | per policy (§11.7) |
 
-### 3.3 Act (the performing entity)
-Real careers distinguish the *person* from the *act*: a soloist is an Act with one
-member, and groups have membership histories.
+### 4.3 Act
 ```
-Act
-  id, name, kind {solo, group, unit, duo, project, band}, country_of_origin
-  members: [{person_id, role {main_vocal, rapper, dancer, leader, visual, instrumentalist...},
-             joined, left, reason}]
-  concept/brand: style position, persona tags, image (e.g. "innocent", "tough",
-                 "girl-next-door", "artist-auteur"), target segments
-  label_id, management_id, contracts[]
-  status vector → §3.4;  fandom → §3.5;  catalogue → releases[]
-  lifecycle stage: pre-debut | rookie | rising | established | peak | veteran
-                   | hiatus | disbanded | legacy   (descriptive, derived from status)
+Act  id, name, kind {solo, group, duo, band, unit, project, collective}, origin market
+     members [{person, role, joined, left, reason}]
+     identity: style position, genre tags, persona/image, target segments
+     affiliations: label(s) per market, management/agency, publisher
+     status (§4.4), fandoms per market (§4.5), catalogue, contracts
+     lifecycle (derived): pre-debut … rookie … rising … established … peak … veteran
+                          … hiatus … disbanded … legacy
 ```
 
-### 3.4 Status vector (per act, per market, and for key persons)
-These are kept separate on purpose. Each is updated by named mechanisms (§6.8).
+### 4.4 Status vector (per act per market; key persons too)
+`recognition[segment]`, `public_appeal[segment]`, `fandom` (object), `singles_power`,
+`album_power`, `live_demand[city tier]`, `endorsement_value`, `leverage`,
+`critical_prestige`, `industry_respect`, `momentum` (recency-weighted surprise),
+`sustainability` (fatigue, saturation, churn, internal tension).
+The industry sees `O` versions (Bayesian beliefs from attributed results), so acts can be
+over- or under-rated, and international reach is simply status in other markets.
 
-| Component | Definition | Main drivers |
-|---|---|---|
-| `recognition[market][segment]` | share of population who know the act by name/face | TV, radio, hits, endorsements, news |
-| `public_appeal[market][segment]` | mean liking among recognisers | songs' appeal, image, scandals |
-| `fandom` | object (§3.5) | conversion of liking into identity |
-| `singles_power` | expected song-level audience pull (O: industry belief) | track record of song reach |
-| `album_power` | expected album purchase pull | fandom × collectability × casual conversion |
-| `live_demand` | ticket/event demand by city tier | fandom, recognition, live reputation |
-| `endorsement_value` | CF/brand value | recognition × image fit × scandal risk |
-| `leverage` | bargaining power with labels/broadcasters | O-ish: perceived outside options |
-| `critical_prestige` | critics' running assessment | reception of releases (§5.9) |
-| `industry_respect` | peers, producers, PDs | professionalism, craft, relationships |
-| `reach[region]` | international recognition | exports, licensing, touring abroad |
-| `momentum` | recency-weighted *surprise* (outcomes vs expectations) | beating or missing expectations |
-| `sustainability` | risk indicators: fatigue, over-exposure, fandom churn, members' contract horizon | schedule, saturation, internal tension |
+### 4.5 Fandom (per act per market)
+Size by tier (core/active/casual), segment mix, loyalty, intensity, organisation level,
+purchase propensities (albums, multiple copies, merch, tickets), mobilisation capacity,
+morale, rivalries, member-specific attachment. **Mobilisation tools are era/market data**:
+fan clubs and mail-order, request lines, street teams and mixtapes, broadcast attendance
+and coloured-balloon cultures, voting apps and streaming campaigns. The underlying fan
+psychology is shared.
 
-The industry never sees true values. Labels and media act on `O` versions
-(for example `singles_power_O` is a Bayesian estimate from attributed results), so
-an act can be under- or over-rated.
-
-### 3.5 Fandom (per act per market)
+### 4.6 Creative works
 ```
-Fandom
-  size_by_tier {core, active, casual}        # people
-  segment_mix                                # age/gender/region composition
-  loyalty (churn hazard), intensity distribution
-  organisation: {official_club, membership, colour/symbol, leaders, chapters}
-  purchase_propensity {album, multiple_copies, merch, tickets}
-  mobilisation {voting, requests, attendance, chart_activity} (era-dependent tools)
-  morale (reacts to treatment, scandals, hiatus, member changes)
-  rivalries {fandom_id: intensity}            # fan wars; affects mobilisation
-  identity_attachment {act, members[]}        # member-specific fandom → solo spin-offs
-```
-In late-1990s Korea, organised fan clubs, coloured balloons and attendance at
-broadcasts were real mobilisation tools *(verify details per act)*. In streaming eras
-the tools become streaming campaigns and voting apps. The **tools are era-gated**;
-the fandom psychology is shared.
-
-### 3.6 Creative works (separated deliberately)
-```
-Composition (the song as written; publishing lives here)
-  id, title, writers [{person_id, share}], publishers [{org_id, share}],
-  language, creative attributes (§4.1, composition-level), created_date, demo_quality
-Recording (a specific performance/production of a composition)
-  id, composition_id, performers [act/person], producers[], engineers[],
-  session dates, cost, creative attributes (§4.1, recording-level), version {original,
-  remix, live, acoustic, translated}
-Release (a commercial package)
-  id, act_id, label_id, kind {album, mini_album/EP, single, repackage, compilation,
-  OST, special}, tracklist [recording_id], focus_tracks (lead/follow-up singles),
-  markets, release_dates {market: date}, cover/visual concept, price tier
-Product (SKU per format, per market)
-  release_id, format {LP, cassette, CD, CD_single, cassingle, 7", 12", VHS/DVD,
-  digital_album, digital_track, ringtone, ...}, list_price, dealer_price,
-  pressing/manufacturing cost, editions (photobook, limited, version A/B)
-Campaign (a promotion cycle around a release)
-  release_id, start, planned_end, budget lines, focus_track per week,
-  bookings[], MV[], marketing actions[], status
+Composition  writers[share], publishers[share], language, composition attributes (§5.1)
+Recording    composition, performers, producers, engineers, sessions, cost,
+             recording attributes, version {original, remix, radio edit, extended,
+             translated, live, acoustic}
+Release      act, label per market, kind {album, EP/mini, single, maxi/12", repackage,
+             compilation, soundtrack, mixtape}, tracklist, focus tracks per market,
+             release dates per market, artwork concept
+Product      release × format × market: {LP, cassette, CD, 7", 12", cassingle, CD single,
+             VHS/DVD, digital album, digital track, ringtone, stream}, list/dealer price,
+             unit cost, editions; formats exist only where era data allows
+Campaign     promotion cycle per release per market: budget lines, focus track by week,
+             bookings, videos, radio promo, tour support, status
 ```
 
-### 3.7 Markets
+### 4.7 Markets and audiences
 ```
-Market (country)
-  population by Segment (age band × gender × urban/rural/region × taste cluster)
-  music_spend per segment (era table, inflation-adjusted, macro shocks)
-  format_adoption curves (share of segment able/willing to buy each format)
-  media diet per segment: TV hours by channel, radio listening by format/station,
-                          music-TV access, internet/platform adoption
-  karaoke/noraebang usage, concert-going, travel/region weights
-  price tables, currency, inflation, exchange rates
-  rule pack → markets/<cc>/ (charts, awards, contract norms, release weekday,
-               retail structure, broadcasting regulation)
-Segment taste state (§4.3): position in style space, novelty appetite, openness
-               to foreign/other-language music, genre affinities, drift velocity
+Market       population by Segment, music spend per segment, inflation, currency, FX,
+             format adoption curves, media diet (TV, radio by format, music-TV, internet),
+             concert-going, karaoke, regional/city structure, foreign-music openness,
+             language(s), release conventions, institutions (from pack), regulation
+Segment      templates (age × gender × region/urbanicity × taste cluster); taste clusters
+             are market/era data. In US 1980s data, for example, Black urban audiences
+             and suburban pop audiences have different radio diets, which is what made
+             crossover a real mechanism.
+Taste state  per segment: distribution over style space, novelty appetite, openness,
+             drift velocity
 ```
 
-### 3.8 Media and channels
-```
-Broadcaster/Program: schedule (weekday/time), audience by segment (era), slots per
-  episode, booking policy (status thresholds, PD relationships, label politics,
-  quota rules), ranking system (§8) if any, live/pre-recorded, stage quality factor
-RadioStation: format, audience by segment, playlist size, rotation categories
-  (power/medium/light/recurrent), programmer person, research method, ad climate
-MusicTV/Platform: rotation tiers (MTV-era), later playlists/recommendation (§5.6)
-MediaOutlet: kind {newspaper, sports daily, magazine, trade, online, critic},
-  readership by segment, editorial taste, sensationalism, relationships
-```
-
-### 3.9 Retail and distribution
-```
-Distributor: reach by channel, terms (distribution fee), credit risk
-RetailChannel: record shops (chain/indie), department stores, street stalls,
-  later online retail/platforms; stock policy; reports to which chart panels
-Inventory per Product: pressed, shipped (sell-in), in-store, sold (sell-through),
-  returned, reorder lead time
-```
-**Shipments, sales, reported figures and claimed figures are four different
-numbers** (§5.8). Korean and other labels historically announced shipment or
-claimed figures *(verify by period)*. The engine records each one separately.
-
-### 3.10 Charts and rankings
-```
-ChartDefinition: id, country, publisher, name, methodology versions[] (§8)
-ChartRun: chart_id, methodology_version, period (tracking window), publish_date
-ChartEntry: run_id, rank, subject (release/recording/act), score, components{},
-  last_rank, peak, weeks_on, flags {debut, re-entry, retired, ...}
-```
-
-### 3.11 Opportunities and events
-```
-Opportunity: id, kind {booking, collaboration, OST, CF, feature, overseas_release,
-  tour_support, label_offer, song_pitch, variety_show, ...}, source (org/person),
-  target, terms, expiry, preconditions, originator {npc|narrator|player}, salience
-WorldEvent: canonical event (release, win, scandal, signing, disbandment...);
-  public|private; narrative tags; causes[]
-```
-
-### 3.12 Observation layer
-```
-Observation: subject (entity.attr), observer (person/org/"public"), value,
-  sigma, bias, source {official, chart, shipment_report, A&R_listen, call-out,
-  trade_press, gossip, fan_estimate, own_books}, date, expires
-```
-The player sees public observations plus those of their own team. Their quality
-depends on that team's skill and relationships. NPC organisations decide on their
-own observations only.
+### 4.8 Media, retail, charts, observations, opportunities
+As defined by the archetypes (§2.2). Inventory tracks pressed, shipped, in-store, sold and
+returned. **Shipments, sales, reported figures and claimed figures are four separate numbers.**
+Charts: `ChartDefinition → Methodology versions → ChartRun → ChartEntry`.
+Observations: `{subject, observer, value, sigma, bias, source, date, expires}`.
+Opportunities: `{kind, source, target, terms, expiry, preconditions, originator, salience}`.
 
 ---
 
-## 4. Creative model: songs as creative products
+## 5. Creative model: songs as creative products
 
-### 4.1 Creative attribute vector
-Attributes are **true values** set at creation and observed with noise by everyone,
-including the player's own team.
-
+### 5.1 Attribute vector (true values, observed with noise by everyone)
 | Level | Attribute | Effect |
 |---|---|---|
-| Composition | `melody`, `lyric_craft`, `structure` | base craft; durability |
-| Composition | `hook_strength` | speed of first-listen liking; radio/TV impact |
-| Composition | `depth` | grower vs burner: liking growth with repetition and fatigue resistance |
-| Composition | `singability` | karaoke uptake, crowd participation, word of mouth |
-| Recording | `production_quality` | polish relative to era norms (era-relative!) |
-| Recording | `sonic_signature` | distinctiveness of sound; drives novelty |
-| Recording | `vocal_delivery` | performance emotion/technique as recorded |
-| Recording | `arrangement_fit` | how well production serves the song |
-| Both | `style_position` | coordinates in style space (§4.2) |
-| Both | `accessibility` | how little prior taste the song requires |
-| Both | `ambition` | experimental reach (critics often reward it; casual audiences may not) |
-| Both | `identity_fit` | fit between song and act's established identity |
-| Both | `controversy` | talkability and risk (censorship/broadcast bans by country/era) |
-| Performance | `choreography_hook`, `stage_concept` | TV/live impact and imitation (dance crazes) |
-| Visual | `mv_quality`, `concept_visual` | MV-era exposure and image formation |
+| Composition | `melody`, `lyric_craft`, `structure` | craft; durability |
+| Composition | `hook_strength` | first-listen liking; radio/TV impact |
+| Composition | `depth` | grower vs burner: liking growth with repetition, fatigue resistance |
+| Composition | `singability` | karaoke, crowd participation, word of mouth |
+| Recording | `production_quality` | polish **relative to era norms** |
+| Recording | `sonic_signature` | distinctiveness; novelty |
+| Recording | `vocal_delivery`, `arrangement_fit` | performance and production serving the song |
+| Both | `style_position`, `genre tags` | where it sits culturally |
+| Both | `accessibility`, `ambition`, `identity_fit`, `controversy` | breadth, critical appeal, fit, talkability/risk |
+| Performance | `dance_hook`, `stage_concept` | TV/live impact, dance crazes |
+| Visual | `video_quality`, `visual_concept` | music-video-era exposure and image |
 
-There is **no overall quality score.** Appeal (§4.4) and critical reception (§5.9)
-are separate functions that weight different attributes.
+There is **no overall quality score.**
 
-### 4.2 Style space
-Music is placed in a continuous **style space**: about 8–12 configurable
-dimensions such as tempo/energy, valence, rhythmic emphasis (dance vs ballad),
-electronic vs acoustic, rawness vs polish, vocal-vs-beat centricity, Western-vs-local
-idiom, and lyrical seriousness. It also carries **genre tags** (ballad, dance-pop,
-hip-hop, R&B, rock, trot, idol pop, techno, city pop, Britpop...). Genre tags are
-labels over regions of the space, and their meaning is era- and country-dependent.
-Example: Korean "dance" in 1997 and US "dance" in 1997 are different regions.
+### 5.2 Style space and genres
+A continuous style space of about 8–12 configurable axes: energy, valence, rhythmic feel,
+electronic↔acoustic, raw↔polished, vocal↔beat centricity, harmonic complexity, lyrical
+register, local↔international idiom. **Genre tags are data:** time-varying regions of the
+space, defined per market. "Dance" in 1987 US, 1995 UK and 1998 Korea are different
+regions. Genre emergence (new jack swing, house, gangsta rap, Britpop, idol pop, trap...)
+appears as new regions gaining audience, fed by the culture system (§5.3) and seeded by
+era data as *currents* (influences and technologies), never as predetermined hits.
 
-### 4.3 Culture and taste dynamics
-Each segment has a taste distribution over style space plus a `novelty_appetite`.
-- **Bandwagon drift:** successful styles pull segment tastes toward themselves
-  (weighted by exposure share). This creates trends endogenously.
-- **Saturation:** local density of recent releases in style space lowers novelty for
-  similar songs, so trends exhaust themselves and leave room for the next one.
-- **Exogenous currents** (structural history, tier B): foreign influence (e.g. US
-  hip-hop's influence on 1990s Korean pop), technology (sampling, Auto-Tune),
-  regulation. These enter as *slow drift forces*, not as outcomes for specific songs.
-- **Generational turnover:** cohorts age through segments, keeping the tastes they formed young.
+### 5.3 Culture and taste dynamics
+Bandwagon drift toward successful styles, saturation reducing novelty, exogenous currents
+(technology, imports, scenes), generational turnover and cross-segment crossover.
+These interact to produce trends, backlash and movements endogenously.
 
-### 4.4 Appeal (per song, per segment, per market)
+### 5.4 Appeal (per song × segment × market)
 ```
-appeal_g = taste_match_g(style_position)                 # kernel over style distance
-         · craft_g(melody, structure, production_rel_era, vocal_delivery, arrangement)
-         · novelty_term_g(sonic_signature, saturation, novelty_appetite_g)
-         · accessibility_term_g(accessibility, openness_g)
-         · act_term_g(public_appeal of act, identity_fit, visual concept)
-         · language/foreignness term (market openness by era)
-         · exp(ε_reception)                               # logged, fat-tailed (Student-t)
+appeal = taste_match(style) · craft(melody, structure, production_rel_era, delivery, arrangement)
+       · novelty(sonic_signature, saturation, novelty_appetite)
+       · accessibility(openness) · act_term(public_appeal, identity_fit, image)
+       · language/foreignness(market openness, era) · exp(ε_reception)   # Student-t, logged
 ```
-The weights per segment are config, and segments weigh things differently. For example,
-teen idol fandom segments put heavy weight on `act_term`, while adult ballad listeners
-weight `melody` and `vocal_delivery`.
+Segment weights are data. A teen-pop segment weights the act and image heavily, an adult
+segment weights vocal and melody, and a hip-hop core segment weights authenticity and
+identity fit.
 
-### 4.5 How creative attributes are produced (creative production system)
-Song attributes come from **who made them, under what conditions**, never from
-how a narrator describes them.
-```
-attribute = f(writer/producer skills in this style region,
-              collaborator chemistry (relationship + style compatibility),
-              time & budget (diminishing returns), studio era tech,
-              performer skills (vocal, delivery), brief constraints,
-              creative risk taken (variance ↑ with ambition), shock)
-```
-- **Song market:** writers and producers create compositions continuously and pitch them.
-  Labels buy or commission them, A&R ears (observations) choose among them, and
-  top writers sell their best songs to the acts with most leverage. A player artist can
-  also write their own songs (skill-limited, with identity and royalty benefits).
-- **Creative briefs:** the player or narrator proposes a brief (concept, style target,
-  producer, schedule, budget). The engine produces the attributes. The narrator then
-  describes the recorded result *consistently with them*: for example, "the chorus is
-  instantly catchy but the verses feel thin" if `hook` is high and `depth` low.
-- **Revision loop:** extra recording time, a different producer or a re-mix can move
-  attributes within bounded, costed ranges. That makes creative decisions meaningful.
+### 5.5 Creative production
+Attributes come from the people and the process: writer/producer skill in the style
+region, chemistry, time and budget (diminishing returns), studio technology of the era,
+performer skill, and creative risk (higher ambition means higher variance). There is a
+**song market**: writers and producers pitch, labels commission, A&R ears (noisy) choose,
+and top songs go to acts with leverage. Artists can write their own songs.
+Narrator or player briefs set the intent; the engine computes the result; the narrator
+describes it consistently. Revisions (more time, a new producer, a remix) move attributes
+within bounded, costed ranges.
 
 ---
 
-## 5. Hit formation and consumption
+## 6. Real historical participants as autonomous agents
 
-This is the heart of the engine. It runs **daily, per song, per market, per segment**.
+### 6.1 What a real artist is in the engine
+A real artist (e.g. a major mid-1980s US star) is a full `Person` + `Act` with:
+- **Catalogue:** prior releases with compositions, recordings and estimated attributes,
+  and their **current listener state** at the start date (warm start, §6.4).
+- **Status vector and fandoms** per market, fitted to their history (§6.2).
+- **Affiliations and contracts:** label (as of the start date), management, publishing,
+  estimated contract positions (album commitments remaining, leverage).
+- **Team and relationships:** producers, writers, executives, peers, rivals. Edges are
+  seeded from documented collaborations.
+- **Identity and goals:** artistic direction, personality, ambitions (tier C estimates with rationale).
+- **Agent behaviour:** they decide on releases, collaborations, touring, image changes,
+  label moves and rest like any NPC, through the same utility models.
+- **Intents:** future historical releases and moves as soft priors (§6.3).
 
-### 5.1 Listener state model (per song × segment)
-```
- Unaware ─(exposure)→ Exposed ─(repeat exposure)→ Familiar ─(liking > θ)→ Engaged
-                        │                            │                      │
-                        └─ no interest               └─ indifferent         └─→ Fatigued
-```
-- **Liking evolves with exposure count** (mere-exposure curve). Initial liking is
-  driven by `hook_strength`. Peak and decay are driven by `depth`: growers start
-  slower but peak higher and later, while burners peak fast and fatigue fast.
-- **Engaged listeners** generate demand: requests, purchases, karaoke, streams,
-  word of mouth, and conversion to fandom of the act.
-- **Fatigue** rises with over-exposure. It is per listener, so heavy rotation kills
-  songs as it does in reality.
+### 6.2 Estimating hidden attributes: inverse calibration
+Rather than hand-assigning numbers, hidden attributes are **fitted**:
+1. Collect the artist's pre-start track record (tier A/B): chart runs, certifications,
+   reviews, awards, touring scale.
+2. Choose attribute values (song attributes of past releases, fandom, recognition) such
+   that simulating those past releases under that era's rules reproduces the observed
+   record in distribution (approximate Bayesian computation or likelihood-free fitting).
+3. Store the posterior mean, an uncertainty band and `confidence`. The full posterior
+   allows seed-to-seed variation.
+4. Plausibility checks flag implausible fits (e.g. a cult act fitted with mass recognition)
+   for the calibration report (§15.3). You review reports, not stat sheets.
 
-### 5.2 Exposure channels (daily impressions per segment)
-| Channel | Impressions | Notes |
-|---|---|---|
-| Radio | Σ stations spins × audience_g × daypart | Programmers decide adds and rotation (§6.3) |
-| Music TV shows | viewership_g × slot quality × stage_impact | Booking is scarce and political (§6.2) |
-| Variety/talk TV | viewership_g × personality airtime | Builds act recognition more than song familiarity |
-| Music video TV | rotation tier × channel reach | MTV-era US/UK; KR cable music channels from mid-1990s *(verify)* |
-| Drama/film OST, CF tie-ins | show/ad audience × song prominence | Strong in KR/JP |
-| Retail/public play | store/street play, noraebang catalogue presence | Ambient familiarity |
-| Word of mouth | contacts × engaged share × talkability | Non-linear contagion (§5.3) |
-| Fandom evangelism | core/active fans × mobilisation | Front-loaded; mostly reaches the fans' peers |
-| Chart & media visibility | published rank prominence, news mentions | Social proof feedback loop |
-| Streaming/algorithmic `[P5]` | playlist reach, recommendation | Platform agents with their own logic |
+### 6.3 Contingent history: soft intents
+- **Release intents:** real releases appear as projects around their real dates, with the
+  real team as high-prior participants and real compositions with estimated attributes.
+  Whether, when and how well they happen is simulated. If a collaborator is busy, signed
+  elsewhere or estranged in-sim, the project adapts.
+- **Debut pipeline:** future real artists enter around their real emergence, with
+  estimated profiles. Who signs them and whether they break is simulated.
+- **Organisational intents:** label foundings, mergers and executive moves are pressures
+  conditioned on simulated finances.
+- **Divergence propagation:** later intents read simulated state. Acts that grew bigger
+  get bigger opportunities; acts that faded lose intent priors.
+- `tools/divergence_report` quantifies drift from history.
 
-### 5.3 Non-linear hit dynamics
-1. **Contagion with thresholds:** WOM rate ∝ `engaged_share^α` (α>1 near tipping) ×
-   `talkability`. Songs below the critical mass fade, while songs above it accelerate.
-   This is the source of sleepers and breakouts.
-2. **Social proof:** chart prominence and "everyone's talking about it" coverage raise
-   fence-sitters' liking (bounded). The effect is stronger in conformist segments.
-3. **Gatekeeper cascades:** radio adds and TV bookings depend on *observed* momentum
-   (requests, sales, call-out), so early organic momentum recruits gatekeepers,
-   which brings more exposure.
-4. **Label reinvestment:** the opportunity detector (§6.10) sees momentum above
-   expectation and increases spend, extends the cycle, or pushes a follow-up.
-5. **Cultural moment:** if a song's recognition crosses a high share of the *general*
-   population, it becomes a reference point (parodies, dance crazes, news). Talkability
-   and act recognition jump, which lifts other songs by the act.
-6. **Competition:** exposure slots, radio playlists, TV slots, attention and wallets are
-   **shared pools**. A crowded release week matters.
-7. **Fat tails:** reception shocks are Student-t, and contagion amplifies them.
-   Calibrated on hit-size distributions (§11).
+### 6.4 Warm start
+A campaign starting mid-history needs a living present: songs mid-run on radio, albums
+selling, tours underway. The engine initialises the listener states of recent releases
+so the first simulated weeks reproduce the published charts and airplay of the weeks
+**before** the start date (tier A targets), then runs freely. A test checks continuity
+between the last real weeks and the first simulated weeks.
 
-### 5.4 Fandom formation
-Engaged listeners convert to casual fans at a rate driven by `act_term`, identity
-distinctiveness, member appeal and exposure to *personality* (variety/talk shows,
-fan meetings), not only to songs. Fans move up the tiers (casual → active → core)
-through sustained engagement and community, and churn through hiatus, scandal,
-mistreatment and ageing out. Member-specific attachment is tracked, which enables
-realistic solo spin-offs and fan reactions to lineup changes.
+### 6.5 Competing with real stars
+There are no protected positions. A fictional artist with an exceptional record, strong
+appeal and major support competes directly for the same radio slots, TV bookings, wallets
+and chart positions. Real stars can misfire, delay, switch direction or exceed their history.
 
-### 5.5 Consumption outputs (separate, per day)
+---
+
+## 7. Cross-market careers and international structure
+
+Cross-market expansion is a **process with costs, gatekeepers and uncertainty**, not a multiplier.
+
+### 7.1 How a release reaches another market
+- **Routes:** a major group's local affiliate, a licensing deal with a local label, an
+  import-only release (small reach), a local signing, or later global digital availability.
+  Era data defines which routes exist.
+- **Local priority:** the local affiliate or licensee decides budget and priority from its
+  own observations (local trials, imports, buzz). An overseas star can still be a low
+  priority locally.
+- **Localisation:** local-language versions, local producers or writers, image adaptation,
+  edits for local regulation.
+- **Presence:** local promotion requires calendar time (travel, TV, radio tours), so
+  markets compete for the artist's schedule.
+- **Audience fit:** appeal is computed with the local market's segment tastes,
+  foreign-music openness, language factors and cultural proximity, so the same song can
+  land differently.
+- **Spillover:** recognition leaks across markets only through modelled channels:
+  international media, shared music-TV, diaspora segments and touring. These are weak and
+  explicit.
+
+### 7.2 International charts and institutions
+Each market runs its own institutions (§12). Global aggregates exist only when they
+historically existed.
+
+### 7.3 Coarse simulation of other markets
+Under coarse LOD, foreign markets still produce weekly demand for imported or licensed
+releases, which generates income and recognition. When a campaign moves into a market,
+it is promoted to full LOD.
+
+---
+
+## 8. Hit formation and consumption
+
+Runs daily, per song × market (full LOD) × segment.
+
+### 8.1 Listener state
+`Unaware → Exposed → Familiar → Engaged → Fatigued`. Liking follows a mere-exposure curve
+shaped by `hook_strength` (early liking) and `depth` (late peak, fatigue resistance).
+Fatigue is per listener, so over-rotation burns songs out.
+
+### 8.2 Exposure channels
+Radio (spins × station audience by segment × daypart), TV performances (viewership × slot ×
+stage impact), talk/variety (artist recognition more than song familiarity), music-video
+rotation, soundtracks and ads, ambient/public play, word of mouth, fandom evangelism,
+chart and media visibility, clubs/DJs and mixtapes (era/genre data), and streaming platforms
+and algorithms in later eras. Which channels exist, and their reach by segment, is market/era data.
+
+### 8.3 Non-linear hit dynamics
+1. Contagion with thresholds (word of mouth ∝ engaged share^α × talkability), which produces sleepers and breakouts.
+2. Social proof from chart/media prominence (bounded, segment-dependent conformity).
+3. Gatekeeper cascades: radio adds and TV bookings follow *observed* momentum.
+4. Label reinvestment via the opportunity detector (§9.9).
+5. Cultural moments: crossing general-population thresholds triggers parodies, dance crazes
+   and news, lifting the act's whole catalogue.
+6. **Crossover:** songs spread between segments via shared channels (e.g. from a format serving
+   one audience to a mass-pop format), gated by programmers' observations. This is a key mechanism
+   in US R&B/hip-hop history and is fully endogenous.
+7. Competition through shared pools: airplay slots, TV slots, attention, wallets.
+8. Fat-tailed reception shocks amplified by contagion.
+
+### 8.4 Fandom formation
+Engaged listeners convert to fans via the act's appeal, identity distinctiveness and
+exposure to *personality* (interviews, TV, fan events), and move up and down the tiers
+over time. Member-specific attachment enables solo spin-offs and lineup reactions.
+
+### 8.5 Consumption outputs (separate)
 | Output | Driven by |
 |---|---|
-| Album purchases (per format) | core fans (release-day spike, multiple copies), active fans, **casual conversion from engaged listeners of the album's songs** (era/market `conv` factor), perceived album value (track strength, collectability), price, availability (stock), shared wallet |
-| Single purchases | engaged listeners × `single_market_strength[era, market]` × availability. UK/US singles markets existed; KR 1990s had little physical singles market *(verify)*, so song demand flows into albums there |
-| Airplay | programmer decisions (§6.3); this is an exposure input, also measured for charts |
-| Requests/votes | engaged + fandom mobilisation (radio requests, ARS phone votes, later apps) |
-| Karaoke | singability × engaged × noraebang catalogue availability (lag for catalogue updates) |
-| Downloads/ringtones `[P5]` | digital adoption × engaged × price × piracy pressure |
-| Streams `[P5]` | engaged × listening frequency (depth-driven replay) × platform reach |
-| Recognition change | exposures to the act (not just to songs) |
+| Album purchases | core/active fans + casual conversion from engaged listeners of focus tracks at `conv[market, era, segment]` (data), album value, price, stock, shared wallet |
+| Singles purchases | engaged listeners × `singles_market_strength[market, era]` × availability (singles formats exist only per era data) |
+| Airplay | programmer decisions; an exposure input and a measured chart input |
+| Requests/votes | engaged + mobilisation tools available in that era/market |
+| Karaoke, clubs | singability/danceability × venue culture data |
+| Downloads, ringtones, streams | digital adoption × engaged × price/piracy × platform (later eras) |
+| Tickets, merch | fandom tiers + recognition × appeal + live reputation |
+| Recognition | exposure to the act |
 
-**Shared wallet:** each segment has a music budget per period (era/macro table).
-Desired purchases across all products compete for it through a constrained choice
-model. A blockbuster release can therefore suppress other sales that week, and an
-economic crisis (e.g. Korea's 1997–98 financial crisis, tier B) shrinks wallets.
+**Shared wallet:** each segment's music budget (era/macro data) is contested by all desired
+products, so blockbuster weeks and recessions matter.
 
-### 5.6 Album vs single separation (explicit)
-- A song's popularity is in listener state. An album's sales come from the fandom plus
-  casual conversion from engaged listeners of **its focus tracks**, at
-  `conv[era, market, segment]`. That rate is high where buying the album was the
-  main way to own a hit song, and lower where singles or downloads were available.
-- So a ubiquitous song can coexist with modest album sales (low fandom, burner single)
-  and a fandom act can top album charts with little general recognition. The
-  engine never derives one from the other by a fixed ratio.
+### 8.6 Album vs singles separation
+Song popularity lives in listener state. Album sales come from fandom plus market/era-specific
+conversion. In some market/eras hits were mostly owned via albums; in others singles or downloads
+captured that demand. A ubiquitous song can coexist with modest album sales, and a fandom act can
+lead album charts with little general recognition.
 
-### 5.7 Live and events demand
-Ticket demand comes from fandom tiers + recognition × appeal + live reputation, by city.
-Event bookings (KR university festivals, corporate/local events, overseas showcases)
-come from recognition and current-hit familiarity. These can be a major income source
-(§7) *(verify KR 1990s event-fee norms)*.
+### 8.7 Retail, supply, reported numbers
+Pressing from forecasts, stock-outs, returns. `sell_in ≠ sell_through ≠ reported ≠ claimed`.
 
-### 5.8 Retail, supply and reported numbers
-- Labels decide pressing quantities from their *forecast* (observations). Underpressing
-  causes stock-outs and lost or delayed sales; overpressing causes returns.
-- `sell_in` (shipments) ≠ `sell_through` (sales) ≠ `reported` (panel-measured) ≠ `claimed`
-  (label press release). Labels may inflate claims depending on era norms and their
-  personality. Media and fans quote claims; the engine knows the truth.
-
-### 5.9 Critical reception (separate process)
-Critics and outlets each have a taste profile. Critics weight `ambition`, `sonic_signature`,
-`lyric_craft`, `depth` and coherence across an album. They also have biases (genre
-snobbery, nationalism, idol scepticism in some eras). The outputs are reviews, a critical
-consensus, `critical_prestige` updates and award-jury inputs. Commercial appeal and critical
-reception are correlated only through shared attributes, so an acclaimed commercial flop and
-an unacclaimed smash both arise naturally.
+### 8.8 Critical reception
+Outlets with taste profiles and biases (genre snobbery, rockism, idol scepticism, nationalism:
+all data). They weight ambition, signature, lyrics, depth and album coherence. This is separate from
+commercial appeal.
 
 ---
 
-## 6. Industry systems
+## 9. Industry systems
 
-### 6.1 Labels and agencies (organisational model)
-Country rule packs define the organisational norms. In US/UK, labels, management,
-publishing and agents are separate. In KR, integrated entertainment agencies handle
-training, production, management and often publishing, with distribution through
-third parties *(verify per company and period)*.
-```
-LabelAI
-  finances (cash, credit), overhead, roster, A&R staff (ears = taste accuracy by style)
-  strategy: risk appetite, style focus, roster size target, budget bands,
-            exploitation aggressiveness, artist-treatment norms
-  pipeline: trainees, demos, projects in production, release calendar
-  relationships: broadcasters/PDs, programmers, retailers, distributors, writers
-```
-Labels allocate budgets across their roster to maximise **expected value under their own
-beliefs**, with portfolio diversification and calendar-avoidance of big competitors.
+### 9.1 Record companies and agencies
+Organisational structure comes from market pack norms (separate label/management/publishing,
+or integrated agencies). `RecordCompanyAI` has finances, roster, A&R staff with
+style-specific ears, strategy (risk, style focus, budget bands, exploitation aggressiveness,
+artist-treatment norms), a pipeline and gatekeeper relationships. It allocates budgets across
+its roster by expected value **under its own beliefs**, avoiding calendar collisions with
+strong competitors. Corporate groups own multiple labels with internal competition for priority.
 
-### 6.2 Broadcasting and music shows
-- Music shows have a fixed number of performance slots per episode. Bookings are
-  decided by the program's PD AI: act status (O), current momentum, label relationship,
-  diversity rules, scandals and broadcaster politics.
-- Stage impact = `performance skills × choreography_hook × stage_concept × live_stability × shock`.
-  A great stage raises recognition and liking, and a bad live stage can hurt.
-- Ranking systems and their rules (e.g. retirement after N wins) are methodology
-  objects (§8). Wins are public events that feed visibility and fandom morale.
-- Broadcast bans/censorship rules per country and era (lyrics, language, conduct) *(verify)*.
+### 9.2 Broadcasting and TV
+TV programs book from scarce slots by status, momentum, relationships, politics and rules.
+Stage impact = performance skills × dance hook × concept × live stability × shock. Ranking
+shows use methodologies (§12). Regulation (content standards, bans) is data.
 
-### 6.3 Radio
-Programmer AI per station: add a song when
-`score = format_fit + observed_callout + label_pressure + chart/sales signal + relationship
-+ request volume − playlist competition` exceeds a threshold. Songs move between rotation
-tiers and are dropped when "burn" (fatigue observed in research) rises. Illicit influence
-(payola-style practices) is an optional, era-gated mechanic with detection risk *(config;
-off by default)*.
+### 9.3 Radio
+A programmer AI per station (or per cluster, at coarse LOD) adds songs when
+`format_fit + observed research + label promotion + sales/chart signals + relationships
++ requests − playlist competition` clears a threshold. Songs move through rotation tiers
+and are dropped on observed burn. Independent promotion and payola-style influence are optional,
+era-gated mechanics with detection risk (off by default).
 
-### 6.4 Media and news
-Outlets generate coverage from canonical events, weighted by newsworthiness and outlet taste.
-Coverage is exposure (recognition), sentiment (appeal) and observations (claims, rumours).
-Rumours can be false; the engine knows which ones are.
+### 9.4 Music video
+Commissioning decisions (budget → `video_quality`), channel programming committees with
+rotation tiers, audience reach by segment, and era-dependent channel gatekeeping.
 
-### 6.5 Retail
-See §5.8. Retail panels determine what charts can see (§8.3).
+### 9.5 Media and news
+Coverage from canonical events, weighted by newsworthiness and outlet taste; rumours can be
+false. Coverage feeds recognition, sentiment and observations.
 
-### 6.6 Live, events, endorsements
-Promoters offer shows from observed demand. Brand AIs pick endorsers by
-`endorsement_value` per budget. Contracts include morality clauses where era-appropriate.
+### 9.6 Live, events, endorsements
+Promoters offer dates from observed demand; tour routing has calendar and cost; opening slots
+on bigger tours are opportunities. Events/private gigs where markets have them. Brands choose
+endorsers by value and image fit.
 
-### 6.7 Awards
-Award bodies are voting systems with methodology versions: sales-based components,
-juries with taste profiles, broadcaster-affiliated year-end ceremonies, fan votes. Real
-award institutions exist only in their real date ranges, with era-specific categories.
+### 9.7 Awards
+Voting-body models (juries with tastes, member voting, sales components, fan votes), with
+categories and eligibility windows by year.
 
-### 6.8 Careers, skills, status updates
-- Skills grow with training, work and mentors, and decay slowly when idle. Wellbeing
-  falls with overwork; burnout and illness hazards rise.
-- Status components update from their named drivers (§3.4). `momentum` = recency-weighted
-  `(observed outcome − prior expectation)`.
-- Ageing: market valuations follow config curves by era, country and gender (industry
-  bias, not judgement). Skills and prestige can keep rising.
+### 9.8 Careers, groups, trainees
+Skill growth and decay; wellbeing and burnout; ageing valuation curves as data. Training systems
+(where markets have them) with evaluations, debut selection and dropouts. Group dynamics:
+popularity disparity, line and pay distribution, relationships, solo ambitions, disputes, splits,
+reunions, and disbandment hazards around contract horizons.
 
-### 6.9 Groups, trainees, lineups
-- **Trainees:** training curricula, monthly evaluations (observations), debut-team
-  selection by the agency AI, dropouts, transfers.
-- **Group dynamics:** member popularity disparity, line distribution, pay distribution,
-  personal relationships and individual goals. These generate tension, solo
-  activities, unit splits, departures, contract disputes and disbandment hazards,
-  especially near contract expiry. Real first-generation K-pop groups had high disbandment
-  rates around contract renewals *(verify)*. This is a hazard model, not a script.
-- **Lineup changes:** fandom identity attachment determines how fans respond.
+### 9.9 Agents and the opportunity detector
+- **Utility-based agents** for people and organisations, acting every week regardless of the player.
+- **Opportunity detector:** each week, organisations compare observed signals with expectations.
+  On positive surprise they generate and rank actions (extend the campaign, add a single, a remix
+  for another format, a second video, more TV, a soundtrack/ad tie-in, a foreign release, a tour,
+  a repackage). They fund those within budget. On negative surprise they cut losses.
+- **Rivalries** among acts, labels and fandoms influence timing, booking politics and mobilisation.
 
-### 6.10 NPC decision-making and opportunity detection
-- **Utility-based agents** (people and orgs): choose among feasible actions by expected
-  utility under their goals, risk attitudes and *observations*, with bounded rationality
-  (noise, habit, loyalty). Everyone acts every week whether or not the player is involved.
-- **Opportunity detector** (labels, managers, media, brands): each week, compare observed
-  signals against expectations. When `momentum_O` exceeds a threshold, generate candidate
-  actions: extend the cycle, fund a second MV, push a follow-up single, repackage, book
-  more TV, an OST or CF tie-in, an overseas release, a tour. Rank them by expected value
-  and execute those within budget. This structurally fixes "labels that don't exploit
-  obvious opportunities".
-- **Rivalries:** acts, labels and fandoms track rivals. Rivalry influences release timing,
-  booking politics and fan mobilisation.
-
-### 6.11 Personal life (bounded)
-Relationships, health, family and housing are tracked to the extent they affect the career
-and the narrative. Events are drawn from hazards for fictional people. For real living
-people the policy in §9.7 applies.
+### 9.10 Personal life
+Tracked insofar as it affects the career and narrative; hazards per real-person policy (§11.7).
 
 ---
 
-## 7. Economics
+## 10. Economics
 
-All money flows through the double-entry ledger, with currency per market and
-historical exchange rates (tier A/B tables). **Label revenue ≠ artist income.**
+All money goes through a double-entry, multi-currency ledger with historical FX and inflation
+(data). **Label revenue ≠ artist income.**
 
-### 7.1 Contract kinds (typed terms; country norms in rule packs)
+### 10.1 Contract kinds (typed; norms are market/era data)
 | Contract | Key terms |
 |---|---|
-| Recording (US/UK style) | royalty % (of retail/PPD by era), packaging/free-goods deductions, advance, recoupable costs (recording, % of video, tour support), album commitment + options, territory, term |
-| Exclusive agency (KR style) | term (long terms common historically; later standard contracts *(verify dates)*), revenue split by income type, cost deduction before split, training-cost recoupment, penalty clauses |
-| Publishing / songwriter | splits, publisher share, advance, admin/co-pub, collection-society membership (KOMCA, ASCAP/BMI/SESAC, PRS/MCPS, JASRAC) |
-| Producer | fee + points; beat/track sale (KR) |
-| Management (non-KR) | commission % of gross, sunset clause |
-| Live | guarantee vs door split, promoter costs |
-| Endorsement | fee, exclusivity, morality clause, term |
-| Distribution | fee %, advances to the label |
+| Recording | royalty basis and rate (era-specific: retail, wholesale/PPD), deductions (packaging, free goods, new-media), advance, recoupables (recording, part of video, tour support), commitment + options, territory, term, controlled-composition clauses |
+| Integrated agency | term, revenue splits by income type, cost deduction before split, training-cost recoupment, penalties |
+| Management | commission, term, sunset |
+| Publishing/songwriter | splits, publisher share, advance, admin/co-pub, society membership |
+| Producer | fee + points; beat/track sales |
+| Licensing (cross-market) | territory, royalty to licensor, marketing commitments, term |
+| Live, endorsement, distribution | guarantees vs splits; fees, exclusivity, morality clauses; distribution fee |
 
-### 7.2 Revenue waterfall per Product sale
-```
-consumer price → retailer margin → distributor fee → label gross
-label gross → mechanical royalty (publishers → writers, by statutory/negotiated rate per era)
-            → artist royalty (accrues to the artist's recoupment account)
-            → manufacturing, marketing, overhead → label profit
-artist account: royalties − recoupable costs → paid only once recouped (or never)
-```
-Mechanical, performance and neighbouring-right rates are **era tables per country** (tier A
-where statutory, e.g. the US statutory mechanical rate history; collected in Phase 0).
+### 10.2 Waterfall per unit sold
+Consumer price → retail margin → distributor fee → label receipts → mechanicals to publishers
+(statutory/negotiated by market/era) → artist royalty to recoupment account → manufacturing,
+marketing, overhead → label profit. The artist is paid only once recouped.
 
-### 7.3 Other income streams
-Performance royalties (radio/TV/public play, via societies, paid quarterly or annually with lag),
-broadcast appearance fees, event fees, tours, merchandise, endorsements, OST fees, variety
-appearances, overseas licensing, catalogue income over decades.
+### 10.3 Other income
+Performance royalties (societies, with payout lags), broadcast fees, live, merch, endorsements,
+soundtracks, licensing abroad, catalogue over decades.
 
-### 7.4 Organisation P&L
-Labels: revenue − A&R/recording − manufacturing − marketing − artist/publisher costs − overhead
-− interest. Distressed labels cut rosters or get sold. Healthy labels expand. Mergers are
-probabilistic pressures driven by simulated finances.
+### 10.4 Organisation P&L and corporate dynamics
+Label distress, roster cuts, sales and mergers arise from simulated finances, with historical
+consolidation as probabilistic pressure.
 
-### 7.5 Personal finance
-Gross income → agency/management split or commission → taxes (era tables) → lifestyle
-expenses (tiered, with lifestyle creep) → savings/debts/investments (simple).
+### 10.5 Personal finance
+Gross → commissions/splits → taxes (data) → lifestyle (tiers, creep) → savings, debts, investments.
 
 ---
 
-## 8. Chart and ranking engine
+## 11. Historical data, evidence and acquisition
 
-### 8.1 Model
-Every chart, music show ranking, certification and award with a sales component is a
-**`Methodology` object**, versioned by date:
-```yaml
-id: kr.miak.album_monthly            # illustrative; all values pending Phase 0 research
-publisher: org:kr.riak_miak
-valid: [1998-08, 2008-09]            # (verify start/end; sources conflict)
-period: calendar_month
-publish_lag_days: 10                 # (verify)
-subject: release
-inputs:
-  - measure: units_reported           # reported by labels/distributors
-    source: label_reports
-    measurement: {coverage: 1.0, reporting_bias: label_personality, audit: weak}
-score: units_reported
-eligibility: {formats: [CD, cassette], domestic_release: true}
-size: 50
-```
-```yaml
-id: us.billboard.hot100
-versions:
-  - valid: [1958-08-04, 1991-11-29]      # (verify)
-    inputs: [store_rank_reports, station_playlist_reports]
-    measurement: {type: rank_report_panel, panel_size: era_table, noise: high,
-                  manipulable: true}
-  - valid: [1991-11-30, 1998-12-04]      # (verify) BDS airplay + SoundScan sales
-    inputs: [airplay_audience (BDS), sales (SoundScan panel)]
-    eligibility: {requires_commercial_single: true}
-  - valid: [1998-12-05, ...]             # airplay-only songs eligible (verify)
-  - ...                                  # downloads (2005), streaming (2012–13) (verify)
-```
-The engine computes each chart from **measured** data (§8.3), never from true values.
-
-### 8.2 Engine guarantees
-- A chart is computed only within its `valid` window, and only in countries where the
-  scenario activates it. A test asserts this for every run (§11.5).
-- Tracking windows, release weekdays and publication lags come from the methodology,
-  together with chart rules (recurrent rules, retirement rules, eligibility, chart freezes
-  at holidays).
-- The same simulated consumption can produce **different** charts with different
-  dynamics. For example, a pre-1991 US panel with rank reports yields slow climbs, while
-  SoundScan yields high debuts. This is emergent from measurement, and it is a
-  calibration check (§11).
-
-### 8.3 Measurement layer
-`measured = true activity × panel coverage(channel, era) × reporting noise + manipulation`
-- Panel coverage differs by retailer type, region and era (e.g. early sales panels
-  under-represented some store types *(verify)*).
-- Pre-tracking-era rank reports: stores report ranks, not units. The publisher
-  converts these to points, so the engine simulates store reports from local sales plus bias.
-- Manipulation channels (bulk buying, report inflation, vote mobilisation) are explicit,
-  era-gated and detectable, with consequences.
-
-### 8.4 Initial methodology registry (to research in Phase 0; all *(verify)*)
-| Market | Chart / ranking | Notes for research |
+### 11.1 Evidence tiers
+| Tier | Meaning | Shown as history? |
 |---|---|---|
-| KR | RIAK/MIAK monthly album chart | Monthly top-50 with sales figures from ~Aug 1998 to ~2008 (sources conflict on the exact span) |
-| KR | KBS *Gayo Top 10* (1981–1998) → *Music Bank* (from June 1998) | Chart format, weights and retirement rule; Music Bank's chart had periods of abandonment (e.g. 2001–2007) |
-| KR | SBS *Inkigayo* (1991–93; revived 1998) | "Mutizen" ranking; chart format removed ~2003 |
-| KR | MBC *Music Camp* (1998–2005) | Whether and how it ranked songs in 1998–2002 |
-| KR | Radio and print charts, Hanteo (founding date unconfirmed) | Existence and reach by year |
-| KR | Golden Disc Awards, Seoul Music Awards, broadcaster year-end *gayo daejeon* awards | Criteria by year |
-| KR | Digital: Melon (2004–), Gaon (2010) → Circle (2022) | `[P5]` |
-| US | Billboard Hot 100, Billboard 200, genre and airplay charts | SoundScan (1991), BDS, airplay-only eligibility (1998), downloads (2005), streaming (2012–13), album-equivalent units (2014) |
-| UK | Official Singles/Albums Charts | Compilers (Gallup 1983–, Millward Brown 1994–), downloads 2005, streaming 2014/2015, Friday release 2015 |
-| JP | Oricon weekly singles/albums (1968–) | Billboard Japan Hot 100 (2008–), streaming-era changes |
-| All | Certifications (RIAA, BPI, RIAJ; KR none in 1990s?) | Thresholds by date; shipment-based vs sales-based |
+| A | Primary/authoritative (published chart runs, statutory rates, dated institutional changes) | Yes |
+| B | Sourced estimate (reported sales, industry-report market sizes) | Yes, as "reported" |
+| C | Model estimate (fitted attributes, §6.2) | No, internal |
+| S | Simulated (anything after start) | In-world only |
+
+### 11.2 Research ledger
+`data/research_ledger.csv` holds each claim with scope, value, tier, sources and status
+(`open | verified | disputed`). Disputed values become ranges for calibration.
+
+### 11.3 Staged, cached, restartable pipeline
+Stages `discover → fetch → parse → normalise → reconcile → tier → export`. Each is idempotent,
+checkpointed, rate-limited and keyed by source+query+version, with raw responses cached.
+Entity resolution handles romanisation, stage names and group vs member credits, with manual override files.
+**Sources:** open data first (MusicBrainz, Discogs dumps, Wikidata); reference lists as pointers
+to primaries; official archives where terms allow (chart publishers, certification databases,
+industry reports); press archives for tier B. Terms of use are recorded per source; nothing is
+bulk-scraped against terms.
+
+### 11.4 Progressive datasets (never blocking the engine)
+Each market/era starts with a **representative dataset**: enough real acts, releases and
+institutions to make the competitive field credible. Generated fictional NPCs fill the long
+tail, clearly labelled. Datasets expand by era window over time.
+
+### 11.5 Structural history (data, per market)
+Technology (CD, MP3/P2P, downloads, ringtones, streaming), macro (recessions, financial crises,
+pandemic), regulation, media launches. These are environmental conditions, not outcomes.
+
+### 11.6 Real-person policy
+Professional outcomes are simulated for everyone. Scandals, health, crime and private-life
+events are off by default for real people; configurable per campaign.
 
 ---
 
-## 9. Historical data, evidence and acquisition
+## 12. Chart and ranking engine
 
-### 9.1 Evidence tiers
-| Tier | Meaning | Example | May be shown as historical fact? |
-|---|---|---|---|
-| A | Primary/authoritative | Chart run published by publisher; statutory rate; release date with label source | Yes |
-| B | Sourced estimate | Reported sales from press; market size from industry report | Yes, with "reported" wording |
-| C | Model estimate | A real artist's `vocal` = 78 from the rubric | No, internal only |
-| S | Simulated | Anything after the scenario start | Shown as in-world fact, never as history |
-
-Each curated record stores `{value, tier, sources[], retrieved, notes, confidence}`.
-
-### 9.2 Research ledger
-`data/curated/research_ledger.csv` holds every claim the engine relies on: claim, scope,
-value, tier, sources and status (`open | verified | disputed`). Conflicting sources are
-kept side by side, and calibration can treat a disputed value as a range.
-
-### 9.3 Staged, cached, restartable pipeline
+### 12.1 Methodology objects (data)
+Every chart, ranking show, certification and sales-based award is a versioned methodology:
+```yaml
+id: us.billboard.hot100            # illustrative; values are research targets
+versions:
+  - valid: [1958-08-04, 1991-11-29]
+    inputs: [store_rank_reports, station_playlist_reports]
+    measurement: {type: rank_report_panel, noise: high, manipulable: true}
+  - valid: [1991-11-30, ...]       # BDS airplay + SoundScan sales (verify end)
+    inputs: [airplay_audience, sales_panel]
+    eligibility: {commercial_single_required: true}   # until rule change (verify date)
+  - ...                            # downloads from 2005-02-12; streaming later (verify)
 ```
-pipeline/
-  stages: discover → fetch → parse → normalise → reconcile → tier → export
-  each stage: idempotent, checkpointed (manifest.json), resumable, rate-limited,
-              keyed by (source, query, version); raw responses cached in data/raw/
-  reconcile: entity resolution across sources (romanisation variants, stage names,
-             group vs member credits) with manual override files
-```
-**Source priorities:** open data and APIs first (MusicBrainz, Discogs data dumps,
-Wikidata). Then reference lists (Wikipedia chart and number-one lists, used as
-pointers to primary sources). Then official archives (Official Charts, RIAA/BPI
-certification databases, KOCCA/IFPI reports, publishers' archives) where their terms
-allow. Then press archives for tier B facts. Source terms of use are recorded per
-source, and nothing is bulk-scraped where terms forbid it.
+A methodology defines: inputs (measured, never true values), formula and weights, tracking
+window, publication lag, eligibility, special rules (recurrent rules, retirement after N wins,
+holiday freezes), size and subject (song/release/act).
 
-**The engine never waits on the full discography.** The world needs only the
-*representative dataset* for the active scenario. Missing real data is filled with
-generated NPCs, clearly labelled as fictional.
+### 12.2 Guarantees
+- Charts are computed only within validity windows and in markets where they exist (tested).
+- The same consumption measured differently produces different chart dynamics: rank-report
+  eras give slower climbs, while point-of-sale tracking gives higher debuts. This is
+  emergent, and it is a calibration check.
 
-### 9.4 Representative dataset for the first test (KR, ~1996–2001)
-- ~40–60 real acts across idol pop, ballad, dance, hip-hop/R&B, rock/indie and trot,
-  with members, labels, release histories and tier-C attribute estimates.
-- ~15 real organisations: major agencies (SM, DSP, the companies that became YG and
-  JYP, and others), distributors, the three broadcasters' music shows, key radio programs,
-  MIAK/RIAK, awards bodies.
-- MIAK monthly charts for the available months (tier A/B calibration target).
-- Market tables: population by segment, music spend, formats (cassette vs CD
-  share), price tables, macro shock (1997–98 financial crisis), media diet.
-- Generated fictional NPC acts, writers and producers to fill the long tail.
+### 12.3 Measurement layer
+`measured = true activity × panel coverage(channel, era) × reporting noise + manipulation`.
+Rank-report eras simulate store and station reports with bias. Manipulation channels (bulk
+buying, report inflation, vote mobilisation) are explicit, era-gated and detectable.
 
-### 9.5 Historical intents (the contingent past)
-- **Release intents:** real releases become soft intents. Around the real date, the
-  real act and team are high-prior participants, and their real songs exist as
-  compositions with estimated attributes. *Whether* the release happens, when, how
-  good the final recording is and how it performs are simulated.
-- **Debut pipeline:** real future artists enter around their real trainee or debut age,
-  with estimated profiles. Their agency and debut happen if the simulated world allows it.
-- **Organisational intents:** founding, mergers and closures are pressures conditioned
-  on simulated finances.
-- **Divergence propagation:** downstream intents read the simulated state. If a group
-  disbanded early in-sim, their historical comeback intent is dropped. If an act became
-  far bigger, their intents scale up.
-- `tools/divergence_report` shows how far the world has drifted.
-
-### 9.6 Structural history (default ON, per country)
-Technology (CD adoption, MP3/P2P, ringtones, iTunes, streaming services), macroeconomics
-(the 1997 Asian financial crisis, the 2008 crisis, the 2020 pandemic), regulation
-(broadcast censorship, copyright law changes), media launches (cable music channels, MTV).
-These are environment conditions with tier A/B dates, not outcomes.
-
-### 9.7 Real-person policy
-Professional outcomes (sales, charts, wins, signings, disbandments) are simulated for
-everyone. Scandals, health events, crimes and private-life events are **off by default
-for real people** and apply to fictional people. Configurable per campaign.
-
----
-
-## 10. Narrator–engine interface
-
-### 10.1 Roles
-| Engine (authoritative) | Narrator (creative, non-authoritative) |
+### 12.4 Initial methodology research targets (all *(verify)*; Phase 1 needs US and KR only)
+| Market | Institutions |
 |---|---|
-| Numbers, rankings, money, contracts, calendars | Scenes, dialogue, atmosphere, media voice, inner life |
-| Canonical events and their causes | Interpretation and dramatisation of those events |
-| Validation and resolution of proposals | **Proposals**: new people, opportunities, relationship moments, creative briefs |
-| NPC decisions | NPC *voice*, consistent with personality and memories |
-
-### 10.2 A narrative pass (manual loop, P1)
-```
-1. Player: decisions + standing preferences  →  cli: `play act <command file>`
-2. Engine: advance until interrupt           →  writes pass_0042.json + pass_0042.md
-3. Player pastes pass_0042.md into ChatGPT (with the narrator contract, §10.7)
-4. ChatGPT writes the narrative + a fenced ```proposals``` JSON block
-5. Player pastes the proposals block back    →  cli: `submit proposals_0042.json`
-6. Engine validates/resolves, records outcomes, and they appear in the next packet
-```
-`[P6]` replaces steps 3–5 with an HTTP API (OpenAPI spec for ChatGPT Actions, and/or MCP).
-
-### 10.3 Fact packet (narrator-facing, player-visible only)
-```
-header: campaign, date range covered, location, protagonist snapshot
-digest: canonical events since last pass (ordered, with causes in plain language)
-scenes: suggested scene hooks with participants and stakes (recording session,
-        taping, negotiation, fan meeting, rivalry moment)
-decisions_pending: options with engine-computed trade-offs and deadlines
-people: dossiers of relevant NPCs (personality, goals, relationship to protagonist,
-        salient memories, current situation known to the protagonist)
-industry: published charts/rankings (as published), competitor activity, gossip
-          (each item tagged: official | reported | rumour, with confidence)
-numbers: every quotable number with {value, label, provenance tag, quotable: true|false}
-creative: realised attributes of new recordings translated into descriptive tags
-          ("immediate hook, thin verses, vocally demanding bridge")
-constraints: what the narrator must not contradict or invent (see 10.4)
-```
-Hidden true values never appear. "Your manager estimates first-week sales at
-80–120k" is an observation with its uncertainty.
-
-### 10.4 Narrator latitude
-- **May invent freely:** sensory detail, minor dialogue, non-consequential background
-  people, weather, outfits, emotions, media tone.
-- **Must propose (engine resolves):** anything with consequences, such as a new named
-  industry person, an offer, a collaboration, a relationship change beyond flavour, a
-  scandal, a creative decision, money, a booking, a public statement with impact.
-- **Must never state:** numbers not in the packet, chart positions, outcomes of pending
-  resolutions, other people's private information the protagonist could not know.
-
-### 10.5 Proposal protocol
-```json
-{"proposals": [
-  {"type": "introduce_person", "role": "composer", "traits": {...},
-   "context": "met at the studio through Producer Kim"},
-  {"type": "opportunity", "kind": "OST", "source": "org:kr.kbs.drama_dept",
-   "rationale": "drama PD saw the Music Bank stage"},
-  {"type": "relationship_moment", "between": ["person:p", "person:x"],
-   "nature": "confided about burnout", "intended_effect": "trust+"},
-  {"type": "creative_brief", "release": "...", "concept": "...", "producer": "..."},
-  {"type": "player_action", "action": "decline_variety_show", "args": {...}}
-]}
-```
-Resolution pipeline: **schema → feasibility** (exists? available? within capability/
-budget? era-possible? does the protagonist know them?) → **plausibility prior** (how
-likely in-world, using the same NPC utility models) → **resolution** (accept/modify/reject;
-probabilistic resolution logged with a seed) → **persistence** (canonical event + memories)
-→ **feedback** in the next packet with reasons. Narrator proposals cannot raise their own
-odds by wording. Resolution uses state only.
-
-### 10.6 Approval and delegation
-`PlayerPolicy` (editable standing orders):
-- **Always ask:** contracts and renewals, release decisions (date, lead single, concept),
-  major creative commitments, career redirections, public statements, lineup changes,
-  large spending.
-- **Delegate with preferences:** routine bookings, interviews, schedule packing level,
-  minor endorsements under thresholds, rehearsal intensity.
-Delegated choices are made by the protagonist's team AI (manager/agency), constrained by
-the policy, and reported in the digest.
-
-### 10.7 Narrator contract (shipped as a document)
-`docs/narrator_contract.md`: a reusable instruction block for ChatGPT that explains packet
-fields, the latitude rules, the proposal format and the style expectations: substantial
-immersive passes, flexible pacing, rich context.
-
-### 10.8 Consistency checker `[P1 basic, P6 full]`
-Parses narration for numbers, rankings, named outcomes and new named people. It flags
-anything not in the packet or not proposed. In manual mode, the player can run `check
-narrative.txt` before submitting proposals.
+| US | Billboard Hot 100 and Top Pop Albums/Billboard 200 (SoundScan albums from 1991-05-25, Hot 100 BDS+SoundScan from 1991-11-30, downloads from 2005-02-12); Hot Black Singles (renamed Hot R&B Singles in Oct 1990; R&B/Hip-Hop naming from Dec 1999); Black/R&B albums; rap, AC and rock charts; airplay charts; RIAA certifications with dated thresholds; Grammys, AMAs, Soul Train awards; MTV and BET programming |
+| KR | Monthly album sales charts published by industry associations (RIAK/MIAK, ~1998–2008; sources conflict on dates); broadcast music shows with ranking systems and retirement rules (KBS, SBS, MBC programs and their validity windows); year-end awards; Hanteo; later digital charts (Melon, Gaon → Circle) |
+| UK `[later]` | Official Singles/Albums Charts by compiler era; downloads 2005; streaming 2014/2015; BPI certifications; BRITs; music press |
+| JP `[later]` | Oricon weekly charts; Billboard Japan; RIAJ certifications |
 
 ---
 
-## 11. Calibration and testing
+## 13. Narrator–engine interface
 
-### 11.1 What "realistic" means here
-Calibrate **distributions and relationships**, not individual outcomes:
-- KR: monthly #1 album sales distribution 1998–2002 (MIAK), annual top-50 shape, number
-  of very large sellers per year, format split, label market shares, hits per act per
-  year, rookie breakthrough rates, group survival curves.
-- US (second test): Billboard 200 debut-rank distributions before/after SoundScan, weeks
-  at #1 distribution, Hot 100 climb speeds by era, album sales tail shape, label shares.
-- Cross-cutting: hit lifetimes, song-vs-album popularity divergence frequency, sleeper hit
-  frequency, superstar slump frequency, newcomer #1 frequency.
+### 13.1 Roles
+The engine is authoritative for numbers, rankings, money, contracts, calendars, canonical
+events and NPC decisions. The narrator is creative: scenes, dialogue, atmosphere, media voice
+and inner life, plus **proposals** for new people, opportunities, relationship moments and
+creative briefs.
 
-### 11.2 Methods
-1. **Batch runs:** `tools/batch.py --scenario kr_1997 --seeds 200 --years 4`.
-2. **Loss function:** quantile errors and KS distances against reference distributions, weighted.
-3. **Parameter search:** coordinate search, then Bayesian optimisation; hold out years
-   (fit 1998–2000, validate 2001–2002).
-4. **Historical coverage test:** seed real releases with historical inputs and simulate them
-   N times. The real outcome should fall inside the simulated 10–90% band about 80% of the time.
-5. **Sensitivity analysis:** ±20% per parameter, ranking which parameters matter most for
-   the data effort.
-6. **Emergence checks:** frequencies of sleeper hits, breakouts from unknowns, superstar
-   misfires, trend turnover, label crises and disbandments per simulated year. Each should
-   be near history, and none should be forced.
+### 13.2 Manual loop (until the API)
+1. The player sets decisions and standing orders, then runs `play`.
+2. The engine advances until an interrupt and writes `pass_NNNN.md` (human-pasteable, with an embedded JSON block).
+3. The player pastes the pass, plus the narrator contract (`docs/narrator_contract.md`) on first use, into ChatGPT.
+4. ChatGPT writes the narrative plus a fenced `proposals` JSON block.
+5. The player runs `submit`: the engine validates and resolves the proposals, and the results appear in the next pass.
 
-### 11.3 Divergence sanity
-Across seeds, real historical #1s should be *likely but not guaranteed*. If a historical
-#1 is #1 in 100% of seeds, the model is scripted; if in ~0%, it is miscalibrated.
+Later, an HTTP API (OpenAPI for ChatGPT Actions, and/or MCP) automates steps 3–5.
 
-### 11.4 No artificial floors and ceilings (test)
-Inject an exceptional synthetic release (top-percentile attributes, strong label,
-favourable timing) for a newcomer. Over many seeds, the outcome distribution must include
-results exceeding the era's historical maximum at a small but non-zero rate.
+### 13.3 Fact packet
+Header (campaign, period covered, location, protagonist snapshot); digest of canonical events
+with plain-language causes; scene hooks; pending decisions with engine-computed trade-offs;
+dossiers of relevant people (personality, goals, relationship, salient memories); industry
+context (published charts, competitor activity, gossip with official/reported/rumour tags);
+quotable numbers with provenance; creative descriptors of new recordings; constraints.
+It contains only what the protagonist could know. Estimates carry their uncertainty.
 
-### 11.5 Test suite
-- **Unit:** formulas with fixed inputs.
-- **Property:** money conservation; no negative inventory; no overlapping mandatory
-  commitments; every random draw logged; every published number has provenance.
-- **Era-gating:** no chart, award, format or platform exists outside its validity dates/country.
-- **No future knowledge:** a static check that decision modules do not import intent tables,
-  plus a runtime guard on observation dates.
-- **Determinism/replay:** same inputs → same state hash; replay equals snapshot.
-- **Fairness:** the same scenario with the protagonist swapped for an identical NPC gives
-  statistically identical outcome distributions.
-- **Separation:** album sales and song popularity are not perfectly correlated across a
-  batch (regression test against aliasing).
-- **Regression:** golden-seed metrics; config diffs show metric diffs.
+### 13.4 Narrator latitude
+- **May invent freely:** texture, minor dialogue, background people without consequences.
+- **Must propose:** anything consequential (new named industry people, offers,
+  collaborations, relationship shifts, scandals, creative choices, money, bookings).
+- **Must never state:** numbers or outcomes not in the packet, or private information
+  the protagonist could not know.
 
----
+### 13.5 Proposal pipeline
+The pipeline runs schema → feasibility → plausibility prior → resolution → persistence:
+- **Feasibility** checks existence, availability, budget, era-possibility and acquaintance.
+- **Plausibility prior** uses the same agent utility models as everything else.
+- **Resolution** accepts, modifies or rejects; any random roll is logged.
+- **Persistence** records canonical events and memories.
 
-## 12. Phased roadmap
+Results and reasons come back in the next packet. Wording cannot raise odds.
 
-Each phase ends with something runnable, passing tests and an updated
-"implemented vs planned" table in the README.
+### 13.6 Approval and delegation
+`PlayerPolicy` standing orders: always ask for contracts, releases, major creative commitments,
+career redirections, public statements, lineup changes and large spending. Delegate routine
+bookings, interviews and minor deals to the team AI within the stated preferences, and report
+them in the digest.
 
-**Phase 0: Foundations (no gameplay)**
-- Core: clock, RNG streams, event log with provenance, ledger, config, observation
-  layer, memory, SQLite save/replay. Mirrors the acting engine's core contract (§13).
-- Data pipeline skeleton (stages, cache, manifests) + research ledger.
-- Research: KR 1996–2001 methodology registry entries, market tables, the representative act list.
-- *Done when:* a dummy world advances 4 years daily/weekly deterministically,
-  save → load → replay hashes match, and the pipeline resumes after interruption.
-
-**Phase 1: First test — South Korea, 1997–2000 vertical slice**
-- KR rule pack: formats (cassette/CD), retail and distribution, MIAK monthly chart,
-  2–3 broadcast music shows with era-appropriate ranking rules, key radio, year-end awards
-  (simplified), agency contract norms.
-- Creative model (§4), hit formation (§5) with shared pools, fandom with era tools,
-  label AI with opportunity detection, PD/programmer AIs.
-- ~40–60 real acts + generated NPCs; trainee/rookie/established stages; groups with
-  lineup and contract hazards (simplified).
-- Economics: agency contract splits, recoupment, event and CF income, personal finance.
-- Narrator loop v1: fact packets, proposals, approval policy, basic checker.
-- Calibration v1 against MIAK distributions.
-- *Playable test:* a configurable protagonist (e.g. the Bae Yeora scenario) goes from
-  trainee/debut through at least two release cycles, competing against a world that
-  acts independently. Every chart position and sale is traceable.
-
-**Phase 2: Second test — United States, ~1990–1993**
-- US rule pack with the **Billboard methodology change inside the scenario** (rank-report
-  era → SoundScan/BDS), radio formats, MTV, US contract norms, RIAA certifications.
-- *Done when:* KR and US campaigns run on the same engine without market-specific code in
-  core systems, and the debut-rank shift around 1991 emerges from measurement alone.
-
-**Phase 3: Living industry depth**
-Richer NPC goals, careers of writers/producers, label finances (distress, mergers),
-media ecosystem and rumours, relationship/memory depth, group dynamics, touring.
-
-**Phase 4: Economics and awards completeness**
-Full royalty waterfalls per country/era, publishing and collection societies, award
-voting bodies, international licensing and exports between active markets.
-
-**Phase 5: Era expansion and new markets**
-Digital eras (KR digital/ringtones/Melon; US downloads/streaming), UK and Japan rule
-packs, platform agents, the 2010s–2026 global streaming market.
-
-**Phase 6: Narrator API**
-HTTP API with OpenAPI spec (ChatGPT Actions) and/or MCP server; full consistency checker;
-session management for multiple campaigns.
-
-**Phase 7: More professions + shared core with the acting engine**
-Playable producer, songwriter, manager and label executive (each a different control
-surface over the same world). Extract the shared core package (§13) when both engines
-have stabilised.
+### 13.7 Consistency checker
+Flags numbers, rankings, outcomes and new named people in the narration that are not in the
+packet or proposals (basic in Phase 1, full with the API).
 
 ---
 
-## 13. Compatibility with the acting engine
+## 14. Validation scenarios
 
-The two projects are developed in parallel and **must not disrupt each other**.
-- **No cross-repo imports now.** The music engine keeps its own `engine/core/`, written to a
-  *shared core contract* that both repos follow:
-  - IDs: `"<kind>:<slug-or-uuid>"`; dates as ISO days; weekly ticks with a daily clock.
-  - RNG: `rng(seed, system, entity_id, purpose, date)` hash streams.
-  - Event schema: `{event_id, date, system, type, entities, inputs_digest, draws, outputs, causes}`,
-    with namespaced types (`music.*`, `film.*`).
-  - Ledger: double-entry, multi-currency, era inflation index.
-  - Observation and Relationship/Memory schemas as in §3.1/§3.12.
-  - Narrator packet envelope `{header, digest, scenes, decisions_pending, people, numbers,
-    constraints}` and the proposal envelope (§10).
-- `docs/core_contract.md` (written in P0) records the contract. Changes are proposed in
-  both repos before either adopts them.
-- **Later merge:** extract `simcore` as a package both repos depend on. The music and film
-  domains become plug-in "industry modules" over one world, where a `Person` can be both
-  singer and actor (very common in KR and JP), and calendars, fame and relationships are shared.
+Both scenarios are **data-only** campaign presets on the same engine. Neither is special-cased.
+
+### 14.1 Scenario A — United States, late 1980s → early 1990s (first-class)
+- **Window:** data covering ~1985–1993, so starts in 1986 or 1991 both work. The default test
+  run starts in 1988–89 so that the 1991 Billboard measurement change happens mid-campaign.
+- **Protagonist:** fictional emerging pop/R&B singer (configurable), aspiring or newly signed.
+- **Field:** ~80–120 real acts across pop, R&B/soul, new jack swing, hip-hop, dance, rock and
+  AC, with catalogues, labels, teams and intents. Major label groups and key independents.
+  Generated NPCs fill the long tail.
+- **Systems exercised:** US recording contracts and recoupment; singles and album promotion;
+  radio formats and crossover; independent promotion (optional); music video channels;
+  retail with rank-report vs point-of-sale measurement; touring and opening slots; RIAA
+  certifications; awards; competition for airplay, TV and wallets.
+
+### 14.2 Scenario B — South Korea, late 1990s
+- **Window:** data covering ~1996–2001.
+- **Protagonist:** fictional emerging artist under an integrated agency (configurable).
+  Importing an earlier roleplay character is optional and not required.
+- **Field:** ~40–60 real acts across idol pop, ballad, dance, hip-hop/R&B, rock and trot;
+  major agencies; broadcasters' music programs; generated NPCs.
+- **Systems exercised:** integrated agency contracts and training; physical album economics;
+  broadcast music-show booking and ranking rules; fandom organisation and mobilisation;
+  monthly association sales reporting; events and endorsements income; the 1997–98 financial
+  crisis as structural history.
+
+### 14.3 What the pair proves
+They test different organisational models, media gatekeepers, measurement systems, audience
+structures and fan cultures through one core. Market-specific code in core systems is a test failure.
 
 ---
 
-## 14. Failure modes from previous roleplays → structural fixes
+## 15. Calibration, reports and testing
 
-| Previous failure | Structural fix in this design |
+### 15.1 Targets (distributions, not individual outcomes)
+- **US:** debut-rank distributions before/after 1991; weeks-at-#1 distributions; climb speeds;
+  album sales tail; certification counts per year; label market shares; crossover frequency
+  (R&B → pop); new-act breakthrough rates.
+- **KR:** monthly top-album sales distribution; annual top-50 shape; very-large-seller counts;
+  agency shares; group survival curves.
+- **Cross-cutting:** hit lifetimes, song-vs-album divergence frequency, sleepers, superstar
+  misfires, newcomer #1 frequency, trend turnover.
+
+### 15.2 Methods
+Batch runs over seeds; loss functions (quantile/KS); coordinate search, then Bayesian
+optimisation with held-out years; historical coverage test (real outcomes inside the simulated
+10–90% band ~80% of the time); sensitivity analysis; emergence checks; warm-start continuity.
+
+### 15.3 Calibration reports (what you review)
+`tools/calibration_report --scenario <id>` produces a readable report:
+- Simulated vs historical distributions per target, with pass/fail against tolerance.
+- **Real-artist plausibility:** for each major real act, the distribution of simulated
+  outcomes over N seeds with no player, compared with their real record. For example:
+  "Act X reaches #1 album in 64% of seeds (real: yes); median certification 4× vs real 6×."
+- Flags for implausible fitted attributes and the largest sources of uncertainty.
+- Divergence summary: how often history repeats versus changes.
+
+### 15.4 Divergence sanity
+Real historical #1s should be likely but not guaranteed. 100% means the model is scripted;
+~0% means it is miscalibrated.
+
+### 15.5 No ceilings test
+An exceptional synthetic newcomer release must, over many seeds, exceed the era's historical
+maximum at a small, non-zero rate.
+
+### 15.6 Test suite
+Unit; property (money conservation, no negative inventory, no overlapping mandatory
+commitments, all draws logged, provenance for every published number); **neutrality lint** (no
+country/year/genre/institution literals in core/system code); **scenario matrix** (every test
+runs on both validation scenarios); era-gating; no-future-knowledge; determinism/replay; fairness
+(protagonist ↔ identical NPC); album/song separation; warm-start continuity; golden-seed regression.
+
+---
+
+## 16. Phased roadmap
+
+Each phase ends runnable, tested and with an updated implemented-vs-planned table.
+
+**Phase 0: Universal foundations**
+Core (clock, RNG, events/provenance, ledger, config layering, observation, memory, LOD
+framework, save/replay), archetype interfaces, campaign builder skeleton, data pipeline
+skeleton and research ledger, shared-core contract document.
+*Done when:* a synthetic two-market dummy world runs deterministically for years and replays exactly.
+
+**Phase 1: Universal engine + two validation scenarios (the first playable prototype)**
+- 1a: Core systems (creative model, listener dynamics, agents, labels, radio/TV archetypes,
+  retail and measurement, chart engine, contracts and ledger, narrator loop v1), developed
+  against **Scenario A (US)** data.
+- 1b: **Scenario B (KR)** data pack (integrated agency, ranking shows, monthly reporting) on the
+  unchanged core. Any core change required here is a generalisation, not a special case.
+- Calibration reports v1 for both.
+*Done when:* both scenarios are playable through multiple release cycles with a configurable
+protagonist, real artists act autonomously, every number is traceable, and neutrality and
+scenario-matrix tests pass.
+
+**Phase 2: Living industry depth**
+Richer agents and goals, writer/producer careers, label finances and corporate dynamics, media and
+rumours, relationship/memory depth, group dynamics, touring.
+
+**Phase 3: Cross-market careers and economics completeness**
+Licensing and affiliates, localisation, foreign promotion, coarse-to-full LOD promotion, full
+royalty waterfalls, publishing and societies, awards voting bodies.
+
+**Phase 4: Era and market expansion**
+US 2000s (hip-hop deals, radio, the digital transition), UK mid-1990s, Japan, then later eras
+through 2026. Each expansion is data plus, at most, archetype parameters.
+
+**Phase 5: Narrator API**
+HTTP/OpenAPI (ChatGPT Actions) and/or MCP, full consistency checker, multi-campaign sessions.
+
+**Phase 6: More professions + shared core with the acting engine**
+Songwriter, producer, manager and label-executive roles; extraction of the shared core package.
+
+---
+
+## 17. Compatibility with the acting engine
+
+The projects are developed in parallel and must not disrupt each other.
+- No cross-repo imports now. Both follow a **shared core contract** (`docs/core_contract.md`,
+  written in Phase 0):
+  - IDs `"<kind>:<id>"`; ISO dates; a daily clock with weekly decision ticks.
+  - Hash-based RNG streams.
+  - Event schema with namespaced types (`music.*`, `film.*`) and `causes[]`.
+  - Double-entry multi-currency ledger.
+  - Observation, Relationship and Memory schemas.
+  - Narrator packet and proposal envelopes.
+- Contract changes are proposed in both repos before adoption.
+- **Later:** extract `simcore`, with music and film as industry modules over one world, where a
+  Person can be both singer and actor and calendars, fame and relationships are shared.
+
+---
+
+## 18. Failure modes from previous roleplays → structural fixes
+
+| Previous failure | Structural fix |
 |---|---|
-| Fictional songs repeatedly entering at the same low positions | Positions emerge from a competitive pool with heterogeneous creative attributes, exposure and fandom; regression test on debut-position distributions (§11) |
-| Mechanical chart climbs independent of promotion/response | Rank is computed from measured consumption, which comes from listener state driven by exposure and liking dynamics (§5) |
-| Historical stars permanently in historical positions | Real releases are soft intents with simulated outcomes; divergence sanity test (§11.3) |
-| Success artificially limited "for realism" | No caps; fat tails; no-ceiling test (§11.4); fairness test (§11.5) |
-| Labels not exploiting obvious opportunities | Opportunity detector and label portfolio AI (§6.10) |
-| Album popularity conflated with singles popularity | Separate demand channels and era/market conversion (§5.5–5.6); separation test |
-| Numbers changing without identifiable cause | Event log with causes and `inspect why` (§2.4) |
-| Modern chart methods applied to historical periods | Versioned, date-gated methodologies; era-gating test (§8, §11.5) |
-| All music equally effective | Creative attribute vector, segment appeal, separate critical reception (§4, §5.9) |
+| Fictional songs repeatedly entering at the same low positions | Positions emerge from a competitive pool with heterogeneous creative attributes, exposure and fandom; debut-distribution regression test |
+| Mechanical climbs independent of promotion/response | Ranks come from measured consumption driven by exposure and liking dynamics |
+| Historical stars permanently in historical positions | Soft intents with simulated outcomes; divergence sanity test |
+| Success artificially limited | No caps; fat tails; no-ceiling and fairness tests |
+| Labels not exploiting opportunities | Opportunity detector and portfolio AI |
+| Album and singles popularity conflated | Separate demand channels with market/era conversion; separation test |
+| Numbers changing without cause | Event log with causes; `inspect why` |
+| Modern methodology applied to the past | Date-gated methodology objects; era-gating test |
+| All music equally effective | Creative attribute vectors, segment appeal, separate criticism |
+| Engine built around one artist or market | Neutrality lint; data-only scenarios; two-market scenario matrix |
 
 ---
 
-## 15. Decisions needed before Phase 0 code
+## 19. Decisions needed before Phase 0 code
 
-1. **First scenario start:** Bae Yeora as a DSP trainee in early 1997 (pre-debut, so the
-   1997–98 crisis and the arrival of MIAK charts happen during play), or debut-ready in 1998?
-2. **Bae Yeora's existing details:** please share her profile and any canon from your
-   ChatGPT campaign (debut date, songs, members of her team). Should Phase 1 reproduce her
-   canon as the starting state, or restart her career fresh in the engine?
-3. **Real-person policy:** keep the default (§9.7)?
-4. **Seed estimates:** should I draft tier-C attribute estimates for the ~50 real acts for
-   your review, or do you want to supply or adjust them?
-5. **Interface preference:** for the manual loop, do you prefer the packet as Markdown (easy
-   to paste) with an embedded JSON block, or pure JSON plus a separate narrator contract?
-6. **Calibration tolerance:** e.g. simulated monthly #1 sales quantiles within ±25% of MIAK
-   reference for slice sign-off?
-7. **Technology:** Python 3.11+, numpy, SQLite, PyYAML, pytest. Later FastAPI for P6. OK?
+1. **Scenario A default start:** 1988–89 (so the 1991 measurement change happens in play) is
+   recommended for testing; 1986 and 1991 starts will also be supported by the same data. OK?
+2. **Real-person policy:** keep the default (§11.6)?
+3. **Calibration tolerance:** e.g. key simulated distributions within ±25% of reference quantiles?
+4. **Packet format for the manual loop:** Markdown with an embedded JSON block (recommended)?
+5. **Technology:** Python 3.11+, numpy, SQLite, PyYAML, pytest; later FastAPI. OK?
