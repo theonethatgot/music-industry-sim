@@ -1,0 +1,22 @@
+id: album_rock
+publisher: Billboard
+subject: song
+size: 50
+period: weekly
+window_end: sunday
+issue_offset_days: 13
+names:
+  - {from: 1984-01-01, name: "Album Rock Tracks"}
+valid_from: 1981-03-21
+versions:
+  - id: station_reports
+    valid: [1981-03-21, 1991-11-29]
+    measurement: rank_report
+    inertia: 0.45
+    inputs:
+      airplay: {weight: 1.0, formats: [aor], noise: 0.12, list_length: 50}
+  - id: bds
+    valid: [1991-11-30, null]
+    measurement: tracked
+    inputs:
+      airplay: {weight: 1.0, formats: [aor], noise: 0.02, ref: 20000000}

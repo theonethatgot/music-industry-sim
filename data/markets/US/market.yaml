@@ -1,0 +1,291 @@
+# United States market pack (v0.1, slice coverage ~1985-1993).
+# Evidence: institution existence/dates are tier B (verify); audience sizes, reaches
+# and propensities are tier C model estimates pending calibration.
+id: US
+name: United States
+currency: USD
+languages: [en]
+
+release_weekday:              # tier B (verify)
+  - {from: null, weekday: monday}
+  - {from: 1989-04-04, weekday: tuesday}
+  - {from: 2015-07-10, weekday: friday}
+
+# Audience segments = age band x taste cluster. Populations in millions (tier C).
+segments:
+  teen_mainstream:
+    label: "Teens (12-17), mainstream"
+    population: {1985: 17.0, 1990: 15.2, 1995: 16.0}
+    budget_per_capita: {1985: 46, 1990: 54, 1995: 58}
+    single_propensity: 0.085
+    album_propensity: 0.22
+    taste: {pop: 0.35, dance_pop: 0.30, hair_metal: 0.10, rock: 0.08, pop_rap: 0.10, rnb: 0.07}
+    novelty_appetite: 0.8
+    conformity: 0.8
+  teen_urban:
+    label: "Teens (12-17), Black/urban"
+    population: {1985: 3.5, 1990: 3.4, 1995: 3.7}
+    budget_per_capita: {1985: 40, 1990: 48, 1995: 52}
+    single_propensity: 0.1
+    album_propensity: 0.2
+    taste: {rnb: 0.25, new_jack_swing: 0.25, hip_hop: 0.20, pop_rap: 0.10, dance_pop: 0.10, soul_ballad: 0.10}
+    novelty_appetite: 0.8
+    conformity: 0.7
+  ya_mainstream:
+    label: "Young adults (18-34), mainstream"
+    population: {1985: 38.0, 1990: 37.0, 1995: 34.0}
+    budget_per_capita: {1985: 34, 1990: 40, 1995: 44}
+    single_propensity: 0.025
+    album_propensity: 0.2
+    taste: {pop: 0.30, dance_pop: 0.18, rock: 0.18, adult_contemporary: 0.10, rnb: 0.10, alternative: 0.08, soul_ballad: 0.06}
+    novelty_appetite: 0.6
+    conformity: 0.6
+  ya_urban:
+    label: "Young adults (18-34), Black/urban"
+    population: {1985: 8.0, 1990: 8.5, 1995: 8.6}
+    budget_per_capita: {1985: 34, 1990: 40, 1995: 44}
+    single_propensity: 0.04
+    album_propensity: 0.22
+    taste: {rnb: 0.32, new_jack_swing: 0.18, soul_ballad: 0.22, hip_hop: 0.12, house: 0.08, dance_pop: 0.08}
+    novelty_appetite: 0.6
+    conformity: 0.6
+  ya_rock:
+    label: "Young adults (18-34), rock-oriented"
+    population: {1985: 16.0, 1990: 15.0, 1995: 13.0}
+    budget_per_capita: {1985: 38, 1990: 44, 1995: 46}
+    single_propensity: 0.012
+    album_propensity: 0.26
+    taste: {rock: 0.45, hair_metal: 0.30, alternative: 0.20, pop: 0.05}
+    novelty_appetite: 0.5
+    conformity: 0.5
+  adult_mainstream:
+    label: "Adults (35-54), mainstream"
+    population: {1985: 48.0, 1990: 54.0, 1995: 60.0}
+    budget_per_capita: {1985: 12, 1990: 15, 1995: 18}
+    single_propensity: 0.006
+    album_propensity: 0.14
+    taste: {adult_contemporary: 0.45, pop: 0.22, soul_ballad: 0.13, rock: 0.10, singer_songwriter: 0.05, country: 0.05}
+    novelty_appetite: 0.3
+    conformity: 0.5
+  adult_urban:
+    label: "Adults (35-54), Black/urban"
+    population: {1985: 6.0, 1990: 7.0, 1995: 8.0}
+    budget_per_capita: {1985: 15, 1990: 18, 1995: 21}
+    single_propensity: 0.012
+    album_propensity: 0.18
+    taste: {soul_ballad: 0.45, rnb: 0.35, adult_contemporary: 0.10, new_jack_swing: 0.10}
+    novelty_appetite: 0.3
+    conformity: 0.5
+  hiphop_core:
+    label: "Hip-hop core audience (13-29)"
+    population: {1985: 1.5, 1988: 3.0, 1990: 4.5, 1995: 7.0}
+    budget_per_capita: {1985: 50, 1990: 56, 1995: 60}
+    single_propensity: 0.07
+    album_propensity: 0.3
+    taste: {hip_hop: 0.45, gangsta_rap: 0.22, pop_rap: 0.13, new_jack_swing: 0.12, house: 0.08}
+    novelty_appetite: 0.9
+    conformity: 0.4
+
+# Word-of-mouth contact structure (row: listener segment, col: source segment)
+contacts:
+  teen_mainstream:  {teen_mainstream: 1.0, teen_urban: 0.15, ya_mainstream: 0.20, hiphop_core: 0.10}
+  teen_urban:       {teen_urban: 1.0, teen_mainstream: 0.25, ya_urban: 0.30, hiphop_core: 0.35}
+  ya_mainstream:    {ya_mainstream: 1.0, teen_mainstream: 0.10, ya_rock: 0.25, ya_urban: 0.10, adult_mainstream: 0.15}
+  ya_urban:         {ya_urban: 1.0, teen_urban: 0.20, adult_urban: 0.25, ya_mainstream: 0.10, hiphop_core: 0.20}
+  ya_rock:          {ya_rock: 1.0, ya_mainstream: 0.25, teen_mainstream: 0.10}
+  adult_mainstream: {adult_mainstream: 1.0, ya_mainstream: 0.15}
+  adult_urban:      {adult_urban: 1.0, ya_urban: 0.25}
+  hiphop_core:      {hiphop_core: 1.0, teen_urban: 0.30, ya_urban: 0.15}
+
+prices:                         # average consumer price across formats (tier C from B tables)
+  album: {1985: 9.4, 1988: 10.6, 1990: 11.8, 1993: 13.4}
+  single: {1985: 1.99, 1988: 2.20, 1990: 2.60, 1993: 3.20}
+  dealer_share: 0.62            # label/distributor share of consumer price
+  manufacturing: {album: 1.15, single: 0.45}
+
+mechanical_rate:                # statutory per-song rate, USD (tier B, verify)
+  - {from: 1986-01-01, value: 0.0500}
+  - {from: 1988-01-01, value: 0.0525}
+  - {from: 1990-01-01, value: 0.0570}
+  - {from: 1992-01-01, value: 0.0625}
+  - {from: 1994-01-01, value: 0.0660}
+
+royalty_norms:                  # artist royalty as share of consumer price after deductions
+  new_artist: 0.10
+  established: 0.13
+  star: 0.17
+  deduction_factor: 0.80        # packaging + free goods (tier C)
+
+singles_market:                 # strength of the commercial singles market (tier C)
+  {1985: 1.0, 1990: 0.9, 1995: 0.7, 1998: 0.4}
+
+radio:
+  listen_share_of_day: 0.12
+  rotation_spins: {power: 6.0, heavy: 4.0, medium: 2.5, light: 1.2}
+  formats:
+    chr:
+      name: "Contemporary hit radio (Top 40)"
+      reach: {teen_mainstream: 0.55, teen_urban: 0.30, ya_mainstream: 0.38, ya_urban: 0.14, ya_rock: 0.14, adult_mainstream: 0.10, adult_urban: 0.04, hiphop_core: 0.15}
+      playlist: 38
+      reporting_stations: 240
+      genre_affinity: {pop: 1.0, dance_pop: 1.0, latin_pop: 0.8, rnb: 0.7, new_jack_swing: 0.7, pop_rap: 0.7, soul_ballad: 0.6, hair_metal: 0.6, adult_contemporary: 0.5, rock: 0.5, house: 0.5, singer_songwriter: 0.4, alternative: 0.3, hip_hop: 0.2, gangsta_rap: 0.02, country: 0.1}
+    urban:
+      name: "Urban contemporary (Black radio)"
+      reach: {teen_urban: 0.58, ya_urban: 0.62, adult_urban: 0.55, hiphop_core: 0.40, teen_mainstream: 0.05, ya_mainstream: 0.05}
+      playlist: 42
+      reporting_stations: 100
+      genre_affinity: {rnb: 1.0, new_jack_swing: 1.0, soul_ballad: 1.0, hip_hop: 0.6, pop_rap: 0.6, dance_pop: 0.35, house: 0.5, adult_contemporary: 0.12, pop: 0.12, latin_pop: 0.15, gangsta_rap: 0.15}
+    ac:
+      name: "Adult contemporary"
+      reach: {adult_mainstream: 0.42, ya_mainstream: 0.20, adult_urban: 0.10, ya_urban: 0.05}
+      playlist: 28
+      reporting_stations: 120
+      genre_affinity: {adult_contemporary: 1.0, soul_ballad: 0.9, pop: 0.7, singer_songwriter: 0.7, latin_pop: 0.5, rnb: 0.4, rock: 0.2, dance_pop: 0.2, country: 0.3}
+    aor:
+      name: "Album-oriented rock"
+      reach: {ya_rock: 0.62, ya_mainstream: 0.15, teen_mainstream: 0.15, adult_mainstream: 0.05}
+      playlist: 34
+      reporting_stations: 140
+      genre_affinity: {rock: 1.0, hair_metal: 1.0, alternative: 0.6, singer_songwriter: 0.3}
+    street:
+      name: "Club DJs, mix shows and mixtapes"
+      reach: {hiphop_core: 0.45, teen_urban: 0.20, ya_urban: 0.15}
+      playlist: 30
+      reporting_stations: 0          # not measured by any chart
+      genre_affinity: {hip_hop: 1.0, gangsta_rap: 1.0, pop_rap: 0.7, new_jack_swing: 0.7, house: 0.7, dance_pop: 0.3, rnb: 0.3}
+
+video:
+  view_share_of_day: 0.05
+  rotation_plays: {heavy: 4.0, medium: 2.0, light: 1.0}
+  channels:
+    mtv:
+      name: "MTV"
+      valid_from: 1981-08-01
+      reach: {teen_mainstream: 0.30, ya_mainstream: 0.24, ya_rock: 0.30, teen_urban: 0.18, hiphop_core: 0.25, ya_urban: 0.08, adult_mainstream: 0.03}
+      playlist: 55
+      genre_affinity: {pop: 1.0, dance_pop: 1.0, rock: 1.0, hair_metal: 1.0, alternative: 0.7, pop_rap: 0.7, rnb: 0.6, new_jack_swing: 0.6, hip_hop: 0.5, soul_ballad: 0.5, latin_pop: 0.6, house: 0.4, adult_contemporary: 0.4, gangsta_rap: 0.2, singer_songwriter: 0.5}
+    bet:
+      name: "BET"
+      valid_from: 1980-01-25
+      reach: {teen_urban: 0.30, ya_urban: 0.26, adult_urban: 0.18, hiphop_core: 0.30}
+      playlist: 45
+      genre_affinity: {rnb: 1.0, new_jack_swing: 1.0, soul_ballad: 1.0, hip_hop: 0.8, pop_rap: 0.8, gangsta_rap: 0.4, dance_pop: 0.5, house: 0.5, pop: 0.3}
+    vh1:
+      name: "VH1"
+      valid_from: 1985-01-01
+      reach: {adult_mainstream: 0.07, ya_mainstream: 0.05, adult_urban: 0.03}
+      playlist: 35
+      genre_affinity: {adult_contemporary: 1.0, soul_ballad: 0.8, pop: 0.8, singer_songwriter: 0.8, rock: 0.5, latin_pop: 0.6}
+
+television:
+  exposures_per_performance: 1.5
+  programs:
+    soul_train:
+      name: "Soul Train"
+      valid_from: 1971-10-02
+      valid_to: 2006-03-25
+      slots_per_week: 2
+      viewers: {teen_urban: 0.20, ya_urban: 0.16, adult_urban: 0.10, hiphop_core: 0.10, teen_mainstream: 0.02}
+      genre_affinity: {rnb: 1.0, new_jack_swing: 1.0, soul_ballad: 1.0, dance_pop: 0.6, pop_rap: 0.6, hip_hop: 0.5, house: 0.5, pop: 0.3}
+      booking_threshold: 0.25
+    american_bandstand:
+      name: "American Bandstand"
+      valid_from: 1957-08-05
+      valid_to: 1989-10-07
+      slots_per_week: 2
+      viewers: {teen_mainstream: 0.05, teen_urban: 0.03, ya_mainstream: 0.02}
+      genre_affinity: {pop: 1.0, dance_pop: 1.0, rnb: 0.7, new_jack_swing: 0.7, latin_pop: 0.8, rock: 0.5, hair_metal: 0.5, pop_rap: 0.5}
+      booking_threshold: 0.2
+    arsenio_hall_show:
+      name: "The Arsenio Hall Show"
+      valid_from: 1989-01-03
+      valid_to: 1994-05-27
+      slots_per_week: 4
+      viewers: {ya_mainstream: 0.05, ya_urban: 0.12, teen_urban: 0.08, hiphop_core: 0.10, teen_mainstream: 0.03}
+      genre_affinity: {rnb: 1.0, new_jack_swing: 1.0, hip_hop: 0.9, pop_rap: 0.9, soul_ballad: 0.8, dance_pop: 0.8, pop: 0.7, rock: 0.4}
+      booking_threshold: 0.3
+    tonight_show:
+      name: "The Tonight Show"
+      valid_from: 1962-10-01
+      slots_per_week: 1
+      viewers: {adult_mainstream: 0.06, ya_mainstream: 0.04, adult_urban: 0.03}
+      genre_affinity: {adult_contemporary: 1.0, pop: 0.8, soul_ballad: 0.9, singer_songwriter: 0.8, rock: 0.5, latin_pop: 0.6}
+      booking_threshold: 0.55
+    saturday_night_live:
+      name: "Saturday Night Live"
+      valid_from: 1975-10-11
+      slots_per_week: 1
+      season_months: [10, 11, 12, 1, 2, 3, 4, 5]
+      viewers: {ya_mainstream: 0.08, ya_rock: 0.07, teen_mainstream: 0.05, ya_urban: 0.04}
+      genre_affinity: {pop: 1.0, rock: 1.0, alternative: 1.0, dance_pop: 0.8, rnb: 0.8, hip_hop: 0.6, singer_songwriter: 0.8, hair_metal: 0.6}
+      booking_threshold: 0.6
+    showtime_at_the_apollo:
+      name: "Showtime at the Apollo"
+      valid_from: 1987-09-12
+      slots_per_week: 2
+      viewers: {teen_urban: 0.08, ya_urban: 0.08, adult_urban: 0.06, hiphop_core: 0.06}
+      genre_affinity: {rnb: 1.0, soul_ballad: 1.0, new_jack_swing: 1.0, hip_hop: 0.8, pop_rap: 0.8}
+      booking_threshold: 0.15
+
+media_outlets:
+  billboard:          {name: "Billboard", kind: trade}
+  radio_and_records:  {name: "Radio & Records", kind: trade}
+  rolling_stone:
+    name: "Rolling Stone"
+    kind: critic
+    taste: {ambition: 0.30, signature: 0.25, lyric_craft: 0.30, depth: 0.15}
+    genre_bias: {rock: 0.10, alternative: 0.15, singer_songwriter: 0.15, dance_pop: -0.10, pop: -0.05, hair_metal: -0.10}
+  village_voice:
+    name: "The Village Voice"
+    kind: critic
+    taste: {ambition: 0.30, signature: 0.35, lyric_craft: 0.20, depth: 0.15}
+    genre_bias: {hip_hop: 0.15, gangsta_rap: 0.10, alternative: 0.10, house: 0.05, hair_metal: -0.15, adult_contemporary: -0.10}
+  jet:
+    name: "Jet"
+    kind: urban_press
+  teen_press:
+    name: "Teen magazines"
+    kind: teen_press
+
+certification:                  # RIAA (tier B, verify thresholds by date)
+  body: "RIAA"
+  basis: shipments
+  album:
+    - {from: 1976-01-01, gold: 500000, platinum: 1000000, multi: true}
+  single:
+    - {from: 1976-01-01, gold: 1000000, platinum: 2000000}
+    - {from: 1989-01-01, gold: 500000, platinum: 1000000}
+
+charts: [hot100, top_albums, black_singles, black_albums, ac, album_rock, rap_singles]
+
+live:
+  local_gig_fee: {1985: 80, 1990: 110, 1995: 150}      # per small club night (tier C)
+  cost_of_living_index: {1985: 1.0, 1990: 1.2, 1995: 1.4}
+
+# Generated (fictional) participants that fill the long tail of the industry (tier S).
+generated:
+  genre_mix: {pop: 14, dance_pop: 10, rnb: 13, new_jack_swing: 6, soul_ballad: 6, adult_contemporary: 8, rock: 11,
+              hair_metal: 7, alternative: 6, hip_hop: 6, pop_rap: 5, latin_pop: 3, singer_songwriter: 3, house: 2,
+              gangsta_rap: 1}
+  group_genres: [pop, rnb, new_jack_swing, dance_pop, pop_rap, hip_hop]
+  default_genre: pop
+  names:
+    first: [Danny, Tasha, Marcus, Kim, Lisa, Terrence, Angela, Rob, Nicole, Derek, Monique, Steve, Carla, Jamal, Tracy,
+            Kevin, Renee, Chris, Dana, Andre, Shawn, Tina, Jeff, Keisha, Brian, Michelle, Tony, Yolanda, Greg, Stacy,
+            Lamont, Heather, Ray, Denise, Eddie, Crystal, Mike, Vanessa, Jerome, Paula, Rick, Sonya, Lou, Gina, Vince, Erica]
+    last: [Carter, Hayes, Moreno, Whitfield, Brooks, Delgado, Pryor, Lambert, Simms, Kowalski, Bishop, Rivers, Tate,
+           Monroe, Fontaine, Ellis, Baxter, Duvall, Greer, Vaughn, Holloway, Shepherd, Nash, Ortega, Sterling, Pruitt,
+           Gaines, Valentine, Coleman, Wilder, Mercer]
+    band_a: [Velvet, Electric, Midnight, Paper, Neon, Crimson, Silver, Wild, Lost, Golden, Broken, Savage, Urban,
+             Crystal, Steel, Atomic, Cherry, Sugar, Black, Concrete]
+    band_b: [Hearts, Angels, Machine, Union, Cowboys, Tigers, Shadows, Rebels, Society, Kings, Sisters, Avenue, Crew,
+             Posse, Groove, Express, Brigade, Dolls, Saints, Thieves]
+  title_words:
+    a: [Midnight, Heart, Love, Fire, Dream, Shadow, Golden, Wild, Secret, Electric, Summer, Broken, Sweet, Restless,
+        Paradise, Danger, Forever, Crazy, Angel, Lonely, Hot, Velvet, Neon, Silent, Rhythm, Thunder, Diamond, Desire,
+        Tonight, Real]
+    b: [Love, Heart, Night, Eyes, Thing, Girl, Boy, Kiss, Street, Dance, Touch, Fever, Games, Lies, Groove, Feeling,
+        Time, Lover, Promise, Talk, Beat, Rain, Line, Motion]
+    patterns: ["{a} {b}", "{a} {b}", "{a} {b}", "{b} of {a}", "My {a} {b}", "{a} Tonight", "Don't Stop the {b}",
+               "{a} Love Affair", "Givin' Up the {b}", "Say It's {a}", "Only {a}", "{b} on Fire", "Hold On to the {b}",
+               "{a} Girl", "Can't Fight the {b}"]

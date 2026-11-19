@@ -23,6 +23,21 @@ Korea late-1990s, built on the same engine (§14).
 - *(verify)* marks historical facts still awaiting primary-source confirmation. Such facts
   live in data files with their tier, never in code.
 
+**Implementation status (v0.3, first playable slice).** The universal core, the US market pack
+(1986–1993 data window), the manual narrator loop and exact replay are implemented; see README
+for the implemented-vs-planned table. Decisions taken during implementation:
+- Narrator integration is part of the first playable milestone (not a late phase): every pass
+  produces a Markdown packet with embedded authoritative JSON and accepts validated decisions
+  and proposals back (§13).
+- Radio adoption is two-level: national playlists plus *regional pickup* by a minority of a
+  format's stations, so unknown acts can break out without national adds (§9.3).
+- Song awareness ("heard it") and artist recognition ("knows who sings it") are separate; only the
+  upper reaches of a chart create general-public visibility (§8).
+- History informs priors with a bounded weight (`creative.history_evidence_weight`); historical
+  chart peaks are never targets (§6, §15).
+- Market packs are declarative first, but genuinely distinct institutions may get specialised
+  market modules behind core interfaces rather than being forced into one abstraction (§2.1).
+
 ---
 
 ## Table of contents

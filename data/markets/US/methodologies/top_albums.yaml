@@ -1,0 +1,25 @@
+id: top_albums
+publisher: Billboard
+subject: album
+size: 200
+period: weekly
+window_end: sunday
+issue_offset_days: 13
+names:
+  - {from: 1985-01-01, name: "Top Pop Albums"}
+  - {from: 1992-03-14, name: "The Billboard 200"}   # verify
+valid_from: 1956-03-24
+versions:
+  - id: rank_reports
+    valid: [1956-03-24, 1991-05-24]
+    note: "Retailer rank reports converted to points"
+    measurement: rank_report
+    inertia: 0.45
+    inputs:
+      sales: {weight: 1.0, coverage: 0.55, noise: 0.18, list_length: 180}
+  - id: soundscan
+    valid: [1991-05-25, null]
+    note: "Point-of-sale album sales (SoundScan)"
+    measurement: tracked
+    inputs:
+      sales: {weight: 1.0, coverage: 0.85, noise: 0.03, ref: 100000}

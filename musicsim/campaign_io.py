@@ -1,0 +1,241 @@
+"""Campaign persistence and the play loop: create, submit, advance, packet, replay.
+
+A campaign directory holds campaign.sqlite (snapshot + logs) and packets/pass_NNNN.{md,json}.
+Every state-changing step is a logged command, so state = f(scenario, seed, commands).
+"""
+from __future__ import annotations
+
+import json
+import re
+import tempfile
+from pathlib import Path
+
+from .campaign import build_world, load_character, load_scenario
+from .core import dates
+from .core.config import DATA_DIR, stable_hash
+from .core.store import Store
+from .narrator import packet as packet_mod
+from .player import commands as cmds
+from .player import proposals as props
+from .sim import advance as sim_advance
+from .world import World, arrays_to_blob, blob_to_arrays
+
+DEFAULT_ADVANCE_DAYS = 28
+
+
+def data_version() -> str:
+    files = sorted(p for p in DATA_DIR.rglob("*.yaml"))
+    return stable_hash({str(p.relative_to(DATA_DIR)): p.read_text(encoding="utf-8") for p in files})
+
+
+class Campaign:
+    def __init__(self, path: Path | str, store: Store, world: World):
+        self.path = Path(path)
+        self.store = store
+        self.world = world
+
+    @property
+    def id(self) -> str:
+        return self.path.name
+
+    # ------------------------------------------------------------ lifecycle
+    @classmethod
+    def create(cls, path, scenario_name, seed: int, character: str | None = None) -> "Campaign":
+        """scenario_name: a preset name/path, or an already-loaded scenario dict."""
+        path = Path(path)
+        if (path / "campaign.sqlite").exists():
+            raise FileExistsError(f"{path} already holds a campaign")
+        scenario = scenario_name if isinstance(scenario_name, dict) else load_scenario(scenario_name)
+        ch_name = character or scenario.get("protagonist", {}).get("character")
+        ch = load_character(ch_name)
+        store = Store(path / "campaign.sqlite")
+        world = build_world(scenario, seed, ch)
+        store.set_meta("scenario", scenario)
+        store.set_meta("character", ch)
+        store.set_meta("seed", seed)
+        store.set_meta("data_version", data_version())
+        store.set_meta("engine_version", __import__("musicsim").__version__)
+        c = cls(path, store, world)
+        c.make_packet()
+        c._log("create", {"scenario": scenario.get("id"), "seed": seed, "character": ch.get("id")}, {})
+        return c
+
+    @classmethod
+    def open(cls, path) -> "Campaign":
+        path = Path(path)
+        store = Store(path / "campaign.sqlite")
+        _, _, doc, blob = store.read_snapshot()
+        world = World.from_state(doc, blob_to_arrays(blob))
+        return cls(path, store, world)
+
+    def close(self):
+        self.store.close()
+
+    # ------------------------------------------------------------ persistence
+    def _flush(self):
+        w = self.world
+        self.store.append_events(w.events.drain())
+        if w.chart_log:
+            self.store.append_chart_runs(w.chart_log)
+            w.chart_log = []
+        if w.week_log:
+            self.store.append_song_weeks(w.week_log)
+            w.week_log = []
+
+    def _save(self) -> str:
+        self._flush()
+        doc, arrays = self.world.to_state()
+        h = self.world.state_hash()
+        self.store.write_snapshot(self.world.date.isoformat(), h, doc, arrays_to_blob(arrays))
+        self.store.commit()
+        return h
+
+    def _log(self, kind: str, payload: dict, result: dict):
+        h = self._save()
+        seq = len(self.store.commands())
+        self.store.append_command(seq, self.world.date.isoformat(), kind, payload, result, h)
+        self.store.commit()
+        return h
+
+    # ------------------------------------------------------------ play
+    def last_packet(self) -> dict | None:
+        return self.store.read_pass()
+
+    def make_packet(self) -> dict:
+        prev = self.store.read_pass()
+        since = prev["date"] if prev else None
+        self._flush()
+        pk = packet_mod.build(self.world, self.store, self.id, since)
+        self.store.write_pass(self.world.pass_no, pk["date"], pk)
+        d = self.path / "packets"
+        d.mkdir(parents=True, exist_ok=True)
+        stem = f"pass_{self.world.pass_no:04d}"
+        (d / f"{stem}.md").write_text(packet_mod.to_markdown(pk), encoding="utf-8")
+        (d / f"{stem}.json").write_text(json.dumps(pk, indent=1, default=str), encoding="utf-8")
+        self._save()
+        return pk
+
+    def packet_path(self) -> Path:
+        return self.path / "packets" / f"pass_{self.world.pass_no:04d}.md"
+
+    def submit(self, payload: dict, check_pass: bool = True) -> dict:
+        """Apply decisions and proposals, optionally advance time, and produce the next packet."""
+        report = {"decisions": [], "proposals": [], "advance": None}
+        errs = validate_submission(self.world, payload, self.last_packet() if check_pass else None)
+        if errs:
+            return {"status": "invalid", "errors": errs}
+        base = len(self.store.commands()) * 100
+        dec, pro = apply_submission(self.world, payload, base)
+        report["decisions"], report["proposals"] = dec, pro
+        adv = payload.get("advance")
+        if adv:
+            report["advance"] = self._advance(dates.parse_duration(adv))
+        self._log("submit", payload, report)
+        report["packet"] = str(self.make_packet_logged())
+        return report
+
+    def _advance(self, days: int) -> dict:
+        res = sim_advance(self.world, days, stop_on_interrupt=True)
+        return res
+
+    def advance(self, duration: str | None) -> dict:
+        days = dates.parse_duration(duration) if duration else DEFAULT_ADVANCE_DAYS
+        res = self._advance(days)
+        self._log("advance", {"duration": duration or f"{DEFAULT_ADVANCE_DAYS}d"}, res)
+        res["packet"] = str(self.make_packet_logged())
+        return res
+
+    def make_packet_logged(self) -> Path:
+        self.make_packet()
+        self._log("packet", {}, {"pass_no": self.world.pass_no})
+        return self.packet_path()
+
+    # ------------------------------------------------------------ replay
+    def replay(self) -> dict:
+        """Rebuild the campaign from scenario + seed + command log and compare state hashes."""
+        scenario = self.store.get_meta("scenario")
+        ch = self.store.get_meta("character")
+        seed = self.store.get_meta("seed")
+        log = self.store.commands()
+        with tempfile.TemporaryDirectory() as tmp:
+            store = Store(Path(tmp) / "replay.sqlite")
+            world = build_world(scenario, seed, ch)
+            c = Campaign(Path(tmp) / self.id, store, world)
+            c.path = Path(tmp) / self.id
+            mismatches = []
+            checked = 0
+            for entry in log:
+                kind, payload = entry["kind"], entry["payload"]
+                if kind == "create":
+                    c.make_packet()
+                elif kind == "submit":
+                    apply_submission(world, payload, entry["seq"] * 100)
+                    if payload.get("advance"):
+                        sim_advance(world, dates.parse_duration(payload["advance"]), stop_on_interrupt=True)
+                elif kind == "advance":
+                    sim_advance(world, dates.parse_duration(payload["duration"]), stop_on_interrupt=True)
+                elif kind == "packet":
+                    c.make_packet()
+                c._flush()
+                h = world.state_hash()
+                checked += 1
+                if h != entry["state_hash"]:
+                    mismatches.append({"seq": entry["seq"], "kind": kind, "expected": entry["state_hash"], "got": h})
+                    break
+            store.close()
+        return {"commands": len(log), "checked": checked, "ok": not mismatches, "mismatches": mismatches}
+
+
+def apply_submission(world, payload: dict, base: int):
+    """Creative briefs first (they shape this pass's sessions), then decisions, then other proposals."""
+    proposals = list(enumerate(payload.get("proposals", []) or []))
+    briefs = [(k, p) for k, p in proposals if p.get("type") == "creative_brief"]
+    others = [(k, p) for k, p in proposals if p.get("type") != "creative_brief"]
+    pro = {}
+    for k, p in briefs:
+        pro[k] = {"type": p.get("type"), **props.resolve(world, p, base + k)}
+    dec = []
+    for d in payload.get("decisions", []) or []:
+        res = cmds.apply(world, d)
+        dec.append({"command": d.get("command"), **res})
+        world.emit("player", "decision", [world.player["act"]], {"command": d.get("command"), "args": d.get("args"),
+                                                                 "result": res.get("status"),
+                                                                 "detail": res.get("summary") or res.get("reason")})
+    for k, p in others:
+        pro[k] = {"type": p.get("type"), **props.resolve(world, p, base + k)}
+    return dec, [pro[k] for k in sorted(pro)]
+
+
+def validate_submission(world, payload, last_packet) -> list[str]:
+    errs = []
+    if not isinstance(payload, dict):
+        return ["submission must be a JSON object"]
+    allowed = {"pass_id", "decisions", "proposals", "advance", "notes"}
+    errs += [f"unexpected top-level field '{k}'" for k in payload if k not in allowed]
+    if last_packet is not None and payload.get("pass_id") != last_packet.get("pass_id"):
+        errs.append(f"pass_id {payload.get('pass_id')!r} does not match the current pass "
+                    f"{last_packet.get('pass_id')!r} (stale or missing)")
+    for d in payload.get("decisions", []) or []:
+        errs += cmds.validate(world, d)
+    for p in payload.get("proposals", []) or []:
+        errs += props.validate(world, p)
+    if payload.get("advance"):
+        try:
+            dates.parse_duration(payload["advance"])
+        except ValueError as e:
+            errs.append(str(e))
+    return errs
+
+
+_FENCE = re.compile(r"```(?:json)?\s*(\{.*?\})\s*```", re.DOTALL)
+
+
+def parse_submission_text(text: str) -> dict:
+    """Accept raw JSON or a narrator reply containing a fenced ```json block (the last one wins)."""
+    text = text.strip()
+    if text.startswith("{"):
+        return json.loads(text)
+    blocks = _FENCE.findall(text)
+    if not blocks:
+        raise ValueError("no JSON object or ```json block found")
+    return json.loads(blocks[-1])

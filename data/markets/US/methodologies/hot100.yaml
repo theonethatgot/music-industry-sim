@@ -1,0 +1,34 @@
+# Billboard Hot 100. Dates are tier B (verify). Weights/noise are tier C.
+id: hot100
+publisher: Billboard
+subject: song
+size: 100
+period: weekly
+window_end: sunday
+issue_offset_days: 13
+names:
+  - {from: 1958-08-04, name: "Billboard Hot 100"}
+valid_from: 1958-08-04
+versions:
+  - id: rank_reports
+    valid: [1958-08-04, 1991-11-29]
+    note: "Store sales rank reports + station playlist reports, converted to points"
+    measurement: rank_report
+    inertia: 0.40
+    inputs:
+      sales: {weight: 0.50, coverage: 0.55, noise: 0.20, list_length: 90}
+      airplay: {weight: 0.50, formats: [chr, urban, ac, aor], noise: 0.15, list_length: 90}
+  - id: bds_soundscan
+    valid: [1991-11-30, 1998-12-04]
+    note: "Electronically monitored airplay (BDS) + point-of-sale singles sales (SoundScan); commercial single required"
+    measurement: tracked
+    eligibility: {commercial_single: true}
+    inputs:
+      sales: {weight: 0.45, coverage: 0.85, noise: 0.03, ref: 100000}
+      airplay: {weight: 0.55, formats: [chr, urban, ac, aor], noise: 0.02, ref: 100000000}
+  - id: airplay_only_eligible
+    valid: [1998-12-05, null]
+    measurement: tracked
+    inputs:
+      sales: {weight: 0.35, coverage: 0.90, noise: 0.03, ref: 100000}
+      airplay: {weight: 0.65, formats: [chr, urban, ac, aor], noise: 0.02, ref: 100000000}

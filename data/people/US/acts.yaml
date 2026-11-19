@@ -1,0 +1,623 @@
+# Real acts active in the US market, slice ~1987-1990 (representative, not exhaustive).
+#
+# Evidence:
+#   identity, label, genres, release titles: tier B (verify)
+#   release months: tier B, approximate (verify) -- used as SOFT INTENTS only
+#   status/skills: tier C estimates as of 1988 (fame/fandom are starting conditions,
+#   re-simulated from then on)
+#   hist (0..1): strength of historical evidence about a song's appeal, derived from
+#   its documented chart performance. It nudges the PRIOR of the song's creative
+#   attributes (weight in defaults.yaml); it never sets a chart outcome.
+#
+# Everything after a campaign's start date is simulated: intents may slip, be
+# cancelled, perform better or worse than history, or never happen.
+acts:
+  - id: whitney_houston
+    name: Whitney Houston
+    label: arista
+    genres: [pop, soul_ballad, rnb]
+    person: {birth_date: 1963-08-09, gender: female, home_city: "Newark, NJ"}
+    skills: {vocal: 0.98, performance: 0.82, media: 0.65, songwriting: 0.10, look: 0.90}
+    status: {fame: 0.95, fandom: 0.50, prestige: 0.60}
+    personality: {ambition: 0.8, risk_tolerance: 0.35, artistic_vs_commercial: -0.1, discipline: 0.7}
+    intents:
+      - {kind: album, title: "Whitney", date: 1987-06, singles: ["So Emotional", "Where Do Broken Hearts Go", "Love Will Save the Day"], tracks: 11}
+      - {kind: single, title: "So Emotional", date: 1987-10, producers: [narada_michael_walden], genre: dance_pop, hist: 0.88}
+      - {kind: single, title: "Where Do Broken Hearts Go", date: 1988-02, producers: [narada_michael_walden], genre: soul_ballad, hist: 0.90}
+      - {kind: single, title: "Love Will Save the Day", date: 1988-05, producers: [jellybean_benitez], genre: dance_pop, hist: 0.55}
+      - {kind: single, title: "One Moment in Time", date: 1988-08, producers: [narada_michael_walden], writers: [], genre: soul_ballad, hist: 0.70}
+      - {kind: single, title: "I'm Your Baby Tonight", date: 1990-10, producers: [la_reid, babyface], writers: [la_reid, babyface], genre: new_jack_swing, hist: 0.90}
+      - {kind: album, title: "I'm Your Baby Tonight", date: 1990-11, singles: ["I'm Your Baby Tonight"], tracks: 10}
+
+  - id: madonna
+    name: Madonna
+    label: sire
+    genres: [dance_pop, pop]
+    person: {birth_date: 1958-08-16, gender: female, home_city: "New York, NY"}
+    skills: {vocal: 0.62, performance: 0.92, media: 0.95, songwriting: 0.75, look: 0.95}
+    status: {fame: 0.97, fandom: 0.55, prestige: 0.45}
+    personality: {ambition: 0.98, risk_tolerance: 0.85, artistic_vs_commercial: 0.2, discipline: 0.9}
+    intents:
+      - {kind: single, title: "Like a Prayer", date: 1989-03, producers: [patrick_leonard], writers: [madonna, patrick_leonard], genre: pop, hist: 0.92}
+      - {kind: album, title: "Like a Prayer", date: 1989-03, singles: ["Like a Prayer", "Express Yourself", "Cherish"], tracks: 11}
+      - {kind: single, title: "Express Yourself", date: 1989-05, producers: [stephen_bray], writers: [madonna, stephen_bray], genre: dance_pop, hist: 0.75}
+      - {kind: single, title: "Cherish", date: 1989-08, producers: [patrick_leonard], writers: [madonna, patrick_leonard], genre: pop, hist: 0.72}
+      - {kind: single, title: "Vogue", date: 1990-03, producers: [shep_pettibone], writers: [madonna, shep_pettibone], genre: house, hist: 0.92}
+
+  - id: janet_jackson
+    name: Janet Jackson
+    label: am
+    genres: [dance_pop, rnb, new_jack_swing]
+    person: {birth_date: 1966-05-16, gender: female, home_city: "Gary, IN"}
+    skills: {vocal: 0.65, performance: 0.92, media: 0.70, songwriting: 0.65, look: 0.90}
+    status: {fame: 0.82, fandom: 0.40, prestige: 0.45}
+    personality: {ambition: 0.85, risk_tolerance: 0.6, artistic_vs_commercial: 0.2, discipline: 0.9}
+    intents:
+      - {kind: single, title: "Miss You Much", date: 1989-08, producers: [jimmy_jam, terry_lewis], writers: [jimmy_jam, terry_lewis], genre: new_jack_swing, hist: 0.92}
+      - {kind: album, title: "Rhythm Nation 1814", date: 1989-09, singles: ["Miss You Much", "Rhythm Nation", "Escapade"], tracks: 12}
+      - {kind: single, title: "Rhythm Nation", date: 1989-10, producers: [jimmy_jam, terry_lewis], writers: [janet_jackson, jimmy_jam, terry_lewis], genre: new_jack_swing, hist: 0.75}
+      - {kind: single, title: "Escapade", date: 1990-01, producers: [jimmy_jam, terry_lewis], writers: [janet_jackson, jimmy_jam, terry_lewis], genre: dance_pop, hist: 0.88}
+
+  - id: prince
+    name: Prince
+    label: paisley_park
+    genres: [rnb, pop, rock]
+    person: {birth_date: 1958-06-07, gender: male, home_city: "Minneapolis, MN"}
+    skills: {vocal: 0.80, performance: 0.97, media: 0.40, songwriting: 0.95, production: 0.92, look: 0.80}
+    styles: {rnb: 1.0, pop: 0.95, rock: 0.95, dance_pop: 0.9}
+    status: {fame: 0.90, fandom: 0.45, prestige: 0.85}
+    personality: {ambition: 0.9, risk_tolerance: 0.9, artistic_vs_commercial: 0.8, discipline: 0.95, ego: 0.9}
+    intents:
+      - {kind: single, title: "Alphabet St.", date: 1988-04, producers: [prince], writers: [prince], genre: rnb, hist: 0.55}
+      - {kind: album, title: "Lovesexy", date: 1988-05, singles: ["Alphabet St."], tracks: 9}
+      - {kind: single, title: "Batdance", date: 1989-06, producers: [prince], writers: [prince], genre: dance_pop, hist: 0.85}
+      - {kind: album, title: "Batman", date: 1989-06, singles: ["Batdance"], tracks: 9}
+
+  - id: michael_jackson
+    name: Michael Jackson
+    label: epic
+    genres: [pop, dance_pop, rnb]
+    person: {birth_date: 1958-08-29, gender: male, home_city: "Gary, IN"}
+    skills: {vocal: 0.90, performance: 0.99, media: 0.50, songwriting: 0.80, look: 0.85}
+    status: {fame: 0.99, fandom: 0.60, prestige: 0.70}
+    personality: {ambition: 0.95, risk_tolerance: 0.5, artistic_vs_commercial: 0.3, discipline: 0.95}
+    intents:
+      - {kind: album, title: "Bad", date: 1987-08, singles: ["The Way You Make Me Feel", "Man in the Mirror", "Dirty Diana", "Another Part of Me", "Smooth Criminal"], tracks: 11}
+      - {kind: single, title: "The Way You Make Me Feel", date: 1987-11, producers: [quincy_jones], writers: [michael_jackson], genre: dance_pop, hist: 0.90}
+      - {kind: single, title: "Man in the Mirror", date: 1988-01, producers: [quincy_jones], writers: [], genre: pop, hist: 0.92}
+      - {kind: single, title: "Dirty Diana", date: 1988-04, producers: [quincy_jones], writers: [michael_jackson], genre: rock, hist: 0.88}
+      - {kind: single, title: "Another Part of Me", date: 1988-07, producers: [quincy_jones], writers: [michael_jackson], genre: dance_pop, hist: 0.55}
+      - {kind: single, title: "Smooth Criminal", date: 1988-10, producers: [quincy_jones], writers: [michael_jackson], genre: dance_pop, hist: 0.70}
+
+  - id: george_michael
+    name: George Michael
+    label: columbia
+    home_market: GB
+    genres: [pop, rnb]
+    person: {birth_date: 1963-06-25, gender: male, home_city: "London", nationality: GB}
+    skills: {vocal: 0.88, performance: 0.80, media: 0.60, songwriting: 0.88, production: 0.80, look: 0.90}
+    status: {fame: 0.90, fandom: 0.45, prestige: 0.55}
+    intents:
+      - {kind: album, title: "Faith", date: 1987-10, singles: ["Faith", "Father Figure", "One More Try", "Monkey", "Kissing a Fool"], tracks: 9}
+      - {kind: single, title: "Faith", date: 1987-10, producers: [george_michael], writers: [george_michael], genre: pop, hist: 0.95}
+      - {kind: single, title: "Father Figure", date: 1988-01, producers: [george_michael], writers: [george_michael], genre: rnb, hist: 0.90}
+      - {kind: single, title: "One More Try", date: 1988-04, producers: [george_michael], writers: [george_michael], genre: soul_ballad, hist: 0.90}
+      - {kind: single, title: "Monkey", date: 1988-06, producers: [george_michael], writers: [george_michael], genre: dance_pop, hist: 0.88}
+      - {kind: single, title: "Kissing a Fool", date: 1988-10, producers: [george_michael], writers: [george_michael], genre: adult_contemporary, hist: 0.65}
+
+  - id: bobby_brown
+    name: Bobby Brown
+    label: mca
+    genres: [new_jack_swing, rnb]
+    person: {birth_date: 1969-02-05, gender: male, home_city: "Boston, MA"}
+    skills: {vocal: 0.70, performance: 0.92, media: 0.60, songwriting: 0.40, look: 0.80}
+    status: {fame: 0.40, fandom: 0.15, prestige: 0.20}
+    personality: {ambition: 0.8, risk_tolerance: 0.8, discipline: 0.4}
+    intents:
+      - {kind: single, title: "Don't Be Cruel", date: 1988-06, producers: [la_reid, babyface], writers: [la_reid, babyface], genre: new_jack_swing, hist: 0.72}
+      - {kind: album, title: "Don't Be Cruel", date: 1988-06, singles: ["Don't Be Cruel", "My Prerogative", "Roni", "Every Little Step"], tracks: 9}
+      - {kind: single, title: "My Prerogative", date: 1988-10, producers: [teddy_riley], writers: [bobby_brown, teddy_riley], genre: new_jack_swing, hist: 0.92}
+      - {kind: single, title: "Roni", date: 1988-12, producers: [la_reid, babyface], writers: [babyface], genre: rnb, hist: 0.70}
+      - {kind: single, title: "Every Little Step", date: 1989-03, producers: [la_reid, babyface], writers: [la_reid, babyface], genre: new_jack_swing, hist: 0.72}
+
+  - id: paula_abdul
+    name: Paula Abdul
+    label: virgin
+    genres: [dance_pop, pop]
+    person: {birth_date: 1962-06-19, gender: female, home_city: "Los Angeles, CA"}
+    skills: {vocal: 0.50, performance: 0.95, media: 0.80, songwriting: 0.30, look: 0.90}
+    status: {fame: 0.15, fandom: 0.04, prestige: 0.15}
+    intents:
+      - {kind: album, title: "Forever Your Girl", date: 1988-06, singles: ["(It's Just) The Way That You Love Me", "Straight Up", "Forever Your Girl", "Cold Hearted"], tracks: 10}
+      - {kind: single, title: "(It's Just) The Way That You Love Me", date: 1988-08, producers: [oliver_leiber], writers: [oliver_leiber], genre: dance_pop, hist: 0.55}
+      - {kind: single, title: "Straight Up", date: 1988-11, producers: [elliot_wolff], writers: [elliot_wolff], genre: dance_pop, hist: 0.92}
+      - {kind: single, title: "Forever Your Girl", date: 1989-03, producers: [oliver_leiber], writers: [oliver_leiber], genre: dance_pop, hist: 0.85}
+      - {kind: single, title: "Cold Hearted", date: 1989-06, producers: [elliot_wolff], writers: [elliot_wolff], genre: dance_pop, hist: 0.85}
+      - {kind: single, title: "Opposites Attract", date: 1989-11, producers: [oliver_leiber], writers: [oliver_leiber], genre: dance_pop, hist: 0.88}
+
+  - id: new_kids_on_the_block
+    name: New Kids on the Block
+    kind: group
+    label: columbia
+    genres: [pop, dance_pop]
+    members: [Donnie Wahlberg, Jordan Knight, Jonathan Knight, Joey McIntyre, Danny Wood]
+    skills: {vocal: 0.55, performance: 0.80, media: 0.80, songwriting: 0.20, look: 0.88}
+    status: {fame: 0.15, fandom: 0.06, prestige: 0.05}
+    intents:
+      - {kind: single, title: "Please Don't Go Girl", date: 1988-04, producers: [maurice_starr], writers: [maurice_starr], genre: pop, hist: 0.60}
+      - {kind: album, title: "Hangin' Tough", date: 1988-09, singles: ["You Got It (The Right Stuff)", "I'll Be Loving You (Forever)", "Hangin' Tough", "Cover Girl"], tracks: 10}
+      - {kind: single, title: "You Got It (The Right Stuff)", date: 1988-11, producers: [maurice_starr], writers: [maurice_starr], genre: pop, hist: 0.72}
+      - {kind: single, title: "I'll Be Loving You (Forever)", date: 1989-03, producers: [maurice_starr], writers: [maurice_starr], genre: soul_ballad, hist: 0.88}
+      - {kind: single, title: "Hangin' Tough", date: 1989-07, producers: [maurice_starr], writers: [maurice_starr], genre: pop, hist: 0.88}
+      - {kind: single, title: "Step by Step", date: 1990-05, producers: [maurice_starr], writers: [maurice_starr], genre: pop, hist: 0.90}
+
+  - id: guns_n_roses
+    name: Guns N' Roses
+    kind: band
+    label: geffen
+    genres: [rock, hair_metal]
+    members: [Axl Rose, Slash, Izzy Stradlin, Duff McKagan, Steven Adler]
+    skills: {vocal: 0.80, performance: 0.90, media: 0.40, songwriting: 0.80, look: 0.70}
+    status: {fame: 0.35, fandom: 0.20, prestige: 0.40}
+    intents:
+      - {kind: album, title: "Appetite for Destruction", date: 1987-07, singles: ["Sweet Child o' Mine", "Paradise City", "Patience"], tracks: 12}
+      - {kind: single, title: "Sweet Child o' Mine", date: 1988-06, producers: [mike_clink], writers: [guns_n_roses], genre: rock, hist: 0.90}
+      - {kind: single, title: "Paradise City", date: 1988-11, producers: [mike_clink], writers: [guns_n_roses], genre: hair_metal, hist: 0.70}
+      - {kind: single, title: "Patience", date: 1989-04, producers: [mike_clink], writers: [guns_n_roses], genre: rock, hist: 0.65}
+
+  - id: bon_jovi
+    name: Bon Jovi
+    kind: band
+    label: mercury
+    genres: [hair_metal, rock]
+    members: [Jon Bon Jovi, Richie Sambora, David Bryan, Tico Torres, Alec John Such]
+    skills: {vocal: 0.75, performance: 0.85, media: 0.70, songwriting: 0.75, look: 0.88}
+    status: {fame: 0.85, fandom: 0.45, prestige: 0.25}
+    intents:
+      - {kind: single, title: "Bad Medicine", date: 1988-09, producers: [bruce_fairbairn], writers: [bon_jovi, desmond_child], genre: hair_metal, hist: 0.90}
+      - {kind: album, title: "New Jersey", date: 1988-09, singles: ["Bad Medicine", "Born to Be My Baby", "I'll Be There for You"], tracks: 12}
+      - {kind: single, title: "Born to Be My Baby", date: 1988-11, producers: [bruce_fairbairn], writers: [bon_jovi, desmond_child], genre: hair_metal, hist: 0.65}
+      - {kind: single, title: "I'll Be There for You", date: 1989-03, producers: [bruce_fairbairn], writers: [bon_jovi], genre: rock, hist: 0.88}
+
+  - id: def_leppard
+    name: Def Leppard
+    kind: band
+    label: mercury
+    home_market: GB
+    genres: [hair_metal, rock]
+    members: [Joe Elliott, Phil Collen, Steve Clark, Rick Savage, Rick Allen]
+    skills: {vocal: 0.72, performance: 0.82, media: 0.55, songwriting: 0.75, look: 0.75}
+    status: {fame: 0.75, fandom: 0.40, prestige: 0.30}
+    intents:
+      - {kind: album, title: "Hysteria", date: 1987-08, singles: ["Pour Some Sugar on Me", "Love Bites", "Armageddon It"], tracks: 12}
+      - {kind: single, title: "Pour Some Sugar on Me", date: 1988-04, producers: [mutt_lange], writers: [def_leppard, mutt_lange], genre: hair_metal, hist: 0.85}
+      - {kind: single, title: "Love Bites", date: 1988-08, producers: [mutt_lange], writers: [def_leppard, mutt_lange], genre: hair_metal, hist: 0.88}
+      - {kind: single, title: "Armageddon It", date: 1988-11, producers: [mutt_lange], writers: [def_leppard, mutt_lange], genre: hair_metal, hist: 0.65}
+
+  - id: anita_baker
+    name: Anita Baker
+    label: elektra
+    genres: [soul_ballad, rnb]
+    person: {birth_date: 1958-01-26, gender: female, home_city: "Detroit, MI"}
+    skills: {vocal: 0.94, performance: 0.75, media: 0.45, songwriting: 0.50, look: 0.70}
+    status: {fame: 0.55, fandom: 0.40, prestige: 0.70}
+    intents:
+      - {kind: single, title: "Giving You the Best That I Got", date: 1988-09, producers: [michael_j_powell], writers: [anita_baker], genre: soul_ballad, hist: 0.70}
+      - {kind: album, title: "Giving You the Best That I Got", date: 1988-10, singles: ["Giving You the Best That I Got"], tracks: 8}
+
+  - id: guy
+    name: Guy
+    kind: group
+    label: uptown
+    genres: [new_jack_swing, rnb]
+    members: [Teddy Riley, Aaron Hall, Damion Hall]
+    skills: {vocal: 0.80, performance: 0.80, media: 0.40, songwriting: 0.70, look: 0.70}
+    status: {fame: 0.05, fandom: 0.03, prestige: 0.20}
+    intents:
+      - {kind: single, title: "Groove Me", date: 1988-06, producers: [teddy_riley], writers: [teddy_riley], genre: new_jack_swing, hist: 0.45}
+      - {kind: album, title: "Guy", date: 1988-06, singles: ["Groove Me", "I Like"], tracks: 10}
+      - {kind: single, title: "I Like", date: 1989-01, producers: [teddy_riley], writers: [teddy_riley], genre: new_jack_swing, hist: 0.45}
+
+  - id: karyn_white
+    name: Karyn White
+    label: warner_bros
+    genres: [rnb, pop]
+    person: {birth_date: 1965-10-14, gender: female, home_city: "Los Angeles, CA"}
+    skills: {vocal: 0.80, performance: 0.72, media: 0.55, songwriting: 0.30, look: 0.80}
+    status: {fame: 0.04, fandom: 0.02, prestige: 0.10}
+    intents:
+      - {kind: single, title: "The Way You Love Me", date: 1988-09, producers: [la_reid, babyface], writers: [la_reid, babyface], genre: new_jack_swing, hist: 0.55}
+      - {kind: album, title: "Karyn White", date: 1988-09, singles: ["The Way You Love Me", "Secret Rendezvous", "Superwoman"], tracks: 10}
+      - {kind: single, title: "Secret Rendezvous", date: 1989-01, producers: [la_reid, babyface], writers: [la_reid, babyface], genre: rnb, hist: 0.65}
+      - {kind: single, title: "Superwoman", date: 1989-04, producers: [la_reid, babyface], writers: [la_reid, babyface], genre: soul_ballad, hist: 0.65}
+
+  - id: tracy_chapman
+    name: Tracy Chapman
+    label: elektra
+    genres: [singer_songwriter]
+    person: {birth_date: 1964-03-30, gender: female, home_city: "Cleveland, OH"}
+    skills: {vocal: 0.80, performance: 0.70, media: 0.35, songwriting: 0.92, look: 0.50}
+    status: {fame: 0.02, fandom: 0.01, prestige: 0.30}
+    intents:
+      - {kind: album, title: "Tracy Chapman", date: 1988-04, singles: ["Fast Car"], tracks: 11}
+      - {kind: single, title: "Fast Car", date: 1988-04, producers: [david_kershenbaum], writers: [tracy_chapman], genre: singer_songwriter, hist: 0.75}
+
+  - id: run_dmc
+    name: Run-DMC
+    kind: group
+    label: profile
+    genres: [hip_hop]
+    members: [Joseph Simmons, Darryl McDaniels, Jason Mizell]
+    skills: {vocal: 0.75, performance: 0.88, media: 0.60, songwriting: 0.70, look: 0.70}
+    status: {fame: 0.60, fandom: 0.30, prestige: 0.55}
+    intents:
+      - {kind: album, title: "Tougher Than Leather", date: 1988-05, singles: ["Mary, Mary"], tracks: 12}
+      - {kind: single, title: "Mary, Mary", date: 1988-06, producers: [run_dmc], writers: [run_dmc], genre: hip_hop, hist: 0.35}
+
+  - id: public_enemy
+    name: Public Enemy
+    kind: group
+    label: def_jam
+    genres: [hip_hop]
+    members: [Chuck D, Flavor Flav, Terminator X, Professor Griff]
+    skills: {vocal: 0.80, performance: 0.85, media: 0.70, songwriting: 0.92, look: 0.60}
+    status: {fame: 0.20, fandom: 0.12, prestige: 0.60}
+    intents:
+      - {kind: album, title: "It Takes a Nation of Millions to Hold Us Back", date: 1988-06, singles: ["Don't Believe the Hype"], tracks: 16}
+      - {kind: single, title: "Don't Believe the Hype", date: 1988-06, producers: [hank_shocklee], writers: [public_enemy], genre: hip_hop, hist: 0.35}
+
+  - id: jazzy_jeff_fresh_prince
+    name: DJ Jazzy Jeff & The Fresh Prince
+    kind: duo
+    label: jive
+    genres: [pop_rap]
+    members: [Jeff Townes, Will Smith]
+    skills: {vocal: 0.65, performance: 0.80, media: 0.90, songwriting: 0.65, look: 0.80}
+    status: {fame: 0.20, fandom: 0.08, prestige: 0.20}
+    intents:
+      - {kind: album, title: "He's the DJ, I'm the Rapper", date: 1988-03, singles: ["Parents Just Don't Understand", "A Nightmare on My Street"], tracks: 14}
+      - {kind: single, title: "Parents Just Don't Understand", date: 1988-04, producers: [jazzy_jeff_fresh_prince], writers: [jazzy_jeff_fresh_prince], genre: pop_rap, hist: 0.55}
+      - {kind: single, title: "A Nightmare on My Street", date: 1988-08, producers: [jazzy_jeff_fresh_prince], writers: [jazzy_jeff_fresh_prince], genre: pop_rap, hist: 0.45}
+
+  - id: tone_loc
+    name: Tone Lōc
+    label: delicious_vinyl
+    genres: [pop_rap]
+    person: {birth_date: 1966-03-03, gender: male, home_city: "Los Angeles, CA"}
+    skills: {vocal: 0.65, performance: 0.65, media: 0.60, songwriting: 0.50, look: 0.60}
+    status: {fame: 0.02, fandom: 0.01, prestige: 0.05}
+    intents:
+      - {kind: single, title: "Wild Thing", date: 1988-10, producers: [matt_dike], writers: [tone_loc, matt_dike], genre: pop_rap, hist: 0.82}
+      - {kind: album, title: "Lōc-ed After Dark", date: 1989-01, singles: ["Wild Thing", "Funky Cold Medina"], tracks: 10}
+      - {kind: single, title: "Funky Cold Medina", date: 1989-02, producers: [matt_dike], writers: [tone_loc], genre: pop_rap, hist: 0.70}
+
+  - id: ll_cool_j
+    name: LL Cool J
+    label: def_jam
+    genres: [hip_hop, pop_rap]
+    person: {birth_date: 1968-01-14, gender: male, home_city: "Queens, NY"}
+    skills: {vocal: 0.75, performance: 0.85, media: 0.80, songwriting: 0.80, look: 0.85}
+    status: {fame: 0.50, fandom: 0.25, prestige: 0.45}
+    intents:
+      - {kind: single, title: "I'm That Type of Guy", date: 1989-06, producers: [ll_cool_j], writers: [ll_cool_j], genre: hip_hop, hist: 0.40}
+      - {kind: album, title: "Walking with a Panther", date: 1989-06, singles: ["I'm That Type of Guy"], tracks: 15}
+
+  - id: rick_astley
+    name: Rick Astley
+    label: rca
+    home_market: GB
+    genres: [dance_pop, pop]
+    person: {birth_date: 1966-02-06, gender: male, home_city: "Newton-le-Willows", nationality: GB}
+    skills: {vocal: 0.82, performance: 0.60, media: 0.55, songwriting: 0.40, look: 0.70}
+    status: {fame: 0.40, fandom: 0.10, prestige: 0.10}
+    intents:
+      - {kind: single, title: "Never Gonna Give You Up", date: 1987-12, producers: [stock_aitken_waterman], writers: [stock_aitken_waterman], genre: dance_pop, hist: 0.90}
+      - {kind: album, title: "Whenever You Need Somebody", date: 1988-01, singles: ["Never Gonna Give You Up", "Together Forever"], tracks: 10}
+      - {kind: single, title: "Together Forever", date: 1988-04, producers: [stock_aitken_waterman], writers: [stock_aitken_waterman], genre: dance_pop, hist: 0.88}
+      - {kind: single, title: "It Would Take a Strong Strong Man", date: 1988-07, producers: [stock_aitken_waterman], writers: [stock_aitken_waterman], genre: pop, hist: 0.55}
+
+  - id: debbie_gibson
+    name: Debbie Gibson
+    label: atlantic
+    genres: [pop, dance_pop]
+    person: {birth_date: 1970-08-31, gender: female, home_city: "Merrick, NY"}
+    skills: {vocal: 0.70, performance: 0.70, media: 0.75, songwriting: 0.72, look: 0.80}
+    status: {fame: 0.55, fandom: 0.25, prestige: 0.15}
+    intents:
+      - {kind: album, title: "Out of the Blue", date: 1987-08, singles: ["Foolish Beat"], tracks: 10}
+      - {kind: single, title: "Foolish Beat", date: 1988-04, producers: [debbie_gibson], writers: [debbie_gibson], genre: pop, hist: 0.85}
+      - {kind: single, title: "Lost in Your Eyes", date: 1989-01, producers: [debbie_gibson], writers: [debbie_gibson], genre: adult_contemporary, hist: 0.90}
+      - {kind: album, title: "Electric Youth", date: 1989-01, singles: ["Lost in Your Eyes", "Electric Youth"], tracks: 12}
+      - {kind: single, title: "Electric Youth", date: 1989-04, producers: [debbie_gibson], writers: [debbie_gibson], genre: dance_pop, hist: 0.55}
+
+  - id: gloria_estefan
+    name: Gloria Estefan & Miami Sound Machine
+    kind: band
+    label: epic
+    genres: [latin_pop, pop, adult_contemporary]
+    members: [Gloria Estefan]
+    skills: {vocal: 0.80, performance: 0.80, media: 0.70, songwriting: 0.70, look: 0.80}
+    status: {fame: 0.70, fandom: 0.30, prestige: 0.35}
+    intents:
+      - {kind: single, title: "1-2-3", date: 1988-06, producers: [emilio_estefan], writers: [gloria_estefan], genre: latin_pop, hist: 0.65}
+      - {kind: single, title: "Don't Wanna Lose You", date: 1989-06, producers: [emilio_estefan], writers: [gloria_estefan], genre: adult_contemporary, hist: 0.88}
+      - {kind: album, title: "Cuts Both Ways", date: 1989-07, singles: ["Don't Wanna Lose You", "Get on Your Feet"], tracks: 11}
+      - {kind: single, title: "Get on Your Feet", date: 1989-09, producers: [emilio_estefan], writers: [gloria_estefan], genre: latin_pop, hist: 0.55}
+
+  - id: richard_marx
+    name: Richard Marx
+    label: emi_manhattan
+    genres: [pop, adult_contemporary, rock]
+    person: {birth_date: 1963-09-16, gender: male, home_city: "Chicago, IL"}
+    skills: {vocal: 0.78, performance: 0.70, media: 0.55, songwriting: 0.85, look: 0.75}
+    status: {fame: 0.45, fandom: 0.20, prestige: 0.25}
+    intents:
+      - {kind: single, title: "Hold On to the Nights", date: 1988-04, producers: [richard_marx], writers: [richard_marx], genre: adult_contemporary, hist: 0.85}
+      - {kind: album, title: "Repeat Offender", date: 1989-05, singles: ["Satisfied", "Right Here Waiting"], tracks: 11}
+      - {kind: single, title: "Satisfied", date: 1989-05, producers: [richard_marx], writers: [richard_marx], genre: rock, hist: 0.85}
+      - {kind: single, title: "Right Here Waiting", date: 1989-07, producers: [richard_marx], writers: [richard_marx], genre: soul_ballad, hist: 0.92}
+
+  - id: new_edition
+    name: New Edition
+    kind: group
+    label: mca
+    genres: [rnb, new_jack_swing]
+    members: [Ricky Bell, Michael Bivins, Ronnie DeVoe, Ralph Tresvant, Johnny Gill]
+    skills: {vocal: 0.80, performance: 0.85, media: 0.60, songwriting: 0.40, look: 0.80}
+    status: {fame: 0.55, fandom: 0.30, prestige: 0.30}
+    intents:
+      - {kind: single, title: "If It Isn't Love", date: 1988-06, producers: [jimmy_jam, terry_lewis], writers: [jimmy_jam, terry_lewis], genre: new_jack_swing, hist: 0.65}
+      - {kind: album, title: "Heart Break", date: 1988-06, singles: ["If It Isn't Love", "Can You Stand the Rain"], tracks: 12}
+      - {kind: single, title: "Can You Stand the Rain", date: 1988-11, producers: [jimmy_jam, terry_lewis], writers: [jimmy_jam, terry_lewis], genre: soul_ballad, hist: 0.50}
+
+  - id: bell_biv_devoe
+    name: Bell Biv DeVoe
+    kind: group
+    label: mca
+    genres: [new_jack_swing, pop_rap]
+    members: [Ricky Bell, Michael Bivins, Ronnie DeVoe]
+    skills: {vocal: 0.70, performance: 0.80, media: 0.60, songwriting: 0.40, look: 0.75}
+    status: {fame: 0.10, fandom: 0.05, prestige: 0.10}
+    intents:
+      - {kind: single, title: "Poison", date: 1990-03, producers: [hank_shocklee], writers: [bell_biv_devoe], genre: new_jack_swing, hist: 0.85}
+      - {kind: album, title: "Poison", date: 1990-03, singles: ["Poison"], tracks: 10}
+
+  - id: babyface
+    name: Babyface
+    label: solar
+    genres: [rnb, soul_ballad]
+    person: {birth_date: 1959-04-10, gender: male, home_city: "Indianapolis, IN"}
+    skills: {vocal: 0.75, performance: 0.65, media: 0.55, songwriting: 0.95, production: 0.86, look: 0.75}
+    status: {fame: 0.20, fandom: 0.10, prestige: 0.50}
+    intents:
+      - {kind: single, title: "It's No Crime", date: 1989-07, producers: [la_reid, babyface], writers: [babyface], genre: new_jack_swing, hist: 0.50}
+      - {kind: album, title: "Tender Lover", date: 1989-07, singles: ["It's No Crime", "Tender Lover", "Whip Appeal"], tracks: 10}
+      - {kind: single, title: "Whip Appeal", date: 1990-01, producers: [la_reid, babyface], writers: [babyface], genre: soul_ballad, hist: 0.55}
+
+  - id: bobby_mcferrin
+    name: Bobby McFerrin
+    label: emi_manhattan
+    genres: [adult_contemporary, pop]
+    person: {birth_date: 1950-03-11, gender: male, home_city: "New York, NY"}
+    skills: {vocal: 0.92, performance: 0.80, media: 0.60, songwriting: 0.70, look: 0.55}
+    status: {fame: 0.15, fandom: 0.05, prestige: 0.55}
+    intents:
+      - {kind: single, title: "Don't Worry, Be Happy", date: 1988-07, producers: [bobby_mcferrin], writers: [bobby_mcferrin], genre: pop, hist: 0.92}
+
+  - id: phil_collins
+    name: Phil Collins
+    label: atlantic
+    home_market: GB
+    genres: [pop, adult_contemporary, rock]
+    person: {birth_date: 1951-01-30, gender: male, home_city: "London", nationality: GB}
+    skills: {vocal: 0.78, performance: 0.80, media: 0.75, songwriting: 0.85, production: 0.80, look: 0.50}
+    status: {fame: 0.90, fandom: 0.40, prestige: 0.55}
+    intents:
+      - {kind: single, title: "Two Hearts", date: 1988-11, producers: [phil_collins], writers: [phil_collins], genre: pop, hist: 0.88}
+      - {kind: single, title: "Another Day in Paradise", date: 1989-10, producers: [phil_collins], writers: [phil_collins], genre: adult_contemporary, hist: 0.92}
+      - {kind: album, title: "...But Seriously", date: 1989-11, singles: ["Another Day in Paradise"], tracks: 12}
+
+  - id: mc_hammer
+    name: MC Hammer
+    label: capitol
+    genres: [pop_rap, dance_pop]
+    person: {birth_date: 1962-03-30, gender: male, home_city: "Oakland, CA"}
+    skills: {vocal: 0.50, performance: 0.95, media: 0.75, songwriting: 0.55, look: 0.70}
+    status: {fame: 0.05, fandom: 0.03, prestige: 0.05}
+    intents:
+      - {kind: album, title: "Let's Get It Started", date: 1988-09, singles: ["Turn This Mutha Out"], tracks: 12}
+      - {kind: single, title: "Turn This Mutha Out", date: 1988-09, producers: [mc_hammer], writers: [mc_hammer], genre: pop_rap, hist: 0.30}
+      - {kind: single, title: "U Can't Touch This", date: 1990-03, producers: [mc_hammer], writers: [mc_hammer], genre: pop_rap, hist: 0.82}
+      - {kind: album, title: "Please Hammer, Don't Hurt 'Em", date: 1990-02, singles: ["U Can't Touch This"], tracks: 13}
+
+  - id: nwa
+    name: N.W.A
+    kind: group
+    label: priority
+    genres: [gangsta_rap]
+    members: [Eazy-E, Ice Cube, Dr. Dre, MC Ren, DJ Yella]
+    skills: {vocal: 0.80, performance: 0.75, media: 0.50, songwriting: 0.85, look: 0.60}
+    status: {fame: 0.02, fandom: 0.02, prestige: 0.20}
+    intents:
+      - {kind: album, title: "Straight Outta Compton", date: 1988-08, singles: ["Straight Outta Compton"], tracks: 13}
+      - {kind: single, title: "Straight Outta Compton", date: 1988-08, producers: [dr_dre], writers: [nwa], genre: gangsta_rap, hist: 0.40, controversy: 0.95}
+
+  - id: de_la_soul
+    name: De La Soul
+    kind: group
+    label: tommy_boy
+    genres: [hip_hop]
+    members: [Posdnuos, Trugoy, Maseo]
+    skills: {vocal: 0.72, performance: 0.70, media: 0.55, songwriting: 0.88, look: 0.55}
+    status: {fame: 0.00, fandom: 0.00, prestige: 0.10}
+    intents:
+      - {kind: single, title: "Me Myself and I", date: 1989-03, producers: [prince_paul], writers: [de_la_soul, prince_paul], genre: pop_rap, hist: 0.50}
+      - {kind: album, title: "3 Feet High and Rising", date: 1989-03, singles: ["Me Myself and I"], tracks: 24}
+
+  - id: luther_vandross
+    name: Luther Vandross
+    label: epic
+    genres: [soul_ballad, rnb]
+    person: {birth_date: 1951-04-20, gender: male, home_city: "New York, NY"}
+    skills: {vocal: 0.96, performance: 0.80, media: 0.50, songwriting: 0.80, production: 0.82, look: 0.55}
+    status: {fame: 0.55, fandom: 0.40, prestige: 0.70}
+    intents:
+      - {kind: single, title: "Any Love", date: 1988-09, producers: [luther_vandross], writers: [luther_vandross], genre: soul_ballad, hist: 0.45}
+      - {kind: album, title: "Any Love", date: 1988-09, singles: ["Any Love"], tracks: 9}
+
+  - id: taylor_dayne
+    name: Taylor Dayne
+    label: arista
+    genres: [dance_pop, pop]
+    person: {birth_date: 1962-03-07, gender: female, home_city: "Long Island, NY"}
+    skills: {vocal: 0.86, performance: 0.72, media: 0.60, songwriting: 0.40, look: 0.75}
+    status: {fame: 0.40, fandom: 0.12, prestige: 0.20}
+    intents:
+      - {kind: single, title: "I'll Always Love You", date: 1988-07, producers: [ric_wake], writers: [], genre: soul_ballad, hist: 0.65}
+      - {kind: single, title: "With Every Beat of My Heart", date: 1989-09, producers: [ric_wake], writers: [], genre: dance_pop, hist: 0.65}
+      - {kind: album, title: "Can't Fight Fate", date: 1989-10, singles: ["With Every Beat of My Heart", "Love Will Lead You Back"], tracks: 11}
+      - {kind: single, title: "Love Will Lead You Back", date: 1990-01, producers: [ric_wake], writers: [diane_warren], genre: soul_ballad, hist: 0.90}
+
+  - id: martika
+    name: Martika
+    label: columbia
+    genres: [pop, dance_pop]
+    person: {birth_date: 1969-05-18, gender: female, home_city: "Whittier, CA"}
+    skills: {vocal: 0.72, performance: 0.70, media: 0.60, songwriting: 0.50, look: 0.85}
+    status: {fame: 0.03, fandom: 0.01, prestige: 0.05}
+    intents:
+      - {kind: album, title: "Martika", date: 1988-09, singles: ["More Than You Know", "Toy Soldiers"], tracks: 10}
+      - {kind: single, title: "More Than You Know", date: 1988-12, producers: [full_force], writers: [martika], genre: dance_pop, hist: 0.55}
+      - {kind: single, title: "Toy Soldiers", date: 1989-04, producers: [full_force], writers: [martika], genre: pop, hist: 0.90}
+
+  - id: jody_watley
+    name: Jody Watley
+    label: mca
+    genres: [dance_pop, rnb]
+    person: {birth_date: 1959-01-30, gender: female, home_city: "Chicago, IL"}
+    skills: {vocal: 0.70, performance: 0.85, media: 0.70, songwriting: 0.60, look: 0.92}
+    status: {fame: 0.50, fandom: 0.18, prestige: 0.35}
+    intents:
+      - {kind: single, title: "Real Love", date: 1989-02, producers: [bobby_z], writers: [jody_watley], genre: dance_pop, hist: 0.65}
+      - {kind: album, title: "Larger Than Life", date: 1989-03, singles: ["Real Love"], tracks: 11}
+
+  - id: vanessa_williams
+    name: Vanessa Williams
+    label: wing
+    genres: [rnb, soul_ballad, pop]
+    person: {birth_date: 1963-03-18, gender: female, home_city: "Millwood, NY"}
+    skills: {vocal: 0.78, performance: 0.75, media: 0.80, songwriting: 0.30, look: 0.95}
+    status: {fame: 0.60, fandom: 0.08, prestige: 0.20}
+    intents:
+      - {kind: album, title: "The Right Stuff", date: 1988-04, singles: ["The Right Stuff", "Dreamin'"], tracks: 10}
+      - {kind: single, title: "Dreamin'", date: 1988-11, producers: [], writers: [], genre: soul_ballad, hist: 0.65}
+
+  - id: u2
+    name: U2
+    kind: band
+    label: island
+    home_market: IE
+    genres: [rock, alternative]
+    members: [Bono, The Edge, Adam Clayton, Larry Mullen Jr.]
+    skills: {vocal: 0.80, performance: 0.92, media: 0.80, songwriting: 0.85, look: 0.70}
+    status: {fame: 0.85, fandom: 0.50, prestige: 0.80}
+    intents:
+      - {kind: single, title: "Desire", date: 1988-09, producers: [], writers: [u2], genre: rock, hist: 0.55}
+      - {kind: album, title: "Rattle and Hum", date: 1988-10, singles: ["Desire"], tracks: 17}
+
+  - id: rem
+    name: R.E.M.
+    kind: band
+    label: warner_bros
+    genres: [alternative, rock]
+    members: [Michael Stipe, Peter Buck, Mike Mills, Bill Berry]
+    skills: {vocal: 0.72, performance: 0.75, media: 0.55, songwriting: 0.88, look: 0.55}
+    status: {fame: 0.45, fandom: 0.30, prestige: 0.80}
+    intents:
+      - {kind: album, title: "Green", date: 1988-11, singles: ["Stand"], tracks: 11}
+      - {kind: single, title: "Stand", date: 1989-01, producers: [], writers: [rem], genre: alternative, hist: 0.55}
+
+  - id: salt_n_pepa
+    name: Salt-N-Pepa
+    kind: group
+    label: next_plateau
+    genres: [pop_rap]
+    members: [Cheryl James, Sandra Denton, Deidra Roper]
+    skills: {vocal: 0.70, performance: 0.80, media: 0.70, songwriting: 0.55, look: 0.80}
+    status: {fame: 0.35, fandom: 0.12, prestige: 0.25}
+    intents:
+      - {kind: album, title: "A Salt with a Deadly Pepa", date: 1988-07, singles: ["Shake Your Thang"], tracks: 12}
+      - {kind: single, title: "Shake Your Thang", date: 1988-08, producers: [hurby_azor], writers: [hurby_azor], genre: pop_rap, hist: 0.35}
+
+  - id: young_mc
+    name: Young MC
+    label: delicious_vinyl
+    genres: [pop_rap]
+    person: {birth_date: 1967-05-10, gender: male, home_city: "Queens, NY"}
+    skills: {vocal: 0.65, performance: 0.65, media: 0.70, songwriting: 0.75, look: 0.60}
+    status: {fame: 0.00, fandom: 0.00, prestige: 0.05}
+    intents:
+      - {kind: single, title: "Bust a Move", date: 1989-05, producers: [matt_dike], writers: [young_mc], genre: pop_rap, hist: 0.82}
+
+  - id: johnny_gill
+    name: Johnny Gill
+    label: motown
+    genres: [rnb, soul_ballad, new_jack_swing]
+    person: {birth_date: 1966-05-22, gender: male, home_city: "Washington, D.C."}
+    skills: {vocal: 0.92, performance: 0.78, media: 0.50, songwriting: 0.30, look: 0.70}
+    status: {fame: 0.20, fandom: 0.08, prestige: 0.30}
+    intents:
+      - {kind: single, title: "Rub You the Right Way", date: 1990-04, producers: [jimmy_jam, terry_lewis], writers: [jimmy_jam, terry_lewis], genre: new_jack_swing, hist: 0.65}
+
+  - id: roxette
+    name: Roxette
+    kind: duo
+    label: emi_manhattan
+    home_market: SE
+    genres: [pop, rock]
+    members: [Per Gessle, Marie Fredriksson]
+    skills: {vocal: 0.78, performance: 0.75, media: 0.55, songwriting: 0.80, look: 0.75}
+    status: {fame: 0.01, fandom: 0.01, prestige: 0.10}
+    intents:
+      - {kind: single, title: "The Look", date: 1989-01, producers: [], writers: [roxette], genre: pop, hist: 0.90}
+      - {kind: single, title: "Listen to Your Heart", date: 1989-08, producers: [], writers: [roxette], genre: soul_ballad, hist: 0.90}
+
+  - id: fine_young_cannibals
+    name: Fine Young Cannibals
+    kind: band
+    label: irs
+    home_market: GB
+    genres: [pop, rnb]
+    members: [Roland Gift, Andy Cox, David Steele]
+    skills: {vocal: 0.80, performance: 0.70, media: 0.55, songwriting: 0.75, look: 0.70}
+    status: {fame: 0.20, fandom: 0.05, prestige: 0.40}
+    intents:
+      - {kind: single, title: "She Drives Me Crazy", date: 1989-01, producers: [], writers: [fine_young_cannibals], genre: pop, hist: 0.92}
+      - {kind: album, title: "The Raw & the Cooked", date: 1989-02, singles: ["She Drives Me Crazy", "Good Thing"], tracks: 10}
+      - {kind: single, title: "Good Thing", date: 1989-05, producers: [], writers: [fine_young_cannibals], genre: pop, hist: 0.88}
+
+  - id: soul_ii_soul
+    name: Soul II Soul
+    kind: collective
+    label: virgin
+    home_market: GB
+    genres: [rnb, house]
+    members: [Jazzie B, Caron Wheeler, Nellee Hooper]
+    skills: {vocal: 0.80, performance: 0.60, media: 0.40, songwriting: 0.80, look: 0.60}
+    status: {fame: 0.00, fandom: 0.00, prestige: 0.30}
+    intents:
+      - {kind: single, title: "Keep On Movin'", date: 1989-06, producers: [], writers: [soul_ii_soul], genre: rnb, hist: 0.55}
+      - {kind: single, title: "Back to Life", date: 1989-10, producers: [], writers: [soul_ii_soul], genre: rnb, hist: 0.50}
+
+  # Debut pipeline example: a real future star who has not debuted at slice start.
+  - id: mariah_carey
+    name: Mariah Carey
+    label: null
+    genres: [pop, soul_ballad, rnb]
+    person: {birth_date: 1969-03-27, gender: female, home_city: "New York, NY"}
+    skills: {vocal: 0.97, performance: 0.65, media: 0.50, songwriting: 0.78, look: 0.88}
+    status: {fame: 0.00, fandom: 0.00, prestige: 0.00}
+    intents:
+      - {kind: signing, label: columbia, date: 1988-12, note: "signed by Columbia after a demo reached its president (verify)"}
+      - {kind: single, title: "Vision of Love", date: 1990-05, producers: [rhett_lawrence, narada_michael_walden], writers: [mariah_carey], genre: soul_ballad, hist: 0.92}
+      - {kind: album, title: "Mariah Carey", date: 1990-06, singles: ["Vision of Love"], tracks: 11}

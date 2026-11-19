@@ -1,0 +1,19 @@
+id: us_1991_rnb_newcomer
+title: "Atlanta, January 1991: a newly signed R&B singer"
+start_date: 1991-01-07
+burn_in_weeks: 40
+home_market: US
+active_markets: [US]
+protagonist: {source: character, character: example_rnb_pop_singer}
+career_stage: indie_signed
+circumstances:
+  city: "Atlanta, GA"
+  cash: 4000
+  lifestyle: modest
+  label: bayview_sound
+  connections:
+    - {template: local_producer, relation: "your producer since high school", affinity: 0.6, trust: 0.6}
+  demo: {songs: 3, quality: 0.6}
+  scheduled: []
+world: {structural_history: on, contingent_history: intents, real_person_policy: default, fictional_npc_acts: 480}
+notes: "Real-artist intents in the bundled dataset are thin after mid-1990; generated acts fill the field. The 1991 SoundScan/BDS chart changes occur during play."

@@ -1,0 +1,47 @@
+# US record companies, slice ~1985-1993. Ownership/distribution relationships are
+# tier B (verify dates; several changed hands during this window). Strategy numbers
+# (size, risk, ears) are tier C estimates.
+# size: relative annual marketing capacity (1.0 ~ a mid-size major label)
+groups:
+  cbs_sony:     {name: "CBS Records / Sony Music", notes: "CBS Records acquired by Sony Jan 1988; renamed Sony Music 1991"}
+  wea:          {name: "Warner Music Group (WEA)"}
+  bmg:          {name: "BMG Music"}
+  polygram:     {name: "PolyGram"}
+  mca:          {name: "MCA Music Entertainment"}
+  emi:          {name: "Capitol-EMI"}
+  independent:  {name: "Independent distribution"}
+
+labels:
+  arista:        {name: "Arista Records", group: bmg, size: 1.2, risk: 0.35, focus: {pop: 1.0, rnb: 0.9, soul_ballad: 1.0, adult_contemporary: 0.8, dance_pop: 0.8}, ear: 0.80, exec: clive_davis}
+  rca:           {name: "RCA Records", group: bmg, size: 1.0, risk: 0.40, focus: {pop: 0.9, rock: 0.7, dance_pop: 0.8, rnb: 0.6, country: 0.5}, ear: 0.60}
+  jive:          {name: "Jive Records", group: bmg, size: 0.5, risk: 0.65, focus: {pop_rap: 1.0, hip_hop: 0.9, rnb: 0.7, new_jack_swing: 0.7}, ear: 0.70, distributed_by: rca}
+  columbia:      {name: "Columbia Records", group: cbs_sony, size: 1.5, risk: 0.40, focus: {pop: 1.0, rock: 0.9, rnb: 0.7, soul_ballad: 0.8, dance_pop: 0.8, singer_songwriter: 0.7}, ear: 0.72, exec: tommy_mottola}
+  epic:          {name: "Epic Records", group: cbs_sony, size: 1.4, risk: 0.45, focus: {pop: 1.0, rnb: 0.8, rock: 0.8, dance_pop: 0.9, latin_pop: 0.8}, ear: 0.68}
+  def_jam:       {name: "Def Jam Recordings", group: cbs_sony, size: 0.4, risk: 0.80, focus: {hip_hop: 1.0, pop_rap: 0.8, rnb: 0.4}, ear: 0.82, exec: russell_simmons, distributed_by: columbia}
+  warner_bros:   {name: "Warner Bros. Records", group: wea, size: 1.4, risk: 0.45, focus: {pop: 0.9, rock: 1.0, alternative: 0.8, rnb: 0.7, singer_songwriter: 0.8, new_jack_swing: 0.6}, ear: 0.75, exec: mo_ostin}
+  sire:          {name: "Sire Records", group: wea, size: 0.6, risk: 0.65, focus: {dance_pop: 1.0, alternative: 1.0, pop: 0.8, house: 0.6}, ear: 0.80, exec: seymour_stein, distributed_by: warner_bros}
+  atlantic:      {name: "Atlantic Records", group: wea, size: 1.3, risk: 0.45, focus: {pop: 1.0, rock: 0.9, rnb: 0.8, hair_metal: 0.7, dance_pop: 0.8}, ear: 0.72, exec: doug_morris}
+  elektra:       {name: "Elektra Records", group: wea, size: 1.0, risk: 0.50, focus: {rnb: 0.9, singer_songwriter: 1.0, rock: 0.8, soul_ballad: 0.9, alternative: 0.6}, ear: 0.74, exec: bob_krasnow}
+  geffen:        {name: "Geffen Records", group: wea, size: 0.9, risk: 0.55, focus: {rock: 1.0, hair_metal: 1.0, alternative: 0.7, pop: 0.6}, ear: 0.76, exec: david_geffen}
+  mca:           {name: "MCA Records", group: mca, size: 1.2, risk: 0.50, focus: {rnb: 1.0, new_jack_swing: 1.0, pop: 0.8, dance_pop: 0.7, country: 0.6}, ear: 0.70}
+  uptown:        {name: "Uptown Records", group: mca, size: 0.4, risk: 0.75, focus: {new_jack_swing: 1.0, rnb: 1.0, hip_hop: 0.7}, ear: 0.80, exec: andre_harrell, distributed_by: mca}
+  motown:        {name: "Motown Records", group: mca, size: 0.7, risk: 0.45, focus: {rnb: 1.0, soul_ballad: 1.0, new_jack_swing: 0.7}, ear: 0.65, exec: jheryl_busby}
+  am:            {name: "A&M Records", group: polygram, size: 1.0, risk: 0.50, focus: {pop: 0.9, dance_pop: 0.9, rnb: 0.7, rock: 0.7}, ear: 0.72, notes: "independent until acquired by PolyGram 1989-90 (verify)"}
+  mercury:       {name: "Mercury Records", group: polygram, size: 1.0, risk: 0.45, focus: {rock: 1.0, hair_metal: 1.0, pop: 0.7, rnb: 0.5}, ear: 0.66}
+  wing:          {name: "Wing Records", group: polygram, size: 0.4, risk: 0.55, focus: {rnb: 1.0, soul_ballad: 1.0, pop: 0.7}, ear: 0.70, distributed_by: mercury}
+  island:        {name: "Island Records", group: polygram, size: 0.7, risk: 0.65, focus: {rock: 0.8, alternative: 0.9, pop_rap: 0.6, hip_hop: 0.5, dance_pop: 0.5}, ear: 0.74, notes: "acquired by PolyGram 1989 (verify)"}
+  virgin:        {name: "Virgin Records America", group: independent, size: 0.8, risk: 0.60, focus: {dance_pop: 1.0, pop: 0.9, rnb: 0.7, alternative: 0.6}, ear: 0.74}
+  capitol:       {name: "Capitol Records", group: emi, size: 1.0, risk: 0.45, focus: {pop: 0.9, rock: 0.9, rnb: 0.6, pop_rap: 0.6, country: 0.5}, ear: 0.64}
+  emi_manhattan: {name: "EMI-Manhattan Records", group: emi, size: 0.8, risk: 0.50, focus: {pop: 1.0, adult_contemporary: 0.9, rnb: 0.6, soul_ballad: 0.7}, ear: 0.66}
+  tommy_boy:     {name: "Tommy Boy Records", group: independent, size: 0.3, risk: 0.85, focus: {hip_hop: 1.0, pop_rap: 0.8, house: 0.8, dance_pop: 0.6}, ear: 0.80}
+  profile:       {name: "Profile Records", group: independent, size: 0.3, risk: 0.75, focus: {hip_hop: 1.0, pop_rap: 0.7}, ear: 0.70}
+  delicious_vinyl: {name: "Delicious Vinyl", group: polygram, size: 0.2, risk: 0.85, focus: {pop_rap: 1.0, hip_hop: 0.9}, ear: 0.78, distributed_by: island}
+  priority:      {name: "Priority Records", group: independent, size: 0.3, risk: 0.85, focus: {gangsta_rap: 1.0, hip_hop: 0.9}, ear: 0.72}
+  next_plateau:  {name: "Next Plateau Records", group: independent, size: 0.2, risk: 0.80, focus: {pop_rap: 1.0, hip_hop: 0.8, dance_pop: 0.7}, ear: 0.70}
+  solar:         {name: "SOLAR Records", group: cbs_sony, size: 0.3, risk: 0.50, focus: {rnb: 1.0, soul_ballad: 0.9, new_jack_swing: 0.8}, ear: 0.70, distributed_by: epic}
+  paisley_park:  {name: "Paisley Park Records", group: wea, size: 0.2, risk: 0.70, focus: {rnb: 0.9, pop: 0.8, rock: 0.6}, ear: 0.80, distributed_by: warner_bros}
+  irs:           {name: "I.R.S. Records", group: mca, size: 0.3, risk: 0.70, focus: {alternative: 1.0, rock: 0.8, pop: 0.6}, ear: 0.74, distributed_by: mca}
+  # Fictional independents (clearly labelled) for the long tail and self-releases
+  sunset_strip:  {name: "Sunset Strip Records", group: independent, size: 0.12, risk: 0.85, focus: {pop: 0.8, rnb: 0.8, dance_pop: 0.8, rock: 0.6}, ear: 0.55, fictional: true}
+  bayview_sound: {name: "Bayview Sound", group: independent, size: 0.10, risk: 0.90, focus: {hip_hop: 1.0, rnb: 0.8, new_jack_swing: 0.8}, ear: 0.60, fictional: true}
+  lakeshore:     {name: "Lakeshore Music", group: independent, size: 0.10, risk: 0.80, focus: {rock: 0.9, alternative: 0.9, hair_metal: 0.7}, ear: 0.55, fictional: true}

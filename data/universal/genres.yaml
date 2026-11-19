@@ -1,0 +1,20 @@
+# Genre tags are labelled regions (centroids) of the style space.
+# Axes: [energy, mood, groove, electronic, polish, rap, rock, edge]
+# 'from' is when a genre is available as a creative target (tier B, approximate).
+genres:
+  pop:                {centroid: [0.60, 0.72, 0.50, 0.50, 0.80, 0.00, 0.20, 0.10], label: "Pop", mainstream: true}
+  dance_pop:          {centroid: [0.78, 0.75, 0.82, 0.75, 0.80, 0.05, 0.08, 0.15], label: "Dance-pop", mainstream: true}
+  rnb:                {centroid: [0.50, 0.55, 0.66, 0.50, 0.76, 0.05, 0.05, 0.22], label: "Contemporary R&B"}
+  new_jack_swing:     {centroid: [0.76, 0.62, 0.92, 0.72, 0.72, 0.30, 0.05, 0.32], label: "New jack swing", from: 1987-01-01}
+  soul_ballad:        {centroid: [0.22, 0.45, 0.30, 0.30, 0.82, 0.00, 0.05, 0.05], label: "Soul ballad", mainstream: true}
+  adult_contemporary: {centroid: [0.30, 0.56, 0.30, 0.35, 0.80, 0.00, 0.22, 0.05], label: "Adult contemporary", mainstream: true}
+  hip_hop:            {centroid: [0.66, 0.45, 0.80, 0.55, 0.40, 0.95, 0.10, 0.62], label: "Hip-hop"}
+  pop_rap:            {centroid: [0.72, 0.72, 0.80, 0.62, 0.62, 0.85, 0.10, 0.30], label: "Pop rap", mainstream: true}
+  gangsta_rap:        {centroid: [0.72, 0.28, 0.76, 0.50, 0.45, 0.95, 0.10, 0.95], label: "Gangsta rap", from: 1986-01-01}
+  rock:               {centroid: [0.72, 0.50, 0.40, 0.20, 0.62, 0.00, 0.90, 0.45], label: "Rock"}
+  hair_metal:         {centroid: [0.82, 0.62, 0.45, 0.25, 0.76, 0.00, 0.95, 0.42], label: "Pop metal"}
+  alternative:        {centroid: [0.60, 0.40, 0.45, 0.30, 0.40, 0.00, 0.72, 0.52], label: "Alternative"}
+  singer_songwriter:  {centroid: [0.30, 0.40, 0.25, 0.10, 0.50, 0.00, 0.40, 0.30], label: "Singer-songwriter"}
+  latin_pop:          {centroid: [0.66, 0.75, 0.72, 0.50, 0.76, 0.00, 0.15, 0.10], label: "Latin pop", mainstream: true}
+  house:              {centroid: [0.82, 0.66, 0.95, 0.90, 0.60, 0.05, 0.00, 0.22], label: "House", from: 1985-01-01}
+  country:            {centroid: [0.45, 0.60, 0.35, 0.10, 0.70, 0.00, 0.45, 0.15], label: "Country"}

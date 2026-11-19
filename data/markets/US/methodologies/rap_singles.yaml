@@ -1,0 +1,23 @@
+id: rap_singles
+publisher: Billboard
+subject: song
+size: 30
+period: weekly
+window_end: sunday
+issue_offset_days: 13
+names:
+  - {from: 1989-03-11, name: "Hot Rap Singles"}          # verify launch date and method
+valid_from: 1989-03-11
+eligibility_genres: [hip_hop, pop_rap, gangsta_rap]
+versions:
+  - id: sales_reports
+    valid: [1989-03-11, 1991-11-29]
+    measurement: rank_report
+    inertia: 0.40
+    inputs:
+      sales: {weight: 1.0, coverage: 0.45, noise: 0.22, list_length: 30}
+  - id: soundscan
+    valid: [1991-11-30, null]
+    measurement: tracked
+    inputs:
+      sales: {weight: 1.0, coverage: 0.80, noise: 0.04, ref: 20000}

@@ -1,0 +1,53 @@
+# Real US producers, songwriters and executives (slice ~1985-1993).
+# Existence, roles and affiliations: tier B. Skill values and personalities: tier C
+# estimates from track records (documented rubric: docs/estimation_rubric.md).
+# skills: production | songwriting (0..1);  styles: genre -> competence (0..1)
+# fee: typical fee per recorded song at the start of the slice (nominal USD, tier C)
+producers:
+  narada_michael_walden: {name: "Narada Michael Walden", skills: {production: 0.86, songwriting: 0.76}, styles: {pop: 0.9, soul_ballad: 0.9, rnb: 0.8, dance_pop: 0.85}, fee: 60000}
+  la_reid:               {name: "L.A. Reid", skills: {production: 0.86, songwriting: 0.70}, styles: {rnb: 1.0, new_jack_swing: 0.9, pop: 0.8, soul_ballad: 0.8}, fee: 50000}
+  babyface:              {name: "Babyface", skills: {production: 0.86, songwriting: 0.95}, styles: {rnb: 1.0, soul_ballad: 1.0, new_jack_swing: 0.85, pop: 0.85, adult_contemporary: 0.8}, fee: 50000, act: babyface}
+  teddy_riley:           {name: "Teddy Riley", skills: {production: 0.90, songwriting: 0.75}, styles: {new_jack_swing: 1.0, rnb: 0.85, hip_hop: 0.7, pop_rap: 0.7}, fee: 40000, act: guy}
+  jimmy_jam:             {name: "Jimmy Jam", skills: {production: 0.92, songwriting: 0.86}, styles: {rnb: 1.0, dance_pop: 0.95, new_jack_swing: 0.9, soul_ballad: 0.85, pop: 0.9}, fee: 80000, partner: terry_lewis}
+  terry_lewis:           {name: "Terry Lewis", skills: {production: 0.90, songwriting: 0.86}, styles: {rnb: 1.0, dance_pop: 0.95, new_jack_swing: 0.9, soul_ballad: 0.85, pop: 0.9}, fee: 80000, partner: jimmy_jam}
+  quincy_jones:          {name: "Quincy Jones", skills: {production: 0.96, songwriting: 0.80}, styles: {pop: 1.0, rnb: 1.0, soul_ballad: 0.9, dance_pop: 0.9}, fee: 150000}
+  stock_aitken_waterman: {name: "Stock Aitken Waterman", collective: true, nationality: GB, skills: {production: 0.80, songwriting: 0.80}, styles: {dance_pop: 1.0, pop: 0.9}, fee: 30000}
+  patrick_leonard:       {name: "Patrick Leonard", skills: {production: 0.85, songwriting: 0.84}, styles: {pop: 0.95, dance_pop: 0.85, adult_contemporary: 0.8}, fee: 50000}
+  stephen_bray:          {name: "Stephen Bray", skills: {production: 0.76, songwriting: 0.78}, styles: {dance_pop: 0.9, pop: 0.85}, fee: 30000}
+  shep_pettibone:        {name: "Shep Pettibone", skills: {production: 0.82, songwriting: 0.70}, styles: {house: 1.0, dance_pop: 0.95}, fee: 30000}
+  maurice_starr:         {name: "Maurice Starr", skills: {production: 0.72, songwriting: 0.72}, styles: {pop: 0.85, new_jack_swing: 0.7, rnb: 0.7, dance_pop: 0.8}, fee: 20000}
+  mutt_lange:            {name: "Robert John \"Mutt\" Lange", nationality: ZA, skills: {production: 0.96, songwriting: 0.88}, styles: {hair_metal: 1.0, rock: 1.0, pop: 0.9}, fee: 150000}
+  mike_clink:            {name: "Mike Clink", skills: {production: 0.80, songwriting: 0.20}, styles: {rock: 1.0, hair_metal: 0.95}, fee: 40000}
+  bruce_fairbairn:       {name: "Bruce Fairbairn", nationality: CA, skills: {production: 0.86, songwriting: 0.40}, styles: {hair_metal: 1.0, rock: 1.0}, fee: 60000}
+  desmond_child:         {name: "Desmond Child", skills: {production: 0.70, songwriting: 0.90}, styles: {rock: 0.95, hair_metal: 1.0, pop: 0.9}, fee: 30000}
+  diane_warren:          {name: "Diane Warren", skills: {production: 0.10, songwriting: 0.92}, styles: {pop: 1.0, soul_ballad: 1.0, adult_contemporary: 1.0, rock: 0.8}, fee: 25000, writer_only: true}
+  elliot_wolff:          {name: "Elliot Wolff", skills: {production: 0.72, songwriting: 0.74}, styles: {dance_pop: 0.95, pop: 0.85}, fee: 20000}
+  oliver_leiber:         {name: "Oliver Leiber", skills: {production: 0.74, songwriting: 0.76}, styles: {dance_pop: 0.95, pop: 0.85, rnb: 0.7}, fee: 20000}
+  rick_rubin:            {name: "Rick Rubin", skills: {production: 0.88, songwriting: 0.50}, styles: {hip_hop: 1.0, rock: 0.9, hair_metal: 0.7}, fee: 40000}
+  hank_shocklee:         {name: "Hank Shocklee", skills: {production: 0.88, songwriting: 0.60}, styles: {hip_hop: 1.0, gangsta_rap: 0.8}, fee: 25000}
+  dr_dre:                {name: "Dr. Dre", skills: {production: 0.86, songwriting: 0.65}, styles: {gangsta_rap: 1.0, hip_hop: 0.95}, fee: 15000}
+  marley_marl:           {name: "Marley Marl", skills: {production: 0.84, songwriting: 0.55}, styles: {hip_hop: 1.0, pop_rap: 0.8}, fee: 15000}
+  prince_paul:           {name: "Prince Paul", skills: {production: 0.84, songwriting: 0.60}, styles: {hip_hop: 1.0, pop_rap: 0.8}, fee: 10000}
+  full_force:            {name: "Full Force", collective: true, skills: {production: 0.74, songwriting: 0.74}, styles: {rnb: 0.9, pop_rap: 0.8, dance_pop: 0.8, new_jack_swing: 0.7}, fee: 20000}
+  hurby_azor:            {name: "Hurby \"Luv Bug\" Azor", skills: {production: 0.72, songwriting: 0.70}, styles: {pop_rap: 1.0, hip_hop: 0.8, dance_pop: 0.7}, fee: 10000}
+  matt_dike:             {name: "Matt Dike", skills: {production: 0.72, songwriting: 0.55}, styles: {pop_rap: 1.0, hip_hop: 0.8}, fee: 8000}
+  michael_j_powell:      {name: "Michael J. Powell", skills: {production: 0.82, songwriting: 0.60}, styles: {soul_ballad: 1.0, rnb: 0.9, adult_contemporary: 0.8}, fee: 30000}
+  david_kershenbaum:     {name: "David Kershenbaum", skills: {production: 0.78, songwriting: 0.30}, styles: {singer_songwriter: 1.0, rock: 0.8, adult_contemporary: 0.8}, fee: 30000}
+  rhett_lawrence:        {name: "Rhett Lawrence", skills: {production: 0.78, songwriting: 0.74}, styles: {pop: 0.9, rnb: 0.85, dance_pop: 0.85}, fee: 30000}
+  ric_wake:              {name: "Ric Wake", skills: {production: 0.76, songwriting: 0.60}, styles: {pop: 0.9, dance_pop: 0.9, adult_contemporary: 0.8}, fee: 30000}
+  walter_afanasieff:     {name: "Walter Afanasieff", skills: {production: 0.82, songwriting: 0.80}, styles: {soul_ballad: 1.0, pop: 0.9, adult_contemporary: 0.95}, fee: 30000}
+  jellybean_benitez:     {name: "John \"Jellybean\" Benitez", skills: {production: 0.76, songwriting: 0.40}, styles: {dance_pop: 1.0, house: 0.9, pop: 0.8}, fee: 25000}
+  emilio_estefan:        {name: "Emilio Estefan", skills: {production: 0.78, songwriting: 0.60}, styles: {latin_pop: 1.0, pop: 0.85, adult_contemporary: 0.8}, fee: 30000}
+  bobby_z:               {name: "Peter Wolf", skills: {production: 0.70, songwriting: 0.60}, styles: {pop: 0.85, dance_pop: 0.8}, fee: 20000}
+
+executives:
+  clive_davis:     {name: "Clive Davis", employer: arista, title: "President", personality: {ambition: 0.9, risk_tolerance: 0.4, artistic_vs_commercial: 0.2, ego: 0.8}}
+  tommy_mottola:   {name: "Tommy Mottola", employer: columbia, title: "President, CBS Records", personality: {ambition: 0.95, risk_tolerance: 0.6, artistic_vs_commercial: -0.3, ego: 0.8}}
+  mo_ostin:        {name: "Mo Ostin", employer: warner_bros, title: "Chairman", personality: {ambition: 0.7, risk_tolerance: 0.6, artistic_vs_commercial: 0.5, ego: 0.4}}
+  seymour_stein:   {name: "Seymour Stein", employer: sire, title: "Founder", personality: {ambition: 0.7, risk_tolerance: 0.8, artistic_vs_commercial: 0.5, ego: 0.6}}
+  doug_morris:     {name: "Doug Morris", employer: atlantic, title: "President", personality: {ambition: 0.85, risk_tolerance: 0.5, artistic_vs_commercial: -0.2, ego: 0.6}}
+  bob_krasnow:     {name: "Bob Krasnow", employer: elektra, title: "Chairman", personality: {ambition: 0.7, risk_tolerance: 0.6, artistic_vs_commercial: 0.4, ego: 0.6}}
+  david_geffen:    {name: "David Geffen", employer: geffen, title: "Founder", personality: {ambition: 0.95, risk_tolerance: 0.6, artistic_vs_commercial: 0.0, ego: 0.8}}
+  andre_harrell:   {name: "Andre Harrell", employer: uptown, title: "Founder", personality: {ambition: 0.85, risk_tolerance: 0.75, artistic_vs_commercial: 0.0, ego: 0.7}}
+  russell_simmons: {name: "Russell Simmons", employer: def_jam, title: "Co-founder", personality: {ambition: 0.9, risk_tolerance: 0.8, artistic_vs_commercial: 0.1, ego: 0.7}}
+  jheryl_busby:    {name: "Jheryl Busby", employer: motown, title: "President", personality: {ambition: 0.75, risk_tolerance: 0.5, artistic_vs_commercial: -0.1, ego: 0.5}}

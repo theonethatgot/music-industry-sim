@@ -1,0 +1,22 @@
+# A portable, fictional protagonist. Any field may be edited; abilities are
+# true values the engine uses (the protagonist only sees impressions of them).
+id: example_rnb_pop_singer
+name: "Danielle Reyes"
+act_name: "Danielle Reyes"
+birth_date: 1967-04-12
+gender: female
+nationality: US
+home_city: "Long Beach, CA"
+background: "Grew up singing in church; two years of community-college music theory; sings backing vocals on local sessions."
+genres: [rnb, pop, dance_pop]
+persona: [warm, determined, girl-next-door]
+skills:
+  vocal: 0.80
+  performance: 0.62
+  media: 0.55
+  songwriting: 0.58
+  production: 0.20
+  look: 0.72
+styles: {rnb: 0.8, pop: 0.75, soul_ballad: 0.8, dance_pop: 0.65, new_jack_swing: 0.55}
+personality: {ambition: 0.8, risk_tolerance: 0.55, artistic_vs_commercial: 0.1, discipline: 0.7, ego: 0.4, sociability: 0.7, resilience: 0.6}
+goals: {fame: 0.35, artistry: 0.25, money: 0.2, stability: 0.2}

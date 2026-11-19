@@ -1,0 +1,19 @@
+id: us_1986_aspiring
+title: "New York, spring 1986: an aspiring singer"
+start_date: 1986-03-03
+burn_in_weeks: 40
+home_market: US
+active_markets: [US]
+protagonist: {source: character, character: example_rnb_pop_singer}
+career_stage: aspiring
+circumstances:
+  city: "New York, NY"
+  cash: 1200
+  day_job: {title: "Department store sales and church choir solos", weekly_income: 210}
+  lifestyle: modest
+  connections:
+    - {template: local_producer, relation: "a friend who makes beats in his apartment", affinity: 0.5, trust: 0.5}
+  demo: {songs: 1, quality: 0.45}
+  scheduled: []
+world: {structural_history: on, contingent_history: intents, real_person_policy: default, fictional_npc_acts: 480}
+notes: "Real-artist intents in the bundled dataset are thin before 1988; generated acts fill the field."

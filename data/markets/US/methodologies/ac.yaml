@@ -1,0 +1,22 @@
+id: ac
+publisher: Billboard
+subject: song
+size: 40
+period: weekly
+window_end: sunday
+issue_offset_days: 13
+names:
+  - {from: 1983-01-01, name: "Adult Contemporary"}
+valid_from: 1961-07-17
+versions:
+  - id: station_reports
+    valid: [1961-07-17, 1991-11-29]
+    measurement: rank_report
+    inertia: 0.45
+    inputs:
+      airplay: {weight: 1.0, formats: [ac], noise: 0.12, list_length: 40}
+  - id: bds
+    valid: [1991-11-30, null]
+    measurement: tracked
+    inputs:
+      airplay: {weight: 1.0, formats: [ac], noise: 0.02, ref: 20000000}

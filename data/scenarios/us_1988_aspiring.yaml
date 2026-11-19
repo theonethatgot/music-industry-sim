@@ -1,0 +1,28 @@
+# Default US validation scenario. A preset is just data: any field can be changed,
+# and any compatible character file can be used as the protagonist.
+id: us_1988_aspiring
+title: "Los Angeles, autumn 1988: an unsigned singer"
+start_date: 1988-09-05
+burn_in_weeks: 66          # simulate the industry before the start so the present is alive
+home_market: US
+active_markets: [US]
+protagonist:
+  source: character
+  character: example_rnb_pop_singer
+career_stage: aspiring
+circumstances:
+  city: "Los Angeles, CA"
+  cash: 1800
+  day_job: {title: "Session backing vocalist and restaurant shifts", weekly_income: 260}
+  lifestyle: modest
+  connections:
+    - {template: local_producer, relation: "worked together on demos", affinity: 0.45, trust: 0.5}
+    - {template: club_booker, relation: "books you at a Hollywood club", affinity: 0.3, trust: 0.4}
+  demo: {songs: 2, quality: 0.55}
+  scheduled:
+    - {in_days: 12, kind: showcase, venue: "a Hollywood club", note: "a booker has invited A&R staff from several labels"}
+world:
+  structural_history: on
+  contingent_history: intents
+  real_person_policy: default
+  fictional_npc_acts: 480

@@ -1,0 +1,28 @@
+id: black_singles
+publisher: Billboard
+subject: song
+size: 100
+period: weekly
+window_end: sunday
+issue_offset_days: 13
+names:
+  - {from: 1982-06-26, name: "Hot Black Singles"}
+  - {from: 1990-10-27, name: "Hot R&B Singles"}          # verify exact issue
+  - {from: 1999-01-01, name: "Hot R&B Singles & Tracks"}
+  - {from: 1999-12-11, name: "Hot R&B/Hip-Hop Singles & Tracks"}
+valid_from: 1982-06-26
+scope_segments: [teen_urban, ya_urban, adult_urban, hiphop_core]
+versions:
+  - id: rank_reports
+    valid: [1982-06-26, 1991-11-29]
+    measurement: rank_report
+    inertia: 0.40
+    inputs:
+      sales: {weight: 0.45, coverage: 0.50, noise: 0.20, list_length: 90}
+      airplay: {weight: 0.55, formats: [urban], noise: 0.15, list_length: 90}
+  - id: bds_soundscan
+    valid: [1991-11-30, null]
+    measurement: tracked
+    inputs:
+      sales: {weight: 0.45, coverage: 0.80, noise: 0.04, ref: 30000}
+      airplay: {weight: 0.55, formats: [urban], noise: 0.02, ref: 25000000}

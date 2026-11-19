@@ -1,0 +1,105 @@
+# Universal model coefficients (tier C: model parameters, to be calibrated).
+# Market packs and scenarios may override any value.
+version: 1
+
+style_axes: [energy, mood, groove, electronic, polish, rap, rock, edge]
+
+listener:
+  aware_k: 1.0              # awareness from impressions: A += (1-A)(1-exp(-k*I))
+  hook_floor: 0.35          # liking at first exposure = appeal * (floor + (1-floor)*hook)
+  tau_base: 2.0             # exposures to grow into a song: tau = base + span*depth
+  tau_span: 10.0
+  peak_base: 10.0           # exposures before fatigue sets in: base + span*depth
+  peak_span: 40.0
+  burn_base: 12.0           # fatigue decay scale
+  burn_span: 50.0
+  engage_threshold: 0.62    # liking needed to become engaged
+  engage_spread: 0.11
+  wom_k: 0.06               # word-of-mouth impressions per engaged contact
+  wom_nonlinear: 4.0        # extra contagion as engaged share grows (tipping)
+  talk_base: 0.4
+  social_proof: 0.18        # appeal lift from top-of-chart prominence (bounded)
+  chart_visibility: 0.01    # impressions/day for a #1 song from chart & media visibility
+  fan_impressions: 4.0      # impressions per fan in release week
+  reception_df: 4           # Student-t degrees of freedom for reception shocks
+  reception_sigma: 0.16
+  retire_after_days: 420
+  retire_engaged_below: 0.0005
+
+appeal:
+  taste_sigma: 0.32         # style-space kernel width
+  craft_low: 0.50           # craft factor range
+  craft_high: 1.20
+  act_appeal_weight: 0.25
+  fandom_weight: 1.5
+  novelty_weight: 0.25
+  saturation_radius: 0.25
+
+consumption:
+  single_rate: 0.06         # daily hazard of an intending buyer actually buying
+  album_rate: 0.025
+  fan_album_buy: 0.55       # share of core fans buying an album
+  fan_urgency_days: 10
+  album_value_tracks: 0.6
+  wallet_slack: 1.3         # tolerated overspend vs average daily budget before rationing
+  reorder_weeks: 2.0
+  initial_ship_weeks: 3.0
+
+radio:
+  w_fit: 1.4
+  w_research: 3.2
+  w_promo: 1.1
+  w_signal: 1.3
+  w_act: 0.9
+  noise: 0.25
+  add_threshold: 1.55
+  drop_threshold: 0.95
+  max_adds_per_week: 6
+  burn_drop: 0.55           # observed fatigue ratio that triggers a drop
+  min_weeks_before_drop: 3
+  recurrent_after_weeks: 18
+  max_current_weeks: 28
+  regional_margin: 0.5
+  regional_max_share: 0.3
+
+video:
+  w_quality: 1.4
+  w_fit: 1.0
+  w_signal: 1.2
+  w_act: 0.9
+  w_promo: 0.6
+  noise: 0.25
+  add_threshold: 1.6
+  drop_after_weeks: 12
+
+labels:
+  ear_sigma: 0.12           # A&R observation noise on song attributes
+  opportunity_up: 1.6       # observed/expected ratio that triggers reinvestment
+  opportunity_down: 0.45
+  promo_by_tier: {low: 15000, standard: 60000, high: 180000}
+  weekly_radio_share: 0.08  # share of single promo budget spent per active week
+  video_cost: {low: 25000, standard: 70000, high: 250000}
+  scout_interval_weeks: 2
+  offer_threshold: 0.60
+  album_after_singles: 1
+
+creative:
+  noise: 0.07
+  budget_ref: 60000         # recording budget at which polish saturates
+  history_evidence_weight: 0.30   # how much a real song's historical strength nudges its prior
+  ambition_variance: 0.10
+
+careers:
+  recognition_decay: 0.996  # weekly
+  fan_conversion: 0.002
+  fan_churn: 0.006
+  momentum_halflife_weeks: 6
+  power_learning: 0.25
+
+finance:
+  living_cost_week: {modest: 220, comfortable: 600, lavish: 2500}
+  statement_interval_weeks: 26
+
+narrator:
+  max_digest_items: 40
+  max_news_items: 14

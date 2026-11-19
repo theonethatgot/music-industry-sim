@@ -1,0 +1,24 @@
+id: black_albums
+publisher: Billboard
+subject: album
+size: 75
+period: weekly
+window_end: sunday
+issue_offset_days: 13
+names:
+  - {from: 1982-06-26, name: "Top Black Albums"}
+  - {from: 1990-10-27, name: "Top R&B Albums"}           # verify
+valid_from: 1982-06-26
+scope_segments: [teen_urban, ya_urban, adult_urban, hiphop_core]
+versions:
+  - id: rank_reports
+    valid: [1982-06-26, 1991-05-24]
+    measurement: rank_report
+    inertia: 0.45
+    inputs:
+      sales: {weight: 1.0, coverage: 0.50, noise: 0.18, list_length: 75}
+  - id: soundscan
+    valid: [1991-05-25, null]
+    measurement: tracked
+    inputs:
+      sales: {weight: 1.0, coverage: 0.80, noise: 0.04, ref: 30000}
