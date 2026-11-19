@@ -1,0 +1,23 @@
+{
+  "pass_id": "session1-0003",
+  "decisions": [
+    {
+      "command": "hire_manager",
+      "args": {
+        "person_id": "person:n00001",
+        "commission": 0.15
+      }
+    },
+    {
+      "command": "set_policy",
+      "args": {
+        "training_when_idle": "none",
+        "training_spend_per_week": 0,
+        "gigs_when_idle": 2,
+        "rest_when_exhausted": true
+      }
+    }
+  ],
+  "proposals": [],
+  "advance": "1w"
+}
