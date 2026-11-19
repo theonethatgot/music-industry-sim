@@ -44,7 +44,7 @@ def main() -> None:
                 report = camp.submit(payload)
                 if report.get("status") == "invalid":
                     raise ValueError(f"{path.name}: submission rejected: {report['errors']}")
-                rejected = [item for item in report["decisions"] if item.get("status") not in ("ok", "accepted", "success")]
+                rejected = [item for item in report["decisions"] if item.get("status") not in ("accepted",)]
                 if rejected:
                     raise ValueError(f"{path.name}: decision did not complete: {rejected}")
                 results.append({"turn": path.name, "report": report})
