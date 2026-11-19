@@ -23,11 +23,30 @@ without disrupting each other.
 | Industry AI | Label promotion budgets, opportunity detector (reinvest/cut), video commissioning, A&R scouting and showcases, offers, NPC signings, real-artist intents (release/slip/cancel), fictional release cycles | Group dynamics, label finances and mergers, touring |
 | Charts | Data-defined, era-gated methodologies: Hot 100, Top Pop Albums / Billboard 200, Hot Black / R&B Singles and Albums, AC, Album Rock, Hot Rap Singles; rank-report vs SoundScan/BDS measurement | Year-end charts, recurrent rules after 1991 |
 | Economics | Retail/dealer split, mechanicals, artist royalty account and recoupment, statements, advances, recording funds, living costs, gigs | Publishing deals, touring, merch, endorsements |
-| Narrator | Rich Markdown packet with embedded authoritative JSON, return-format template, validated decisions and proposals, number-claim rejection, real-person protection | HTTP/OpenAPI or MCP connection |
+| Narrator | Rich Markdown packet with embedded authoritative JSON, engine industry briefing, pacing ("next" = until something needs you), team/standing orders, validated decisions and proposals, number-claim rejection, real-person protection | HTTP/OpenAPI or MCP connection |
+| Delegation | Standing orders (club nights, lessons, rest), hireable managers who chase press, gigs, TV and showcases on commission | Richer team roles (lawyer, publicist, agent) |
 | Markets | US pack | Korean late-1990s pack on the same core (next milestone), then UK and Japan |
 
 See [DESIGN.md](DESIGN.md) for the full design and [docs/calibration_v1.md](docs/calibration_v1.md)
 for the current calibration snapshot and known gaps.
+
+## Playtest
+
+The first ChatGPT-narrated session package is in [docs/PLAYTEST.md](docs/PLAYTEST.md) (US, autumn 1988,
+seed 1988, `playtests/session1/`).
+
+## Development priorities (after the playtest feedback)
+
+1. Expand real historical artist and release coverage well beyond the current ~22% of Hot 100 entries
+   (staged, cached pipeline; no single huge import).
+2. Restore historically relevant catalogue albums (pre-warm-start releases with ongoing sales).
+3. Multi-seed calibration reports, including deliberately extraordinary, ordinary and unsuccessful
+   career paths (no hidden ceilings, no guaranteed success).
+4. Audit record labels' signing, marketing and producer-spending decisions for financial and commercial
+   plausibility (budgets vs. revenues, recoupment, roster economics).
+5. Verify the industry keeps evolving independently when the player does nothing (a test exists; a
+   longer-horizon report is planned).
+6. Then: the Korean late-1990s market pack on the same core.
 
 ## Requirements
 Python 3.11+, `numpy`, `PyYAML`; `pytest` for tests (`pip install -r requirements.txt`).
@@ -53,7 +72,8 @@ Other commands:
 
 ```bash
 python -m musicsim status  campaigns/danielle
-python -m musicsim advance campaigns/danielle 4w        # move time (stops early at interrupts)
+python -m musicsim advance campaigns/danielle next      # until something needs you (or 3d, 2w, 2m)
+python -m musicsim briefing campaigns/danielle          # engine-generated industry briefing
 python -m musicsim charts  campaigns/danielle hot100 --n 40
 python -m musicsim why     campaigns/danielle rec:n01876 # provenance: true attributes, weekly exposure, decisions, draws
 python -m musicsim replay  campaigns/danielle           # rebuild from the command log and verify hashes

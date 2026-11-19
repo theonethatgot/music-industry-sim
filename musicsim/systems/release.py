@@ -66,9 +66,8 @@ def place_release(world, rel) -> None:
         AT.view("released")[a] = day
         AT.view("active")[a] = True
         AT.view("fanvec")[a] = fan
-        for t in rel.tracks:
-            if t in world.recordings and world.recordings[t].status != "released":
-                world.recordings[t].status = "released"
+        # album tracks stay available to be issued as singles later (status "released" means
+        # "released as a single"); the album link lives in the album's track list
     eid = world.emit("release", "released", [rel.id, rel.act, *(rel.tracks[:3])],
                      {"title": rel.title, "kind": rel.kind, "label": rel.label, "market": market,
                       "expectation_weekly": rel.expectation, "initial_shipment": round(first),
@@ -104,7 +103,7 @@ def weekly_restock(world, market: str, week_units: dict):
         rel = world.releases[rid]
         need = week_units[rid] * wks - rel.stock
         if rel.stockout_days:
-            need *= 1.5
+            need *= 1.15
         if need > 50:
             _ship(world, rel, need)
         rel.stockout_days = 0

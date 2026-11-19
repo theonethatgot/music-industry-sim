@@ -48,6 +48,10 @@ def _scheduled(world, market):
     for item in list(world.schedule):
         if item["date"] != today or item.get("market", market) != market or item.get("done"):
             continue
+        if item["kind"] == "tv" and item.get("act") == world.player.get("act"):
+            world.interrupts.append({"reason": "tv_performance", "program": item.get("program")})
+            item["done"] = True
+            continue
         if item["kind"] == "showcase":
             act = world.acts.get(item["act"])
             if act and not act.label:

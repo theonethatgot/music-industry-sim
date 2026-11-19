@@ -64,3 +64,33 @@ def test_real_people_cannot_be_invented(tmp_path):
         {"type": "introduce_person", "name": "Whitney Houston", "role": "friend", "context": "bumped into her"}]})
     assert rep["proposals"][0]["status"] == "rejected"
     c.close()
+
+
+def test_world_evolves_without_the_player(tmp_path):
+    """The industry keeps releasing, charting and signing when the protagonist does nothing."""
+    c = _campaign(tmp_path)
+    w = c.world
+    before_rel = sum(1 for r in w.releases.values() if r.status == "released")
+    before_top = w.charts["hot100"]["last_run"]["top"][0]["subject"] if "hot100" in w.charts else None
+    c.advance("8w")
+    c.advance("8w")
+    after_rel = sum(1 for r in w.releases.values() if r.status == "released")
+    assert after_rel > before_rel + 10
+    assert w.charts["hot100"]["last_run"]["top"][0]["subject"] != before_top or after_rel > before_rel
+    c.close()
+
+
+def test_standing_orders_and_next_pacing(tmp_path):
+    c = _campaign(tmp_path)
+    pid = c.last_packet()["pass_id"]
+    rep = c.submit({"pass_id": pid, "decisions": [
+        {"command": "set_policy", "args": {"gigs_when_idle": 3, "training_when_idle": "vocal"}}], "advance": "next"})
+    assert rep["decisions"][0]["status"] == "accepted"
+    adv = rep["advance"]
+    assert adv["days"] <= 84
+    kinds = {x["kind"] for x in c.world.commitments}
+    assert "gigs" in kinds and "training" in kinds          # booked by the team, not the player
+    pk = c.last_packet()
+    assert pk["team"]["standing_orders"]["gigs_when_idle"] == 3
+    assert pk["pacing"]["days_covered"] == adv["days"]
+    c.close()

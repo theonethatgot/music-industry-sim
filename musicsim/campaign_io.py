@@ -21,6 +21,13 @@ from .sim import advance as sim_advance
 from .world import World, arrays_to_blob, blob_to_arrays
 
 DEFAULT_ADVANCE_DAYS = 28
+NEXT_EVENT_CAP_DAYS = 84          # "next": run until something needs the player, at most ~3 months
+
+
+def advance_days(spec: str | None) -> int:
+    if spec in (None, "", "next", "until_event"):
+        return NEXT_EVENT_CAP_DAYS
+    return dates.parse_duration(spec)
 
 
 def data_version() -> str:
@@ -129,7 +136,7 @@ class Campaign:
         report["decisions"], report["proposals"] = dec, pro
         adv = payload.get("advance")
         if adv:
-            report["advance"] = self._advance(dates.parse_duration(adv))
+            report["advance"] = self._advance(advance_days(adv))
         self._log("submit", payload, report)
         report["packet"] = str(self.make_packet_logged())
         return report
@@ -139,9 +146,9 @@ class Campaign:
         return res
 
     def advance(self, duration: str | None) -> dict:
-        days = dates.parse_duration(duration) if duration else DEFAULT_ADVANCE_DAYS
-        res = self._advance(days)
-        self._log("advance", {"duration": duration or f"{DEFAULT_ADVANCE_DAYS}d"}, res)
+        spec = duration or "next"
+        res = self._advance(advance_days(spec))
+        self._log("advance", {"duration": spec}, res)
         res["packet"] = str(self.make_packet_logged())
         return res
 
@@ -171,9 +178,9 @@ class Campaign:
                 elif kind == "submit":
                     apply_submission(world, payload, entry["seq"] * 100)
                     if payload.get("advance"):
-                        sim_advance(world, dates.parse_duration(payload["advance"]), stop_on_interrupt=True)
+                        sim_advance(world, advance_days(payload["advance"]), stop_on_interrupt=True)
                 elif kind == "advance":
-                    sim_advance(world, dates.parse_duration(payload["duration"]), stop_on_interrupt=True)
+                    sim_advance(world, advance_days(payload["duration"]), stop_on_interrupt=True)
                 elif kind == "packet":
                     c.make_packet()
                 c._flush()
@@ -221,9 +228,9 @@ def validate_submission(world, payload, last_packet) -> list[str]:
         errs += props.validate(world, p)
     if payload.get("advance"):
         try:
-            dates.parse_duration(payload["advance"])
+            advance_days(payload["advance"])
         except ValueError as e:
-            errs.append(str(e))
+            errs.append(f"advance: {e} (or use \"next\")")
     return errs
 
 

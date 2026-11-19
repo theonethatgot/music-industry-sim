@@ -116,6 +116,7 @@ class AlbumTable(_Table):
         super().__init__({
             "BA": ((G,), f),           # casual buyers (share of segment)
             "BF": ((G,), f),           # fan buyers (share of segment)
+            "interest": ((G,), f),     # remembered interest in the album (decays slowly after its singles fade)
             "fanvec": ((G,), f),
             "value": ((), f),          # perceived album value multiplier
             "released": ((), i),

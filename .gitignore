@@ -7,3 +7,4 @@ data/raw/
 campaigns/
 *.egg-info/
 .pytest_cache/
+playtests/*/campaign.sqlite

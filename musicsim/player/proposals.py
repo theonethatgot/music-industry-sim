@@ -260,7 +260,7 @@ def _p_opportunity(world, prop, dr):
         world.ledger.transfer(world.date, "ext:venues", _pid(world), fee, "gig_fees", prop["context"][:60])
         act.live_buzz = min(1.0, act.live_buzz + 0.03)
         eid = world.emit("narrative", "gig_played", [act.id], {"fee": fee, "context": prop["context"][:200]}, draws=dr.log)
-        return {"status": "accepted", "summary": f"Played the date; paid ${fee:,.0f}.", "event": eid}
+        return {"status": "accepted", "summary": f"Played the date; paid ${fee:,.0f}.", "event": eid, "fee": fee}
     return {"status": "rejected", "reason": "unhandled"}
 
 

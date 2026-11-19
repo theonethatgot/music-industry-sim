@@ -162,6 +162,8 @@ def daily_step(world, market: str):
             else:
                 interest = np.zeros(rt.G)
             value = AT.view("value")[a]
+            interest = np.maximum(interest, AT.view("interest")[a] * K["album_interest_memory"])
+            AT.view("interest")[a] = interest
             target = interest * rt.album_prop * value
             casual_units[k] = np.maximum(0.0, target - AT.view("BA")[a]) * K["album_rate"] * N
             fan_target = AT.view("fanvec")[a] * K["fan_album_buy"]

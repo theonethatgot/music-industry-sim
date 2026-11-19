@@ -102,7 +102,8 @@ def build(world, store, campaign_id: str, since: str | None) -> dict:
         [{"date": c["start"], "until": c["end"], "what": c["label"], "kind": c["kind"]}
          for c in world.commitments if c.get("who") == pid and c["end"] >= today and not c.get("done")] +
         [{"date": s["date"], "what": (world.markets[m].programs[s["program"]]["name"] + " performance")
-          if s["kind"] == "tv" else s.get("venue") or s["kind"], "kind": s["kind"]}
+          if s["kind"] == "tv" else (f"{s['kind']} at {s['venue']}" if s.get("venue") else s["kind"])
+          + (f" — {s['note']}" if s.get("note") else ""), "kind": s["kind"]}
          for s in world.schedule if s.get("act") == act.id and s["date"] >= today and not s.get("done")],
         key=lambda x: x["date"])
 
@@ -167,9 +168,10 @@ def build(world, store, campaign_id: str, since: str | None) -> dict:
                     for e in full["entries"] if e["act"] == act.id]
         charts[cid] = {"name": run["name"], "chart_dated": run["issue_date"], "tracking_week_ending": run["week_end"],
                        "method": run["methodology"], "top": top, "your_entries": mine}
-    news = sorted([n for n in world.news if n["date"] >= since], key=lambda n: (-n["importance"], n["date"]))
-    news = news[: world.config["narrator.max_news_items"]]
-    news = sorted(news, key=lambda n: n["date"])
+    recent = [n for n in world.news if n["date"] >= since]
+    own = [n for n in recent if act.id in n["entities"] or n["kind"] == "team"]
+    rest = sorted([n for n in recent if n not in own], key=lambda n: (-n["importance"], n["date"]))
+    news = sorted(own[-30:] + rest[: world.config["narrator.max_news_items"]], key=lambda n: n["date"])
     upcoming = []
     for rel in sorted(world.releases.values(), key=lambda r: r.date):
         if rel.status == "planned" and rel.act != act.id and rel.date <= (world.date + dt.timedelta(days=28)).isoformat():
@@ -226,7 +228,11 @@ def build(world, store, campaign_id: str, since: str | None) -> dict:
         producers.append({"person_id": q.id, "name": q.name, "usual_fee": q.fee, "real_person": q.historical,
                           "reputation": _words(q.skills.get("production", 0.5)),
                           "styles": sorted(q.style_skill, key=lambda g: -q.style_skill[g])[:3], "you_know_them": known})
-    producers = [x for x in producers if x["you_know_them"]] + [x for x in producers if not x["you_know_them"]][:18]
+    budget = max(5000.0, 2 * world.ledger.balance(pid)) if not act.label else 1e9
+    known = [x for x in producers if x["you_know_them"]]
+    affordable = [x for x in producers if not x["you_know_them"] and x["usual_fee"] <= budget][:8]
+    famous = [x for x in producers if not x["you_know_them"] and x not in affordable][:8]
+    producers = known + affordable + famous
     if label and label.people.get("house_producer"):
         hp = world.people[label.people["house_producer"]]
         producers.insert(0, {"person_id": hp.id, "name": hp.name, "usual_fee": hp.fee, "real_person": False,
@@ -235,11 +241,23 @@ def build(world, store, campaign_id: str, since: str | None) -> dict:
 
     pending = [x for x in world.pending if any(o["offer_id"] == x.get("id") for o in offers)]
     genres = [g for g in rt.genre_ids if rt.genre_available(g, world.date)]
+    from . import briefing
+    from ..player.delegation import advice
+    world.flags["advice"] = advice(world)
+    last_brief = world.flags.get("last_briefing")
+    with_brief = last_brief is None or (world.date - dates.parse(last_brief)).days >= 91
+    if with_brief:
+        world.flags["last_briefing"] = today
     packet = {
         "packet_version": PACKET_VERSION, "pass_id": pass_id, "campaign": campaign_id,
         "scenario": world.scenario.get("title"), "date": today, "covers": {"from": since, "to": today},
         "protagonist": protagonist, "finances": finances, "calendar": calendar,
         "songbook": songbook, "recordings": recordings, "releases": releases,
+        "pacing": briefing.pacing(world, since, world.interrupts) if world.pass_no > 1 else {
+            "days_covered": 0, "stopped_because": ["the campaign begins"],
+            "guidance": briefing.pacing(world, since, [])["guidance"]},
+        "team": briefing.team(world, since),
+        "industry_landscape": briefing.landscape(world, m) if with_brief else None,
         "charts": charts, "news": [{k: n[k] for k in ("date", "text", "kind", "tag")} for n in news],
         "upcoming_releases_announced": upcoming[:10],
         "people": people[:14],
@@ -268,7 +286,10 @@ def to_markdown(pk: dict) -> str:
     out = []
     w = out.append
     w(f"# {pk['scenario']} — pass {pk['pass_id']}")
-    w(f"**In-world date:** {pk['date']} (this pass covers {pk['covers']['from']} to {pk['covers']['to']})\n")
+    if pk["pacing"]["days_covered"]:
+        w(f"**In-world date:** {pk['date']} (this pass covers {pk['covers']['from']} to {pk['covers']['to']})\n")
+    else:
+        w(f"**In-world date:** {pk['date']}: the story begins (news below covers the two weeks before)\n")
     w("> You are the narrator of a music-industry career simulation. The engine below is authoritative: use its "
       "facts, numbers and people; write immersive scenes, dialogue and atmosphere around them; and return the "
       "player's decisions plus any proposed developments in the JSON format at the end. The full rules are in "
@@ -292,6 +313,19 @@ def to_markdown(pk: dict) -> str:
           f"Royalty account (estimate): ${c['royalty_account_estimate']:,.0f} ({c['recoupment_note']}).")
     else:
         w("- **Unsigned.**")
+    pc = pk["pacing"]
+    w(f"\n## Pacing\nThis pass covers {pc['days_covered']} days. The clock stopped because: "
+      + "; ".join(pc["stopped_because"]) + f". {pc['guidance']}")
+    tm = pk["team"]
+    w("\n## Your team and standing orders")
+    w("- Manager: " + (f"**{tm['manager']['name']}** `{tm['manager']['person_id']}` ({tm['manager']['commission']:.0%} "
+                      f"commission since {tm['manager']['since']})" if tm["manager"] else "none"))
+    w("- Standing orders: " + ", ".join(f"{k}={v}" for k, v in tm["standing_orders"].items()))
+    w("- Always comes back to the player: " + "; ".join(tm["always_comes_back_to_you"]))
+    for x in tm["handled_for_you_this_pass"]:
+        w(f"- Handled for you: {x}")
+    for x in tm["what_people_are_telling_you"]:
+        w(f"- What people are telling you: {x}")
     F = pk["finances"]
     w(f"\n## Money\nCash: **${F['cash']:,.2f}** · this period: +${F['period_income']:,.0f} / −${F['period_spending']:,.0f}"
       f" · lifestyle: {F['lifestyle']}" + (f" · day job: {F['day_job']['title']} "
@@ -339,6 +373,49 @@ def to_markdown(pk: dict) -> str:
         if c["your_entries"]:
             for e in c["your_entries"]:
                 w(f"  ★ You: #{e['rank']} \"{e['title']}\" ({e['weeks']} wk, peak #{e['peak']})")
+    L = pk.get("industry_landscape")
+    if L:
+        w(f"\n## The industry right now (engine briefing as of {L['as_of']})")
+        w(f"_{L['evidence_note']}_\n")
+        w("**Biggest real artists:**")
+        for a in L["biggest_real_artists_right_now"]:
+            bits = [f"{a['label']}", "/".join(a["genres"]), f"recognised by {a['public_recognition_pct']}%",
+                    f"momentum {a['momentum']}"]
+            if a.get("current_single"):
+                cs = a["current_single"]
+                pos = ", ".join(f"#{v} {k}" for k, v in cs["charts"].items())
+                bits.append(f"single \"{cs['title']}\"" + (f" ({pos})" if pos else ""))
+            if a.get("current_album"):
+                ca = a["current_album"]
+                pos = ", ".join(f"#{v} {k}" for k, v in ca["charts"].items())
+                bits.append(f"album \"{ca['title']}\"" + (f" ({pos})" if pos else "")
+                            + (f" [{ca['certified']}]" if ca.get("certified") else ""))
+            if a.get("announced"):
+                bits.append(f"next: {a['announced']['kind']} \"{a['announced']['title']}\" on {a['announced']['date']}")
+            w(f"- **{a['name']}** — " + "; ".join(bits))
+        w("\n**On the rise:** " + "; ".join(f"{a['name']} ({'real' if a['real'] else 'fictional'}, {a['label']}, "
+                                             f"{'/'.join(a['genres'])})" for a in L["acts_on_the_rise"]))
+        w("\n**Record companies:**")
+        for grp, labs in L["record_companies"].items():
+            w(f"- *{grp}*: " + "; ".join(
+                f"{x['label']}{' (fictional)' if x['fictional'] else ''} — {x['size']}, strong in {', '.join(x['strengths'])}"
+                + (f", run by {x['head']}" if x["head"] else "")
+                + (f", roster incl. {', '.join(x['notable_artists'])}" if x["notable_artists"] else "") for x in labs))
+        w("\n**Audiences:**")
+        for a in L["audiences"]:
+            w(f"- {a['segment']}: {a['people_millions']}M people, ~${a['music_spend_per_person_per_year']}/yr on music; "
+              f"loves {', '.join(a['favourite_styles'])}; listens to {', '.join(a['listens_to']) or 'little radio'}; "
+              f"singles buying {a['buys_singles']}, album buying {a['buys_albums']}")
+        w("\n**Media gatekeepers:** radio formats — " + "; ".join(
+            f"{r['format']} (playlist ~{r['current_playlist_size']})" for r in L["radio_formats"])
+          + ". Video channels — " + ", ".join(L["music_video_channels"]) + ". TV music bookings — "
+          + "; ".join(f"{t['program']} ({t['performance_slots_per_week']}/wk, {t['hard_to_book']} to book)"
+                      for t in L["tv_music_bookings"]) + ".")
+        w("\n**Charts in force:** " + "; ".join(f"{c['chart']} [{c['method']}]" for c in L["charts_in_force"]))
+        mk = L["market"]
+        w(f"\n**Market:** albums ~${mk['typical_album_price']}, singles ~${mk['typical_single_price']} (singles market "
+          f"{mk['singles_market']}); new releases on {mk['release_day']}s; songwriter mechanical rate "
+          f"${mk['songwriter_mechanical_rate_per_song']} per song per copy; certification by {mk['certification']}.")
     if pk["upcoming_releases_announced"]:
         w("\n## Announced releases from notable artists")
         for u in pk["upcoming_releases_announced"]:
@@ -378,11 +455,14 @@ def to_markdown(pk: dict) -> str:
         "proposals": [{"type": "relationship_moment", "with": "person:…", "nature": "…", "valence": 1},
                       {"type": "introduce_person", "name": "…", "role": "manager", "context": "…",
                        "traits": ["ambitious"]}],
-        "advance": "2w"}
+        "advance": "next"}
     w("```json\n" + json.dumps(example, indent=2) + "\n```")
-    w("`advance` (optional) is how far to move time after applying decisions (e.g. 3d, 2w, 2m); the engine stops "
-      "early when something needs the player.")
+    w("`advance` (optional): \"next\" runs until something needs the player (at most ~3 months); or a duration "
+      "such as 3d, 2w, 2m. Leave it out if the player still has a decision to make.")
     w("\n## Authoritative engine data (JSON)")
-    w("```json\n" + json.dumps({k: v for k, v in pk.items() if k not in ("commands", "proposal_types")},
-                                indent=1, default=str) + "\n```")
+    w("_Ids, numbers and state the engine will hold you to. News, charts and the industry briefing above are "
+      "authoritative as written; the complete packet is also saved as JSON next to this file._")
+    keep = ("pass_id", "date", "protagonist", "finances", "calendar", "team", "songbook", "recordings", "releases",
+            "people", "canon_facts", "open_offers", "producers_for_hire", "genres_available")
+    w("```json\n" + json.dumps({k: pk[k] for k in keep}, indent=1, default=str) + "\n```")
     return "\n".join(out) + "\n"

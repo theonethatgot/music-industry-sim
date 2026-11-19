@@ -89,3 +89,7 @@ def on_chart(world, cid, run, eid):
                            event_id=eid)
             if e["last"] is None:
                 world.interrupts.append({"reason": "chart_entry", "chart": cid, "subject": e["subject"]})
+            for bar, reason in ((1, "number_one"), (10, "top_10"), (40, "top_40")):
+                if e["rank"] <= bar and (e["last"] is None or e["last"] > bar) and e["peak"] == e["rank"]:
+                    world.interrupts.append({"reason": reason, "chart": cid, "subject": e["subject"]})
+                    break

@@ -68,6 +68,18 @@ def _schema():
         "set_lifestyle": {"desc": "Spending level.", "args": {"level": {"type": "enum", "required": True, "enum": LIFESTYLE}}},
         "rest": {"desc": "Take time off to recover energy and morale.",
                  "args": {"weeks": {"type": "int", "required": True, "min": 1, "max": 8}}},
+        "set_policy": {"desc": "Standing orders for routine work your team handles without asking you.",
+                       "args": {"gigs_when_idle": {"type": "int", "required": False, "min": 0, "max": 5,
+                                                   "desc": "club nights/week to keep booked when nothing else is on (0 = off)"},
+                                "training_when_idle": {"type": "enum", "required": False, "enum": SKILLS + ["none"]},
+                                "training_spend_per_week": {"type": "float", "required": False, "min": 0, "max": 2000},
+                                "manager_may_book_media": {"type": "bool", "required": False},
+                                "manager_may_book_gigs": {"type": "bool", "required": False},
+                                "rest_when_exhausted": {"type": "bool", "required": False}}},
+        "hire_manager": {"desc": "Offer a manager you know a management deal (they decide whether to take you on).",
+                         "args": {"person_id": {"type": "str", "required": True},
+                                  "commission": {"type": "float", "required": True, "min": 0.05, "max": 0.25}}},
+        "fire_manager": {"desc": "End your management deal.", "args": {}},
     }
 
 
@@ -186,6 +198,8 @@ def _cmd_accept_offer(world, a):
         org = world.orgs[off.source]
         off.status = "accepted"
         c = labels_sys.sign(world, org, act, off.terms, causes=off.causes)
+        from .delegation import pay_commission
+        pay_commission(world, float(off.terms.get("advance", 0.0)), "advance")
         for o in world.offers.values():
             if o.target == act.id and o.kind == "recording_contract" and o.status == "open":
                 o.status = "declined"
@@ -427,6 +441,23 @@ def _cmd_set_lifestyle(world, a):
     return _ok(f"Lifestyle set to {a['level']}.")
 
 
+def _cmd_set_policy(world, a):
+    from .delegation import policy
+    pol = policy(world)
+    pol.update(a)
+    return _ok("Standing orders updated: " + ", ".join(f"{k}={v}" for k, v in a.items()) + ".")
+
+
+def _cmd_hire_manager(world, a):
+    from .delegation import hire_manager
+    return hire_manager(world, a["person_id"], float(a["commission"]))
+
+
+def _cmd_fire_manager(world, a):
+    from .delegation import fire_manager
+    return fire_manager(world)
+
+
 def _cmd_rest(world, a):
     c = _overlaps(world, world.date.isoformat(), (world.date + dt.timedelta(days=7 * a["weeks"])).isoformat())
     if c:
@@ -455,6 +486,8 @@ def weekly_player(world, market):
             fee = rt.gig_fee(world.date) * (1 + 4 * local + 2 * act.live_buzz)
             nights = c["nights"]
             world.ledger.transfer(world.date, "ext:venues", pid, fee * nights, "gig_fees", "club dates")
+            from .delegation import pay_commission
+            pay_commission(world, fee * nights, "club dates")
             perf = p.skills.get("performance", 0.5)
             shock = rng.normal(world.seed, "gig_week", pid, today)
             act.live_buzz = float(np.clip(act.live_buzz + 0.006 * nights * (perf + 0.2 * shock), 0, 1))
@@ -485,6 +518,8 @@ def weekly_player(world, market):
     elif wb["energy"] > 0.4:
         world.flags["exhaustion_warned"] = False
     world.flags["promo_boosts"] = [b for b in world.flags.get("promo_boosts", []) if b["until"] >= today]
+    from .delegation import weekly as team_weekly
+    team_weekly(world, market)
 
 
 def describe_recording_for_player(world, rec) -> dict:

@@ -4,7 +4,8 @@
   python -m musicsim packet <dir>                 # print path of the current narrator packet
   python -m musicsim play <dir> <file|->          # submit decisions/proposals (JSON or a narrator reply)
   python -m musicsim check <dir> <file|->         # validate a submission without applying it
-  python -m musicsim advance <dir> [2w]           # move time (stops early at interrupts)
+  python -m musicsim advance <dir> [next|3d|2w|2m] # move time (stops early when something needs you)
+  python -m musicsim briefing <dir>               # write an industry briefing (JSON) for the current date
   python -m musicsim status <dir>
   python -m musicsim charts <dir> [chart_id] [--n 40]
   python -m musicsim why <dir> <song|release id>  # provenance: weekly exposure, decisions, draws
@@ -30,6 +31,8 @@ def cmd_new(a):
     c = Campaign.create(a.dir, a.scenario, a.seed, a.character)
     print(f"Created campaign at {a.dir} ({c.world.scenario.get('title')}); world date {c.world.date}.")
     print(f"Narrator packet: {c.packet_path()}")
+    print("Next: paste docs/narrator_contract.md, then this packet, into ChatGPT. Save its reply and run:\n"
+          f"  python -m musicsim play {a.dir} reply.txt")
     c.close()
 
 
@@ -142,6 +145,16 @@ def cmd_why(a):
     c.close()
 
 
+def cmd_briefing(a):
+    from .narrator.briefing import landscape
+    c = Campaign.open(a.dir)
+    data = landscape(c.world, c.world.player["market"])
+    out = Path(a.dir) / "packets" / f"briefing_{c.world.date.isoformat()}.json"
+    out.write_text(json.dumps(data, indent=1), encoding="utf-8")
+    print(out)
+    c.close()
+
+
 def cmd_replay(a):
     c = Campaign.open(a.dir)
     res = c.replay()
@@ -170,6 +183,7 @@ def main(argv=None):
     p.add_argument("--n", type=int, default=40); p.set_defaults(fn=cmd_charts)
     p = sp.add_parser("why"); p.add_argument("dir"); p.add_argument("subject"); p.set_defaults(fn=cmd_why)
     p = sp.add_parser("replay"); p.add_argument("dir"); p.set_defaults(fn=cmd_replay)
+    p = sp.add_parser("briefing"); p.add_argument("dir"); p.set_defaults(fn=cmd_briefing)
     p = sp.add_parser("scenarios"); p.set_defaults(fn=cmd_scenarios)
     a = ap.parse_args(argv)
     return a.fn(a) or 0

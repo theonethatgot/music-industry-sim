@@ -80,6 +80,9 @@ def _statements(world):
             members = [m["person"] for m in act.members] or [act.id]
             for p in members:
                 world.ledger.transfer(world.date, f"org:{act.label}", p, amount / len(members), "royalties", act.id)
+            if world.player.get("act") == act.id:
+                from ..player.delegation import pay_commission
+                pay_commission(world, amount, "royalties")
             act.unrecouped = 0.0
             eid = world.emit("finance", "royalty_statement", [act.id, f"org:{act.label}"],
                              {"paid": round(amount, 2)}, public=False)

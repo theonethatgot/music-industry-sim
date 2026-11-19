@@ -238,8 +238,9 @@ def tv_week(world, market: str):
                 continue
             recog = np.array(act.recognition.get(market, [0.0] * rt.G))
             draw_power = float((recog * vpop).sum() / max(1.0, vpop.sum()))
+            push = world.flags.get("tv_push", {}).get(sid, 0.0)      # a manager working the bookers
             score = (0.9 * draw_power + 0.8 * prom.get(sid, 0.0) + 0.25 * max(0.0, act.momentum)
-                     + 0.35 * T.view("tv_promo")[i] + 0.15 * fit
+                     + 0.35 * T.view("tv_promo")[i] + 0.15 * fit + push
                      + 0.10 * rng.normal(world.seed, "tv", pid, sid, d.isoformat()))
             scored.append((score, sid, rec.act, draw_power, fit))
         scored.sort(key=lambda s: (-s[0], s[1]))

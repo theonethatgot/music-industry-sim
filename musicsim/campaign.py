@@ -232,7 +232,9 @@ def _generate_fictional(world, market, n):
                     personality={"ambition": u(j, "amb"), "risk_tolerance": u(j, "risk"),
                                  "artistic_vs_commercial": 2 * u(j, "avc") - 1, "discipline": u(j, "disc")})
             members.append({"person": pid, "role": "lead" if j == 0 else "member", "joined": None, "left": None})
-        fame = float(min(0.6, 0.02 * np.exp(2.6 * u("fame"))))     # heavy-tailed starting recognition
+        # heavy-tailed starting recognition, capped below the real top tier: the historical data covers the
+        # established stars, generated acts are the long tail (they can still become stars in play)
+        fame = float(min(0.15, 0.015 * np.exp(2.3 * u("fame"))))
         fandom = fame * 0.4 * u("fandom")
         recog, app, fan = _status_vectors(world, market, [g], fame, fandom)
         signed = u("signed") < 0.75

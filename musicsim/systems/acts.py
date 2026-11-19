@@ -149,7 +149,7 @@ def _intent_recording(world, act, it, k, market=None):
     market = market or next(iter(world.markets))
     # reuse a recording made earlier (e.g. for an album) with the same title
     for rec in world.recordings.values():
-        if rec.act == act.id and rec.title == it.get("title") and rec.status != "released":
+        if rec.act == act.id and rec.title == it.get("title") and not rec.single_release:
             return rec
     writers = _resolve_people(world, it.get("writers"), act.id) or [m["person"] for m in act.members[:1]]
     producers = _resolve_people(world, it.get("producers"), act.id) or _house_producer(world, act.label)
@@ -248,7 +248,7 @@ def _fictional_cycle(world, market, act):
     stats = main_chart(world, market, "song").get("stats", {})
     hit = any(stats.get(r.tracks[0], {}).get("peak", 999) <= 40 for r in done_since_album)
     charted = any(stats.get(r.tracks[0], {}).get("peak", 999) <= 75 for r in done_since_album)
-    if done_since_album and (hit or (charted and len(done_since_album) >= 2) or len(done_since_album) >= 3):
+    if done_since_album and (hit or (charted and len(done_since_album) >= 2)):
         _plan_npc_album(world, market, act, done_since_album)
         return
     key = f"{act.id}#{today.isoformat()}"

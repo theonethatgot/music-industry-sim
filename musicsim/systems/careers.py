@@ -142,6 +142,8 @@ def certifications(world, market: str):
                              {"body": body, "level": level, "basis": rt.data["certification"]["basis"],
                               "shipped": round(rel.shipped)})
             mine = world.player.get("act") == rel.act
+            if mine:
+                world.interrupts.append({"reason": "certified", "release": rel.id, "level": level})
             if mine or act.singles_power_o > 0.3 or act.historical:
                 world.add_news(f"{body}: {possessive(act.name)} \"{rel.title}\" ({rel.kind}) certified {level}.",
                                "certification", [rel.id, rel.act], tag="official",

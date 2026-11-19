@@ -1,0 +1,2849 @@
+{
+ "packet_version": 1,
+ "pass_id": "session1-0001",
+ "campaign": "session1",
+ "scenario": "Los Angeles, autumn 1988: an unsigned singer",
+ "date": "1988-09-05",
+ "covers": {
+  "from": "1988-08-22",
+  "to": "1988-09-05"
+ },
+ "protagonist": {
+  "person_id": "person:pc_example_rnb_pop_singer",
+  "act_id": "act:pc_example_rnb_pop_singer",
+  "name": "Danielle Reyes",
+  "act_name": "Danielle Reyes",
+  "age": 21,
+  "city": "Los Angeles, CA",
+  "background": "Grew up singing in church; two years of community-college music theory; sings backing vocals on local sessions.",
+  "genres": [
+   "rnb",
+   "pop",
+   "dance_pop"
+  ],
+  "persona": [
+   "warm",
+   "determined",
+   "girl-next-door"
+  ],
+  "career_stage": "aspiring",
+  "abilities_as_your_team_sees_them": {
+   "look": 72,
+   "media": 55,
+   "performance": 62,
+   "production": 20,
+   "songwriting": 58,
+   "vocal": 80
+  },
+  "wellbeing": {
+   "energy": "very high",
+   "stress": "low",
+   "morale": "high"
+  },
+  "public_recognition_pct": 0.0,
+  "recognition_by_audience_pct": {
+   "Teens (12-17), mainstream": 0.0,
+   "Teens (12-17), Black/urban": 0.0,
+   "Young adults (18-34), mainstream": 0.0,
+   "Young adults (18-34), Black/urban": 0.0,
+   "Young adults (18-34), rock-oriented": 0.0,
+   "Adults (35-54), mainstream": 0.0,
+   "Adults (35-54), Black/urban": 0.0,
+   "Hip-hop core audience (13-29)": 0.0
+  },
+  "local_live_buzz": "very low",
+  "industry_view": {
+   "singles_track_record": "very low",
+   "momentum": 0.0,
+   "critical_standing": "low"
+  },
+  "label": null,
+  "contract": null
+ },
+ "finances": {
+  "cash": 1800.0,
+  "period_income": 1800.0,
+  "period_spending": 0,
+  "day_job": {
+   "title": "Session backing vocalist and restaurant shifts",
+   "weekly_income": 260,
+   "active": true
+  },
+  "lifestyle": "modest",
+  "recent": [
+   {
+    "date": "1988-09-05",
+    "amount": 1800.0,
+    "category": "savings",
+    "memo": "starting cash",
+    "in": true
+   }
+  ]
+ },
+ "calendar": [
+  {
+   "date": "1988-09-17",
+   "what": "showcase at a Hollywood club \u2014 a booker has invited A&R staff from several labels",
+   "kind": "showcase"
+  }
+ ],
+ "songbook": [],
+ "recordings": [],
+ "releases": [],
+ "pacing": {
+  "days_covered": 0,
+  "stopped_because": [
+   "the campaign begins"
+  ],
+  "guidance": "Give the moments that stopped the clock full scenes. Summarise routine stretches in a few evocative paragraphs. Choose the next 'advance' from what the protagonist is doing: 'next' runs until something needs attention (at most about 3 months); a few days for intense periods; weeks or months for routine."
+ },
+ "team": {
+  "manager": null,
+  "standing_orders": {
+   "gigs_when_idle": 2,
+   "training_when_idle": "none",
+   "training_spend_per_week": 75.0,
+   "manager_may_book_media": true,
+   "manager_may_book_gigs": true,
+   "rest_when_exhausted": true
+  },
+  "always_comes_back_to_you": [
+   "signing or ending contracts (label, management, publishing)",
+   "recording sessions (song, producer, budget)",
+   "releases (which song, when, how much promotion)",
+   "career changes (image, genre, label, city)",
+   "spending more than about $2,000 of your own money",
+   "public statements and anything that could become news"
+  ],
+  "handled_for_you_this_pass": [],
+  "what_people_are_telling_you": [
+   "Carla Holloway: the old demo tape is rough; a properly recorded song would give labels and radio more to hear.",
+   "Club bookers: more regular nights would build a local following that A&R people notice."
+  ]
+ },
+ "industry_landscape": {
+  "as_of": "1988-09-05",
+  "biggest_real_artists_right_now": [
+   {
+    "name": "George Michael",
+    "real": true,
+    "label": "Columbia Records",
+    "genres": [
+     "pop",
+     "rnb"
+    ],
+    "public_recognition_pct": 87.9,
+    "stage": "star",
+    "momentum": "steady",
+    "current_single": {
+     "title": "Monkey",
+     "released": "1988-06-06",
+     "charts": {
+      "Billboard Hot 100": 14,
+      "Hot Black Singles": 25,
+      "Adult Contemporary": 8
+     }
+    },
+    "current_album": {
+     "title": "Faith",
+     "released": "1987-10-05",
+     "certified": "12x platinum",
+     "charts": {
+      "Top Pop Albums": 2,
+      "Top Black Albums": 2
+     }
+    },
+    "announced": {
+     "title": "Kissing a Fool",
+     "kind": "single",
+     "date": "1988-10-10"
+    }
+   },
+   {
+    "name": "Michael Jackson",
+    "real": true,
+    "label": "Epic Records",
+    "genres": [
+     "pop",
+     "dance_pop",
+     "rnb"
+    ],
+    "public_recognition_pct": 84.9,
+    "stage": "star",
+    "momentum": "steady",
+    "current_single": {
+     "title": "Another Part of Me",
+     "released": "1988-07-04",
+     "charts": {
+      "Billboard Hot 100": 2,
+      "Hot Black Singles": 5,
+      "Adult Contemporary": 22
+     }
+    },
+    "current_album": {
+     "title": "Bad",
+     "released": "1987-08-10",
+     "certified": "9x platinum",
+     "charts": {
+      "Top Pop Albums": 16,
+      "Top Black Albums": 4
+     }
+    },
+    "announced": {
+     "title": "Smooth Criminal",
+     "kind": "single",
+     "date": "1988-09-26"
+    }
+   },
+   {
+    "name": "Whitney Houston",
+    "real": true,
+    "label": "Arista Records",
+    "genres": [
+     "pop",
+     "soul_ballad",
+     "rnb"
+    ],
+    "public_recognition_pct": 75.8,
+    "stage": "star",
+    "momentum": "cooling",
+    "current_single": {
+     "title": "One Moment in Time",
+     "released": "1988-07-18",
+     "charts": {
+      "Billboard Hot 100": 12,
+      "Hot Black Singles": 6,
+      "Adult Contemporary": 4
+     }
+    }
+   },
+   {
+    "name": "Phil Collins",
+    "real": true,
+    "label": "Atlantic Records",
+    "genres": [
+     "pop",
+     "adult_contemporary",
+     "rock"
+    ],
+    "public_recognition_pct": 59.4,
+    "stage": "star",
+    "momentum": "steady"
+   },
+   {
+    "name": "Madonna",
+    "real": true,
+    "label": "Sire Records",
+    "genres": [
+     "dance_pop",
+     "pop"
+    ],
+    "public_recognition_pct": 58.1,
+    "stage": "star",
+    "momentum": "steady"
+   },
+   {
+    "name": "Prince",
+    "real": true,
+    "label": "Paisley Park Records",
+    "genres": [
+     "rnb",
+     "pop",
+     "rock"
+    ],
+    "public_recognition_pct": 55.4,
+    "stage": "star",
+    "momentum": "cooling",
+    "current_album": {
+     "title": "Lovesexy",
+     "released": "1988-05-09",
+     "certified": "platinum",
+     "charts": {
+      "Top Pop Albums": 102
+     }
+    }
+   },
+   {
+    "name": "Gloria Estefan & Miami Sound Machine",
+    "real": true,
+    "label": "Epic Records",
+    "genres": [
+     "latin_pop",
+     "pop",
+     "adult_contemporary"
+    ],
+    "public_recognition_pct": 51.4,
+    "stage": "star",
+    "momentum": "hot",
+    "current_single": {
+     "title": "1-2-3",
+     "released": "1988-05-30",
+     "charts": {
+      "Billboard Hot 100": 46,
+      "Hot Black Singles": 42,
+      "Adult Contemporary": 34
+     }
+    }
+   },
+   {
+    "name": "New Kids on the Block",
+    "real": true,
+    "label": "Columbia Records",
+    "genres": [
+     "pop",
+     "dance_pop"
+    ],
+    "public_recognition_pct": 43.8,
+    "stage": "established",
+    "momentum": "red-hot",
+    "current_single": {
+     "title": "Please Don't Go Girl",
+     "released": "1988-04-11",
+     "charts": {
+      "Billboard Hot 100": 47,
+      "Hot Black Singles": 69,
+      "Adult Contemporary": 24
+     }
+    },
+    "current_album": {
+     "title": "Hangin' Tough",
+     "released": "1988-08-08",
+     "certified": null,
+     "charts": {
+      "Top Pop Albums": 44,
+      "Top Black Albums": 52
+     }
+    }
+   },
+   {
+    "name": "Debbie Gibson",
+    "real": true,
+    "label": "Atlantic Records",
+    "genres": [
+     "pop",
+     "dance_pop"
+    ],
+    "public_recognition_pct": 41.4,
+    "stage": "established",
+    "momentum": "hot"
+   },
+   {
+    "name": "Bon Jovi",
+    "real": true,
+    "label": "Mercury Records",
+    "genres": [
+     "hair_metal",
+     "rock"
+    ],
+    "public_recognition_pct": 40.8,
+    "stage": "established",
+    "momentum": "steady",
+    "current_single": {
+     "title": "Bad Medicine",
+     "released": "1988-08-15",
+     "charts": {
+      "Billboard Hot 100": 33,
+      "Album Rock Tracks": 18
+     }
+    },
+    "announced": {
+     "title": "New Jersey",
+     "kind": "album",
+     "date": "1988-10-03"
+    }
+   },
+   {
+    "name": "Janet Jackson",
+    "real": true,
+    "label": "A&M Records",
+    "genres": [
+     "dance_pop",
+     "rnb",
+     "new_jack_swing"
+    ],
+    "public_recognition_pct": 40.6,
+    "stage": "established",
+    "momentum": "steady"
+   },
+   {
+    "name": "U2",
+    "real": true,
+    "label": "Island Records",
+    "genres": [
+     "rock",
+     "alternative"
+    ],
+    "public_recognition_pct": 40.6,
+    "stage": "established",
+    "momentum": "steady",
+    "announced": {
+     "title": "Desire",
+     "kind": "single",
+     "date": "1988-09-19"
+    }
+   },
+   {
+    "name": "Def Leppard",
+    "real": true,
+    "label": "Mercury Records",
+    "genres": [
+     "hair_metal",
+     "rock"
+    ],
+    "public_recognition_pct": 36.9,
+    "stage": "established",
+    "momentum": "steady",
+    "current_single": {
+     "title": "Love Bites",
+     "released": "1988-08-22",
+     "charts": {
+      "Billboard Hot 100": 100
+     }
+    }
+   },
+   {
+    "name": "Vanessa Williams",
+    "real": true,
+    "label": "Wing Records",
+    "genres": [
+     "rnb",
+     "soul_ballad",
+     "pop"
+    ],
+    "public_recognition_pct": 34.8,
+    "stage": "established",
+    "momentum": "steady",
+    "current_album": {
+     "title": "The Right Stuff",
+     "released": "1988-03-28",
+     "certified": null,
+     "charts": {
+      "Top Pop Albums": 104
+     }
+    }
+   },
+   {
+    "name": "Richard Marx",
+    "real": true,
+    "label": "EMI-Manhattan Records",
+    "genres": [
+     "pop",
+     "adult_contemporary",
+     "rock"
+    ],
+    "public_recognition_pct": 30.4,
+    "stage": "established",
+    "momentum": "steady",
+    "current_single": {
+     "title": "Hold On to the Nights",
+     "released": "1988-04-11",
+     "charts": {
+      "Billboard Hot 100": 87,
+      "Hot Black Singles": 87,
+      "Adult Contemporary": 29
+     }
+    }
+   },
+   {
+    "name": "Guns N' Roses",
+    "real": true,
+    "label": "Geffen Records",
+    "genres": [
+     "rock",
+     "hair_metal"
+    ],
+    "public_recognition_pct": 27.5,
+    "stage": "established",
+    "momentum": "steady",
+    "current_single": {
+     "title": "Sweet Child o' Mine",
+     "released": "1988-06-06",
+     "charts": {
+      "Billboard Hot 100": 29,
+      "Hot Black Singles": 92,
+      "Adult Contemporary": 31,
+      "Album Rock Tracks": 5
+     }
+    }
+   },
+   {
+    "name": "Anita Baker",
+    "real": true,
+    "label": "Elektra Records",
+    "genres": [
+     "soul_ballad",
+     "rnb"
+    ],
+    "public_recognition_pct": 25.6,
+    "stage": "established",
+    "momentum": "steady",
+    "announced": {
+     "title": "Giving You the Best That I Got",
+     "kind": "single",
+     "date": "1988-09-05"
+    }
+   },
+   {
+    "name": "Luther Vandross",
+    "real": true,
+    "label": "Epic Records",
+    "genres": [
+     "soul_ballad",
+     "rnb"
+    ],
+    "public_recognition_pct": 25.6,
+    "stage": "established",
+    "momentum": "steady",
+    "announced": {
+     "title": "Any Love",
+     "kind": "single",
+     "date": "1988-09-05"
+    }
+   }
+  ],
+  "acts_on_the_rise": [
+   {
+    "name": "Yolanda Wilder",
+    "real": false,
+    "label": "RCA Records",
+    "genres": [
+     "rnb"
+    ],
+    "public_recognition_pct": 20.0,
+    "stage": "rising",
+    "momentum": "red-hot",
+    "current_single": {
+     "title": "Say It's Broken",
+     "released": "1988-07-11",
+     "charts": {
+      "Billboard Hot 100": 4,
+      "Hot Black Singles": 2,
+      "Adult Contemporary": 23
+     }
+    }
+   },
+   {
+    "name": "Paula Gaines",
+    "real": false,
+    "label": "MCA Records",
+    "genres": [
+     "dance_pop"
+    ],
+    "public_recognition_pct": 25.2,
+    "stage": "rising",
+    "momentum": "red-hot",
+    "current_single": {
+     "title": "Only Love",
+     "released": "1988-06-27",
+     "charts": {
+      "Billboard Hot 100": 1,
+      "Hot Black Singles": 1,
+      "Adult Contemporary": 14
+     }
+    }
+   },
+   {
+    "name": "Danny Tate",
+    "real": false,
+    "label": "Atlantic Records",
+    "genres": [
+     "pop"
+    ],
+    "public_recognition_pct": 12.5,
+    "stage": "rising",
+    "momentum": "red-hot",
+    "current_single": {
+     "title": "Beat of Restless",
+     "released": "1988-07-18",
+     "charts": {
+      "Billboard Hot 100": 9,
+      "Hot Black Singles": 16,
+      "Adult Contemporary": 7
+     }
+    }
+   },
+   {
+    "name": "Bobby McFerrin",
+    "real": true,
+    "label": "EMI-Manhattan Records",
+    "genres": [
+     "adult_contemporary",
+     "pop"
+    ],
+    "public_recognition_pct": 19.3,
+    "stage": "rising",
+    "momentum": "red-hot",
+    "current_single": {
+     "title": "Don't Worry, Be Happy",
+     "released": "1988-07-04",
+     "charts": {
+      "Billboard Hot 100": 6,
+      "Hot Black Singles": 12,
+      "Adult Contemporary": 6
+     }
+    }
+   },
+   {
+    "name": "Erica Holloway",
+    "real": false,
+    "label": "Epic Records",
+    "genres": [
+     "pop"
+    ],
+    "public_recognition_pct": 34.2,
+    "stage": "established",
+    "momentum": "red-hot",
+    "current_album": {
+     "title": "Beat of Shadow",
+     "released": "1988-07-25",
+     "certified": "gold",
+     "charts": {
+      "Top Pop Albums": 6,
+      "Top Black Albums": 26
+     }
+    }
+   },
+   {
+    "name": "Terrence Sterling",
+    "real": false,
+    "label": "Virgin Records America",
+    "genres": [
+     "pop"
+    ],
+    "public_recognition_pct": 32.2,
+    "stage": "established",
+    "momentum": "red-hot",
+    "current_single": {
+     "title": "Givin' Up the Dance",
+     "released": "1988-05-09",
+     "charts": {
+      "Billboard Hot 100": 16,
+      "Hot Black Singles": 21,
+      "Adult Contemporary": 35
+     }
+    }
+   }
+  ],
+  "record_companies": {
+   "CBS Records / Sony Music": [
+    {
+     "label": "Columbia Records",
+     "fictional": false,
+     "size": "flagship",
+     "strengths": [
+      "pop",
+      "rock",
+      "soul_ballad"
+     ],
+     "appetite_for_risk": "moderate",
+     "head": "Tommy Mottola",
+     "notable_artists": [
+      "George Michael",
+      "New Kids on the Block",
+      "Martika"
+     ]
+    },
+    {
+     "label": "Epic Records",
+     "fictional": false,
+     "size": "flagship",
+     "strengths": [
+      "pop",
+      "dance_pop",
+      "rnb"
+     ],
+     "appetite_for_risk": "moderate",
+     "head": null,
+     "notable_artists": [
+      "Michael Jackson",
+      "Gloria Estefan & Miami Sound Machine",
+      "Luther Vandross"
+     ]
+    },
+    {
+     "label": "Def Jam Recordings",
+     "fictional": false,
+     "size": "small",
+     "strengths": [
+      "hip_hop",
+      "pop_rap",
+      "rnb"
+     ],
+     "appetite_for_risk": "very high",
+     "head": "Russell Simmons",
+     "notable_artists": [
+      "LL Cool J",
+      "Public Enemy"
+     ]
+    },
+    {
+     "label": "SOLAR Records",
+     "fictional": false,
+     "size": "tiny",
+     "strengths": [
+      "rnb",
+      "soul_ballad",
+      "new_jack_swing"
+     ],
+     "appetite_for_risk": "moderate",
+     "head": null,
+     "notable_artists": [
+      "Babyface"
+     ]
+    }
+   ],
+   "Warner Music Group (WEA)": [
+    {
+     "label": "Warner Bros. Records",
+     "fictional": false,
+     "size": "flagship",
+     "strengths": [
+      "rock",
+      "pop",
+      "alternative"
+     ],
+     "appetite_for_risk": "moderate",
+     "head": "Mo Ostin",
+     "notable_artists": [
+      "R.E.M.",
+      "Karyn White"
+     ]
+    },
+    {
+     "label": "Atlantic Records",
+     "fictional": false,
+     "size": "flagship",
+     "strengths": [
+      "pop",
+      "rock",
+      "rnb"
+     ],
+     "appetite_for_risk": "moderate",
+     "head": "Doug Morris",
+     "notable_artists": [
+      "Phil Collins",
+      "Debbie Gibson"
+     ]
+    },
+    {
+     "label": "Elektra Records",
+     "fictional": false,
+     "size": "major",
+     "strengths": [
+      "singer_songwriter",
+      "rnb",
+      "soul_ballad"
+     ],
+     "appetite_for_risk": "moderate",
+     "head": "Bob Krasnow",
+     "notable_artists": [
+      "Anita Baker",
+      "Tracy Chapman"
+     ]
+    },
+    {
+     "label": "Geffen Records",
+     "fictional": false,
+     "size": "major",
+     "strengths": [
+      "rock",
+      "hair_metal",
+      "alternative"
+     ],
+     "appetite_for_risk": "moderate",
+     "head": "David Geffen",
+     "notable_artists": [
+      "Guns N' Roses"
+     ]
+    },
+    {
+     "label": "Sire Records",
+     "fictional": false,
+     "size": "small",
+     "strengths": [
+      "dance_pop",
+      "alternative",
+      "pop"
+     ],
+     "appetite_for_risk": "high",
+     "head": "Seymour Stein",
+     "notable_artists": [
+      "Madonna"
+     ]
+    },
+    {
+     "label": "Paisley Park Records",
+     "fictional": false,
+     "size": "tiny",
+     "strengths": [
+      "rnb",
+      "pop",
+      "rock"
+     ],
+     "appetite_for_risk": "high",
+     "head": null,
+     "notable_artists": [
+      "Prince"
+     ]
+    }
+   ],
+   "BMG Music": [
+    {
+     "label": "Arista Records",
+     "fictional": false,
+     "size": "major",
+     "strengths": [
+      "pop",
+      "soul_ballad",
+      "rnb"
+     ],
+     "appetite_for_risk": "low",
+     "head": "Clive Davis",
+     "notable_artists": [
+      "Whitney Houston",
+      "Taylor Dayne"
+     ]
+    },
+    {
+     "label": "RCA Records",
+     "fictional": false,
+     "size": "major",
+     "strengths": [
+      "pop",
+      "dance_pop",
+      "rock"
+     ],
+     "appetite_for_risk": "moderate",
+     "head": null,
+     "notable_artists": [
+      "Rick Astley"
+     ]
+    },
+    {
+     "label": "Jive Records",
+     "fictional": false,
+     "size": "small",
+     "strengths": [
+      "pop_rap",
+      "hip_hop",
+      "rnb"
+     ],
+     "appetite_for_risk": "high",
+     "head": null,
+     "notable_artists": [
+      "DJ Jazzy Jeff & The Fresh Prince"
+     ]
+    }
+   ],
+   "MCA Records": [
+    {
+     "label": "MCA Records",
+     "fictional": false,
+     "size": "major",
+     "strengths": [
+      "rnb",
+      "new_jack_swing",
+      "pop"
+     ],
+     "appetite_for_risk": "moderate",
+     "head": null,
+     "notable_artists": [
+      "Jody Watley",
+      "New Edition",
+      "Bobby Brown",
+      "Bell Biv DeVoe"
+     ]
+    },
+    {
+     "label": "Motown Records",
+     "fictional": false,
+     "size": "mid-size",
+     "strengths": [
+      "rnb",
+      "soul_ballad",
+      "new_jack_swing"
+     ],
+     "appetite_for_risk": "moderate",
+     "head": "Jheryl Busby",
+     "notable_artists": [
+      "Johnny Gill"
+     ]
+    },
+    {
+     "label": "Uptown Records",
+     "fictional": false,
+     "size": "small",
+     "strengths": [
+      "new_jack_swing",
+      "rnb",
+      "hip_hop"
+     ],
+     "appetite_for_risk": "high",
+     "head": "Andre Harrell",
+     "notable_artists": [
+      "Guy"
+     ]
+    },
+    {
+     "label": "I.R.S. Records",
+     "fictional": false,
+     "size": "tiny",
+     "strengths": [
+      "alternative",
+      "rock",
+      "pop"
+     ],
+     "appetite_for_risk": "high",
+     "head": null,
+     "notable_artists": [
+      "Fine Young Cannibals"
+     ]
+    }
+   ],
+   "PolyGram": [
+    {
+     "label": "A&M Records",
+     "fictional": false,
+     "size": "major",
+     "strengths": [
+      "pop",
+      "dance_pop",
+      "rnb"
+     ],
+     "appetite_for_risk": "moderate",
+     "head": null,
+     "notable_artists": [
+      "Janet Jackson"
+     ]
+    },
+    {
+     "label": "Mercury Records",
+     "fictional": false,
+     "size": "major",
+     "strengths": [
+      "rock",
+      "hair_metal",
+      "pop"
+     ],
+     "appetite_for_risk": "moderate",
+     "head": null,
+     "notable_artists": [
+      "Bon Jovi",
+      "Def Leppard"
+     ]
+    },
+    {
+     "label": "Island Records",
+     "fictional": false,
+     "size": "mid-size",
+     "strengths": [
+      "alternative",
+      "rock",
+      "pop_rap"
+     ],
+     "appetite_for_risk": "high",
+     "head": null,
+     "notable_artists": [
+      "U2"
+     ]
+    },
+    {
+     "label": "Wing Records",
+     "fictional": false,
+     "size": "small",
+     "strengths": [
+      "rnb",
+      "soul_ballad",
+      "pop"
+     ],
+     "appetite_for_risk": "moderate",
+     "head": null,
+     "notable_artists": [
+      "Vanessa Williams"
+     ]
+    },
+    {
+     "label": "Delicious Vinyl",
+     "fictional": false,
+     "size": "tiny",
+     "strengths": [
+      "pop_rap",
+      "hip_hop"
+     ],
+     "appetite_for_risk": "very high",
+     "head": null,
+     "notable_artists": [
+      "Tone L\u014dc",
+      "Young MC"
+     ]
+    }
+   ],
+   "Capitol-EMI": [
+    {
+     "label": "Capitol Records",
+     "fictional": false,
+     "size": "major",
+     "strengths": [
+      "pop",
+      "rock",
+      "rnb"
+     ],
+     "appetite_for_risk": "moderate",
+     "head": null,
+     "notable_artists": [
+      "MC Hammer"
+     ]
+    },
+    {
+     "label": "EMI-Manhattan Records",
+     "fictional": false,
+     "size": "mid-size",
+     "strengths": [
+      "pop",
+      "adult_contemporary",
+      "soul_ballad"
+     ],
+     "appetite_for_risk": "moderate",
+     "head": null,
+     "notable_artists": [
+      "Richard Marx",
+      "Bobby McFerrin",
+      "Roxette"
+     ]
+    }
+   ],
+   "Independent distribution": [
+    {
+     "label": "Virgin Records America",
+     "fictional": false,
+     "size": "mid-size",
+     "strengths": [
+      "dance_pop",
+      "pop",
+      "rnb"
+     ],
+     "appetite_for_risk": "high",
+     "head": null,
+     "notable_artists": [
+      "Paula Abdul",
+      "Soul II Soul"
+     ]
+    },
+    {
+     "label": "Priority Records",
+     "fictional": false,
+     "size": "tiny",
+     "strengths": [
+      "gangsta_rap",
+      "hip_hop"
+     ],
+     "appetite_for_risk": "very high",
+     "head": null,
+     "notable_artists": [
+      "N.W.A"
+     ]
+    },
+    {
+     "label": "Profile Records",
+     "fictional": false,
+     "size": "tiny",
+     "strengths": [
+      "hip_hop",
+      "pop_rap"
+     ],
+     "appetite_for_risk": "high",
+     "head": null,
+     "notable_artists": [
+      "Run-DMC"
+     ]
+    },
+    {
+     "label": "Tommy Boy Records",
+     "fictional": false,
+     "size": "tiny",
+     "strengths": [
+      "hip_hop",
+      "pop_rap",
+      "house"
+     ],
+     "appetite_for_risk": "very high",
+     "head": null,
+     "notable_artists": [
+      "De La Soul"
+     ]
+    },
+    {
+     "label": "Next Plateau Records",
+     "fictional": false,
+     "size": "tiny",
+     "strengths": [
+      "pop_rap",
+      "hip_hop",
+      "dance_pop"
+     ],
+     "appetite_for_risk": "very high",
+     "head": null,
+     "notable_artists": [
+      "Salt-N-Pepa"
+     ]
+    },
+    {
+     "label": "Sunset Strip Records",
+     "fictional": true,
+     "size": "tiny",
+     "strengths": [
+      "pop",
+      "rnb",
+      "dance_pop"
+     ],
+     "appetite_for_risk": "very high",
+     "head": null,
+     "notable_artists": []
+    },
+    {
+     "label": "Bayview Sound",
+     "fictional": true,
+     "size": "tiny",
+     "strengths": [
+      "hip_hop",
+      "rnb",
+      "new_jack_swing"
+     ],
+     "appetite_for_risk": "very high",
+     "head": null,
+     "notable_artists": []
+    },
+    {
+     "label": "Lakeshore Music",
+     "fictional": true,
+     "size": "tiny",
+     "strengths": [
+      "rock",
+      "alternative",
+      "hair_metal"
+     ],
+     "appetite_for_risk": "very high",
+     "head": null,
+     "notable_artists": []
+    }
+   ]
+  },
+  "audiences": [
+   {
+    "segment": "Teens (12-17), mainstream",
+    "people_millions": 15.7,
+    "music_spend_per_person_per_year": 52,
+    "favourite_styles": [
+     "Pop",
+     "Dance-pop",
+     "Pop metal"
+    ],
+    "listens_to": [
+     "Contemporary hit radio (Top 40)",
+     "Album-oriented rock"
+    ],
+    "buys_singles": "high",
+    "buys_albums": "moderate"
+   },
+   {
+    "segment": "Teens (12-17), Black/urban",
+    "people_millions": 3.4,
+    "music_spend_per_person_per_year": 46,
+    "favourite_styles": [
+     "Contemporary R&B",
+     "New jack swing",
+     "Hip-hop"
+    ],
+    "listens_to": [
+     "Urban contemporary (Black radio)",
+     "Contemporary hit radio (Top 40)"
+    ],
+    "buys_singles": "very high",
+    "buys_albums": "moderate"
+   },
+   {
+    "segment": "Young adults (18-34), mainstream",
+    "people_millions": 37.3,
+    "music_spend_per_person_per_year": 38,
+    "favourite_styles": [
+     "Pop",
+     "Dance-pop",
+     "Rock"
+    ],
+    "listens_to": [
+     "Contemporary hit radio (Top 40)",
+     "Adult contemporary"
+    ],
+    "buys_singles": "low",
+    "buys_albums": "moderate"
+   },
+   {
+    "segment": "Young adults (18-34), Black/urban",
+    "people_millions": 8.3,
+    "music_spend_per_person_per_year": 38,
+    "favourite_styles": [
+     "Contemporary R&B",
+     "Soul ballad",
+     "New jack swing"
+    ],
+    "listens_to": [
+     "Urban contemporary (Black radio)",
+     "Club DJs, mix shows and mixtapes"
+    ],
+    "buys_singles": "low",
+    "buys_albums": "moderate"
+   },
+   {
+    "segment": "Young adults (18-34), rock-oriented",
+    "people_millions": 15.3,
+    "music_spend_per_person_per_year": 42,
+    "favourite_styles": [
+     "Rock",
+     "Pop metal",
+     "Alternative"
+    ],
+    "listens_to": [
+     "Album-oriented rock",
+     "Contemporary hit radio (Top 40)"
+    ],
+    "buys_singles": "very low",
+    "buys_albums": "high"
+   },
+   {
+    "segment": "Adults (35-54), mainstream",
+    "people_millions": 52.2,
+    "music_spend_per_person_per_year": 14,
+    "favourite_styles": [
+     "Adult contemporary",
+     "Pop",
+     "Soul ballad"
+    ],
+    "listens_to": [
+     "Adult contemporary",
+     "Contemporary hit radio (Top 40)"
+    ],
+    "buys_singles": "very low",
+    "buys_albums": "low"
+   },
+   {
+    "segment": "Adults (35-54), Black/urban",
+    "people_millions": 6.7,
+    "music_spend_per_person_per_year": 17,
+    "favourite_styles": [
+     "Soul ballad",
+     "Contemporary R&B",
+     "Adult contemporary"
+    ],
+    "listens_to": [
+     "Urban contemporary (Black radio)",
+     "Adult contemporary"
+    ],
+    "buys_singles": "very low",
+    "buys_albums": "moderate"
+   },
+   {
+    "segment": "Hip-hop core audience (13-29)",
+    "people_millions": 3.4,
+    "music_spend_per_person_per_year": 54,
+    "favourite_styles": [
+     "Hip-hop",
+     "Gangsta rap",
+     "Pop rap"
+    ],
+    "listens_to": [
+     "Club DJs, mix shows and mixtapes",
+     "Urban contemporary (Black radio)"
+    ],
+    "buys_singles": "moderate",
+    "buys_albums": "high"
+   }
+  ],
+  "radio_formats": [
+   {
+    "format": "Contemporary hit radio (Top 40)",
+    "current_playlist_size": 38
+   },
+   {
+    "format": "Urban contemporary (Black radio)",
+    "current_playlist_size": 42
+   },
+   {
+    "format": "Adult contemporary",
+    "current_playlist_size": 28
+   },
+   {
+    "format": "Album-oriented rock",
+    "current_playlist_size": 34
+   },
+   {
+    "format": "Club DJs, mix shows and mixtapes",
+    "current_playlist_size": 30
+   }
+  ],
+  "music_video_channels": [
+   "MTV",
+   "BET",
+   "VH1"
+  ],
+  "tv_music_bookings": [
+   {
+    "program": "American Bandstand",
+    "performance_slots_per_week": 2,
+    "hard_to_book": "fairly easy",
+    "audience": [
+     "teen_mainstream",
+     "teen_urban"
+    ]
+   },
+   {
+    "program": "Showtime at the Apollo",
+    "performance_slots_per_week": 2,
+    "hard_to_book": "fairly easy",
+    "audience": [
+     "teen_urban",
+     "ya_urban"
+    ]
+   },
+   {
+    "program": "Soul Train",
+    "performance_slots_per_week": 2,
+    "hard_to_book": "fairly easy",
+    "audience": [
+     "teen_urban",
+     "ya_urban"
+    ]
+   },
+   {
+    "program": "The Tonight Show",
+    "performance_slots_per_week": 1,
+    "hard_to_book": "hard",
+    "audience": [
+     "adult_mainstream",
+     "ya_mainstream"
+    ]
+   }
+  ],
+  "charts_in_force": [
+   {
+    "chart": "Billboard Hot 100",
+    "method": "Store sales rank reports + station playlist reports, converted to points",
+    "number_one": "Paula Gaines \u2014 Only Love"
+   },
+   {
+    "chart": "Top Pop Albums",
+    "method": "Retailer rank reports converted to points",
+    "number_one": "Shawn Bishop \u2014 Crazy Night"
+   },
+   {
+    "chart": "Hot Black Singles",
+    "method": "rank_reports",
+    "number_one": "Paula Gaines \u2014 Only Love"
+   },
+   {
+    "chart": "Top Black Albums",
+    "method": "rank_reports",
+    "number_one": "Public Enemy \u2014 It Takes a Nation of Millions to Hold Us Back"
+   },
+   {
+    "chart": "Adult Contemporary",
+    "method": "station_reports",
+    "number_one": "Golden Machine \u2014 My Rhythm Eyes"
+   },
+   {
+    "chart": "Album Rock Tracks",
+    "method": "station_reports",
+    "number_one": "Concrete Thieves \u2014 Wild Tonight"
+   }
+  ],
+  "market": {
+   "typical_album_price": 11.01,
+   "typical_single_price": 2.34,
+   "singles_market": "very high",
+   "release_day": "monday",
+   "songwriter_mechanical_rate_per_song": 0.0525,
+   "certification": "RIAA (based on shipments)"
+  },
+  "evidence_note": "Real artists, labels, institutions and dates come from the engine's historical data (tier A/B). Their statistics are engine estimates, and everything after the campaign start is simulated. Acts marked real=false are generated and fictional."
+ },
+ "charts": {
+  "hot100": {
+   "name": "Billboard Hot 100",
+   "chart_dated": "1988-09-10",
+   "tracking_week_ending": "1988-08-28",
+   "method": "rank_reports",
+   "top": [
+    {
+     "rank": 1,
+     "last": 2,
+     "artist": "Paula Gaines",
+     "title": "Only Love",
+     "weeks": 8,
+     "peak": 1
+    },
+    {
+     "rank": 2,
+     "last": 1,
+     "artist": "Michael Jackson",
+     "title": "Another Part of Me",
+     "weeks": 8,
+     "peak": 1
+    },
+    {
+     "rank": 3,
+     "last": 3,
+     "artist": "Jerome Greer",
+     "title": "Girl of Restless",
+     "weeks": 15,
+     "peak": 3
+    },
+    {
+     "rank": 4,
+     "last": 7,
+     "artist": "Yolanda Wilder",
+     "title": "Say It's Broken",
+     "weeks": 6,
+     "peak": 4
+    },
+    {
+     "rank": 5,
+     "last": 10,
+     "artist": "Rick Astley",
+     "title": "It Would Take a Strong Strong Man",
+     "weeks": 5,
+     "peak": 5
+    },
+    {
+     "rank": 6,
+     "last": 8,
+     "artist": "Bobby McFerrin",
+     "title": "Don't Worry, Be Happy",
+     "weeks": 7,
+     "peak": 6
+    },
+    {
+     "rank": 7,
+     "last": 4,
+     "artist": "Stacy Tate",
+     "title": "Love Feeling",
+     "weeks": 8,
+     "peak": 4
+    },
+    {
+     "rank": 8,
+     "last": 11,
+     "artist": "Lamont Pruitt",
+     "title": "Rhythm Kiss",
+     "weeks": 10,
+     "peak": 8
+    },
+    {
+     "rank": 9,
+     "last": 18,
+     "artist": "Danny Tate",
+     "title": "Beat of Restless",
+     "weeks": 5,
+     "peak": 9
+    },
+    {
+     "rank": 10,
+     "last": 12,
+     "artist": "Sugar Dolls",
+     "title": "Givin' Up the Motion",
+     "weeks": 17,
+     "peak": 9
+    },
+    {
+     "rank": 11,
+     "last": 6,
+     "artist": "Steel Shadows",
+     "title": "Beat on Fire",
+     "weeks": 13,
+     "peak": 2
+    },
+    {
+     "rank": 12,
+     "last": 15,
+     "artist": "Whitney Houston",
+     "title": "One Moment in Time",
+     "weeks": 4,
+     "peak": 12
+    },
+    {
+     "rank": 13,
+     "last": 14,
+     "artist": "Jamal Pryor",
+     "title": "Hold On to the Motion",
+     "weeks": 18,
+     "peak": 10
+    },
+    {
+     "rank": 14,
+     "last": 5,
+     "artist": "George Michael",
+     "title": "Monkey",
+     "weeks": 12,
+     "peak": 1
+    },
+    {
+     "rank": 15,
+     "last": 16,
+     "artist": "Wild Groove",
+     "title": "Say It's Diamond",
+     "weeks": 6,
+     "peak": 15
+    },
+    {
+     "rank": 16,
+     "last": 13,
+     "artist": "Terrence Sterling",
+     "title": "Givin' Up the Dance",
+     "weeks": 14,
+     "peak": 6
+    },
+    {
+     "rank": 17,
+     "last": 17,
+     "artist": "Terrence Simms",
+     "title": "Touch on Fire",
+     "weeks": 20,
+     "peak": 17
+    },
+    {
+     "rank": 18,
+     "last": 9,
+     "artist": "Savage Tigers",
+     "title": "Crazy Tonight",
+     "weeks": 16,
+     "peak": 4
+    },
+    {
+     "rank": 19,
+     "last": 26,
+     "artist": "Vince Tate",
+     "title": "Say It's Paradise",
+     "weeks": 8,
+     "peak": 19
+    },
+    {
+     "rank": 20,
+     "last": 21,
+     "artist": "Jeff Rivers",
+     "title": "Golden Girl",
+     "weeks": 9,
+     "peak": 18
+    }
+   ],
+   "your_entries": []
+  },
+  "top_albums": {
+   "name": "Top Pop Albums",
+   "chart_dated": "1988-09-10",
+   "tracking_week_ending": "1988-08-28",
+   "method": "rank_reports",
+   "top": [
+    {
+     "rank": 1,
+     "last": 1,
+     "artist": "Shawn Bishop",
+     "title": "Crazy Night",
+     "weeks": 5,
+     "peak": 1
+    },
+    {
+     "rank": 2,
+     "last": 2,
+     "artist": "George Michael",
+     "title": "Faith",
+     "weeks": 47,
+     "peak": 1
+    },
+    {
+     "rank": 3,
+     "last": 3,
+     "artist": "Brian Mercer",
+     "title": "Danger Kiss",
+     "weeks": 5,
+     "peak": 3
+    },
+    {
+     "rank": 4,
+     "last": null,
+     "artist": "Michelle Moreno",
+     "title": "Rhythm Heart",
+     "weeks": 1,
+     "peak": 4
+    },
+    {
+     "rank": 5,
+     "last": 5,
+     "artist": "Guns N' Roses",
+     "title": "Appetite for Destruction",
+     "weeks": 60,
+     "peak": 2
+    },
+    {
+     "rank": 6,
+     "last": 6,
+     "artist": "Erica Holloway",
+     "title": "Beat of Shadow",
+     "weeks": 5,
+     "peak": 3
+    },
+    {
+     "rank": 7,
+     "last": 4,
+     "artist": "Black Sisters",
+     "title": "Hold On to the Street",
+     "weeks": 8,
+     "peak": 3
+    },
+    {
+     "rank": 8,
+     "last": 7,
+     "artist": "Steve Delgado",
+     "title": "Fire Kiss",
+     "weeks": 3,
+     "peak": 7
+    },
+    {
+     "rank": 9,
+     "last": 8,
+     "artist": "Cherry Posse",
+     "title": "Can't Fight the Love",
+     "weeks": 3,
+     "peak": 8
+    },
+    {
+     "rank": 10,
+     "last": 10,
+     "artist": "Carla Rivers",
+     "title": "Fire Talk",
+     "weeks": 6,
+     "peak": 5
+    },
+    {
+     "rank": 11,
+     "last": 24,
+     "artist": "Denise Shepherd",
+     "title": "Boy on Fire",
+     "weeks": 2,
+     "peak": 11
+    },
+    {
+     "rank": 12,
+     "last": null,
+     "artist": "Lou Kowalski",
+     "title": "Electric Girl",
+     "weeks": 1,
+     "peak": 12
+    },
+    {
+     "rank": 13,
+     "last": 12,
+     "artist": "Silver Cowboys",
+     "title": "Hold On to the Night",
+     "weeks": 4,
+     "peak": 12
+    },
+    {
+     "rank": 14,
+     "last": null,
+     "artist": "Renee Moreno",
+     "title": "Don't Stop the Fever",
+     "weeks": 1,
+     "peak": 14
+    },
+    {
+     "rank": 15,
+     "last": 18,
+     "artist": "Stacy Vaughn",
+     "title": "Don't Stop the Rain",
+     "weeks": 14,
+     "peak": 2
+    },
+    {
+     "rank": 16,
+     "last": 16,
+     "artist": "Michael Jackson",
+     "title": "Bad",
+     "weeks": 55,
+     "peak": 1
+    },
+    {
+     "rank": 17,
+     "last": 11,
+     "artist": "Derek Vaughn",
+     "title": "Midnight Girl",
+     "weeks": 13,
+     "peak": 3
+    },
+    {
+     "rank": 18,
+     "last": 14,
+     "artist": "Public Enemy",
+     "title": "It Takes a Nation of Millions to Hold Us Back",
+     "weeks": 12,
+     "peak": 10
+    },
+    {
+     "rank": 19,
+     "last": 19,
+     "artist": "Angela Wilder",
+     "title": "Don't Stop the Lies",
+     "weeks": 2,
+     "peak": 19
+    },
+    {
+     "rank": 20,
+     "last": 17,
+     "artist": "Crystal Brooks",
+     "title": "Danger Tonight",
+     "weeks": 9,
+     "peak": 5
+    }
+   ],
+   "your_entries": []
+  },
+  "black_singles": {
+   "name": "Hot Black Singles",
+   "chart_dated": "1988-09-10",
+   "tracking_week_ending": "1988-08-28",
+   "method": "rank_reports",
+   "top": [
+    {
+     "rank": 1,
+     "last": 2,
+     "artist": "Paula Gaines",
+     "title": "Only Love",
+     "weeks": 8,
+     "peak": 1
+    },
+    {
+     "rank": 2,
+     "last": 1,
+     "artist": "Yolanda Wilder",
+     "title": "Say It's Broken",
+     "weeks": 6,
+     "peak": 1
+    },
+    {
+     "rank": 3,
+     "last": 5,
+     "artist": "Jerome Greer",
+     "title": "Girl of Restless",
+     "weeks": 15,
+     "peak": 3
+    },
+    {
+     "rank": 4,
+     "last": 23,
+     "artist": "Public Enemy",
+     "title": "Don't Believe the Hype",
+     "weeks": 10,
+     "peak": 1
+    },
+    {
+     "rank": 5,
+     "last": 3,
+     "artist": "Michael Jackson",
+     "title": "Another Part of Me",
+     "weeks": 8,
+     "peak": 3
+    },
+    {
+     "rank": 6,
+     "last": 6,
+     "artist": "Whitney Houston",
+     "title": "One Moment in Time",
+     "weeks": 5,
+     "peak": 6
+    },
+    {
+     "rank": 7,
+     "last": 17,
+     "artist": "Black Sisters",
+     "title": "Can't Fight the Talk",
+     "weeks": 3,
+     "peak": 7
+    },
+    {
+     "rank": 8,
+     "last": 4,
+     "artist": "Stacy Tate",
+     "title": "Love Feeling",
+     "weeks": 8,
+     "peak": 1
+    },
+    {
+     "rank": 9,
+     "last": 14,
+     "artist": "Jeff Wilder",
+     "title": "Summer Line",
+     "weeks": 7,
+     "peak": 9
+    },
+    {
+     "rank": 10,
+     "last": 21,
+     "artist": "Rick Astley",
+     "title": "It Would Take a Strong Strong Man",
+     "weeks": 5,
+     "peak": 10
+    }
+   ],
+   "your_entries": []
+  },
+  "black_albums": {
+   "name": "Top Black Albums",
+   "chart_dated": "1988-09-10",
+   "tracking_week_ending": "1988-08-28",
+   "method": "rank_reports",
+   "top": [
+    {
+     "rank": 1,
+     "last": 1,
+     "artist": "Public Enemy",
+     "title": "It Takes a Nation of Millions to Hold Us Back",
+     "weeks": 12,
+     "peak": 1
+    },
+    {
+     "rank": 2,
+     "last": 2,
+     "artist": "George Michael",
+     "title": "Faith",
+     "weeks": 47,
+     "peak": 1
+    },
+    {
+     "rank": 3,
+     "last": 3,
+     "artist": "Shawn Bishop",
+     "title": "Crazy Night",
+     "weeks": 5,
+     "peak": 2
+    },
+    {
+     "rank": 4,
+     "last": 5,
+     "artist": "Michael Jackson",
+     "title": "Bad",
+     "weeks": 55,
+     "peak": 1
+    },
+    {
+     "rank": 5,
+     "last": null,
+     "artist": "Michelle Moreno",
+     "title": "Rhythm Heart",
+     "weeks": 1,
+     "peak": 5
+    },
+    {
+     "rank": 6,
+     "last": null,
+     "artist": "Jamal Moreno",
+     "title": "Hot Love Affair",
+     "weeks": 1,
+     "peak": 6
+    },
+    {
+     "rank": 7,
+     "last": 4,
+     "artist": "Run-DMC",
+     "title": "Tougher Than Leather",
+     "weeks": 17,
+     "peak": 3
+    },
+    {
+     "rank": 8,
+     "last": 6,
+     "artist": "Bobby Brown",
+     "title": "Don't Be Cruel",
+     "weeks": 12,
+     "peak": 4
+    },
+    {
+     "rank": 9,
+     "last": 15,
+     "artist": "Angela Wilder",
+     "title": "Don't Stop the Lies",
+     "weeks": 2,
+     "peak": 9
+    },
+    {
+     "rank": 10,
+     "last": 7,
+     "artist": "Brian Mercer",
+     "title": "Danger Kiss",
+     "weeks": 5,
+     "peak": 6
+    }
+   ],
+   "your_entries": []
+  },
+  "ac": {
+   "name": "Adult Contemporary",
+   "chart_dated": "1988-09-10",
+   "tracking_week_ending": "1988-08-28",
+   "method": "station_reports",
+   "top": [
+    {
+     "rank": 1,
+     "last": 5,
+     "artist": "Golden Machine",
+     "title": "My Rhythm Eyes",
+     "weeks": 15,
+     "peak": 1
+    },
+    {
+     "rank": 2,
+     "last": 2,
+     "artist": "Stacy Tate",
+     "title": "Love Feeling",
+     "weeks": 7,
+     "peak": 2
+    },
+    {
+     "rank": 3,
+     "last": 6,
+     "artist": "Rick Astley",
+     "title": "It Would Take a Strong Strong Man",
+     "weeks": 4,
+     "peak": 3
+    },
+    {
+     "rank": 4,
+     "last": 7,
+     "artist": "Whitney Houston",
+     "title": "One Moment in Time",
+     "weeks": 4,
+     "peak": 4
+    },
+    {
+     "rank": 5,
+     "last": 10,
+     "artist": "Jerome Greer",
+     "title": "Girl of Restless",
+     "weeks": 8,
+     "peak": 5
+    },
+    {
+     "rank": 6,
+     "last": 11,
+     "artist": "Bobby McFerrin",
+     "title": "Don't Worry, Be Happy",
+     "weeks": 4,
+     "peak": 6
+    },
+    {
+     "rank": 7,
+     "last": 14,
+     "artist": "Danny Tate",
+     "title": "Beat of Restless",
+     "weeks": 3,
+     "peak": 7
+    },
+    {
+     "rank": 8,
+     "last": 8,
+     "artist": "George Michael",
+     "title": "Monkey",
+     "weeks": 9,
+     "peak": 8
+    },
+    {
+     "rank": 9,
+     "last": 12,
+     "artist": "Black Posse",
+     "title": "Neon Love Affair",
+     "weeks": 9,
+     "peak": 9
+    },
+    {
+     "rank": 10,
+     "last": 19,
+     "artist": "Lamont Pruitt",
+     "title": "Rhythm Kiss",
+     "weeks": 7,
+     "peak": 10
+    }
+   ],
+   "your_entries": []
+  },
+  "album_rock": {
+   "name": "Album Rock Tracks",
+   "chart_dated": "1988-09-10",
+   "tracking_week_ending": "1988-08-28",
+   "method": "station_reports",
+   "top": [
+    {
+     "rank": 1,
+     "last": 1,
+     "artist": "Concrete Thieves",
+     "title": "Wild Tonight",
+     "weeks": 10,
+     "peak": 1
+    },
+    {
+     "rank": 2,
+     "last": 3,
+     "artist": "Steel Kings",
+     "title": "Don't Stop the Time",
+     "weeks": 11,
+     "peak": 1
+    },
+    {
+     "rank": 3,
+     "last": 6,
+     "artist": "Paula Delgado",
+     "title": "Givin' Up the Groove",
+     "weeks": 11,
+     "peak": 3
+    },
+    {
+     "rank": 4,
+     "last": 5,
+     "artist": "Wild Groove",
+     "title": "Say It's Diamond",
+     "weeks": 6,
+     "peak": 4
+    },
+    {
+     "rank": 5,
+     "last": 7,
+     "artist": "Guns N' Roses",
+     "title": "Sweet Child o' Mine",
+     "weeks": 11,
+     "peak": 2
+    },
+    {
+     "rank": 6,
+     "last": 17,
+     "artist": "Steel Groove",
+     "title": "Summer Love Affair",
+     "weeks": 19,
+     "peak": 4
+    },
+    {
+     "rank": 7,
+     "last": 9,
+     "artist": "Crystal Kowalski",
+     "title": "Street of Neon",
+     "weeks": 6,
+     "peak": 7
+    },
+    {
+     "rank": 8,
+     "last": 10,
+     "artist": "Crystal Express",
+     "title": "Summer Lover",
+     "weeks": 16,
+     "peak": 8
+    },
+    {
+     "rank": 9,
+     "last": 11,
+     "artist": "Crimson Sisters",
+     "title": "Forever Boy",
+     "weeks": 7,
+     "peak": 9
+    },
+    {
+     "rank": 10,
+     "last": 19,
+     "artist": "Michael Jackson",
+     "title": "Dirty Diana",
+     "weeks": 21,
+     "peak": 1
+    }
+   ],
+   "your_entries": []
+  }
+ },
+ "news": [
+  {
+   "date": "1988-08-22",
+   "text": "RCA Records is stepping up promotion behind Electric Dolls's \"Dream Kiss\" after a stronger-than-expected response.",
+   "kind": "industry",
+   "tag": "reported"
+  },
+  {
+   "date": "1988-08-22",
+   "text": "RCA Records is stepping up promotion behind Rick Astley's \"It Would Take a Strong Strong Man\" after a stronger-than-expected response.",
+   "kind": "industry",
+   "tag": "reported"
+  },
+  {
+   "date": "1988-08-22",
+   "text": "Hot shot debut on the Top Pop Albums: Angela Wilder - \"Don't Stop the Lies\" enters at #19.",
+   "kind": "chart",
+   "tag": "official"
+  },
+  {
+   "date": "1988-08-22",
+   "text": "New single: Def Leppard - \"Love Bites\" on Mercury Records.",
+   "kind": "release",
+   "tag": "official"
+  },
+  {
+   "date": "1988-08-22",
+   "text": "Yolanda Wilder - \"Say It's Broken\" is the new #1 on the Hot Black Singles (chart dated 1988-09-03).",
+   "kind": "chart",
+   "tag": "official"
+  },
+  {
+   "date": "1988-08-22",
+   "text": "RIAA: Eddie Gaines' \"Golden Eyes\" (album) certified 2x platinum.",
+   "kind": "certification",
+   "tag": "official"
+  },
+  {
+   "date": "1988-08-22",
+   "text": "RIAA: Steve Monroe's \"Golden Lies\" (album) certified platinum.",
+   "kind": "certification",
+   "tag": "official"
+  },
+  {
+   "date": "1988-08-29",
+   "text": "Paula Gaines - \"Only Love\" is the new #1 on the Billboard Hot 100 (chart dated 1988-09-10).",
+   "kind": "chart",
+   "tag": "official"
+  },
+  {
+   "date": "1988-08-29",
+   "text": "RCA Records is stepping up promotion behind Rick Astley's \"It Would Take a Strong Strong Man\" after a stronger-than-expected response.",
+   "kind": "industry",
+   "tag": "reported"
+  },
+  {
+   "date": "1988-08-29",
+   "text": "New album: Crystal Hayes - \"Summer Talk\" on Atlantic Records.",
+   "kind": "release",
+   "tag": "official"
+  },
+  {
+   "date": "1988-08-29",
+   "text": "Hot shot debut on the Billboard Hot 100: Bon Jovi - \"Bad Medicine\" enters at #33.",
+   "kind": "chart",
+   "tag": "official"
+  },
+  {
+   "date": "1988-08-29",
+   "text": "Hot shot debut on the Top Pop Albums: Michelle Moreno - \"Rhythm Heart\" enters at #4.",
+   "kind": "chart",
+   "tag": "official"
+  },
+  {
+   "date": "1988-08-29",
+   "text": "Paula Gaines - \"Only Love\" is the new #1 on the Hot Black Singles (chart dated 1988-09-10).",
+   "kind": "chart",
+   "tag": "official"
+  },
+  {
+   "date": "1988-08-29",
+   "text": "Golden Machine - \"My Rhythm Eyes\" is the new #1 on the Adult Contemporary (chart dated 1988-09-10).",
+   "kind": "chart",
+   "tag": "official"
+  }
+ ],
+ "upcoming_releases_announced": [
+  {
+   "date": "1988-09-05",
+   "artist": "Anita Baker",
+   "title": "Giving You the Best That I Got",
+   "kind": "single",
+   "note": "announced"
+  },
+  {
+   "date": "1988-09-05",
+   "artist": "Luther Vandross",
+   "title": "Any Love",
+   "kind": "single",
+   "note": "announced"
+  },
+  {
+   "date": "1988-09-05",
+   "artist": "Luther Vandross",
+   "title": "Any Love",
+   "kind": "album",
+   "note": "announced"
+  },
+  {
+   "date": "1988-09-05",
+   "artist": "Shawn Kowalski",
+   "title": "Givin' Up the Kiss",
+   "kind": "album",
+   "note": "announced"
+  },
+  {
+   "date": "1988-09-05",
+   "artist": "Black Express",
+   "title": "Promise of Summer",
+   "kind": "album",
+   "note": "announced"
+  },
+  {
+   "date": "1988-09-12",
+   "artist": "Silver Crew",
+   "title": "Only Heart",
+   "kind": "album",
+   "note": "announced"
+  },
+  {
+   "date": "1988-09-12",
+   "artist": "Erica Shepherd",
+   "title": "Say It's Fire",
+   "kind": "album",
+   "note": "announced"
+  },
+  {
+   "date": "1988-09-12",
+   "artist": "Shawn Simms",
+   "title": "Don't Stop the Games",
+   "kind": "album",
+   "note": "announced"
+  },
+  {
+   "date": "1988-09-12",
+   "artist": "Concrete Society",
+   "title": "Time of Golden",
+   "kind": "album",
+   "note": "announced"
+  },
+  {
+   "date": "1988-09-19",
+   "artist": "U2",
+   "title": "Desire",
+   "kind": "single",
+   "note": "announced"
+  }
+ ],
+ "people": [
+  {
+   "person_id": "person:pc_contact1",
+   "name": "Carla Holloway",
+   "roles": [
+    "producer",
+    "songwriter"
+   ],
+   "works_for": null,
+   "real_person": false,
+   "traits": [
+    "driven",
+    "loyal"
+   ],
+   "your_feeling": "close",
+   "their_feeling_toward_you": "close",
+   "their_trust": "moderate",
+   "their_recent_memories_for_characterisation": [
+    "worked together on demos"
+   ],
+   "notes": "local producer (generated)"
+  },
+  {
+   "person_id": "person:pc_contact2",
+   "name": "Michelle Hayes",
+   "roles": [
+    "booker"
+   ],
+   "works_for": null,
+   "real_person": false,
+   "traits": [
+    "outgoing"
+   ],
+   "your_feeling": "friendly",
+   "their_feeling_toward_you": "friendly",
+   "their_trust": "moderate",
+   "their_recent_memories_for_characterisation": [
+    "books you at a Hollywood club"
+   ],
+   "notes": "club booker (generated)"
+  }
+ ],
+ "canon_facts": [],
+ "open_offers": [],
+ "pending_decisions": [],
+ "producers_for_hire": [
+  {
+   "person_id": "person:pc_contact1",
+   "name": "Carla Holloway",
+   "usual_fee": 1200.0,
+   "real_person": false,
+   "reputation": "high",
+   "styles": [
+    "rnb",
+    "pop",
+    "dance_pop"
+   ],
+   "you_know_them": true
+  },
+  {
+   "person_id": "person:producer002",
+   "name": "Paula Greer",
+   "usual_fee": 4900.0,
+   "real_person": false,
+   "reputation": "high",
+   "styles": [
+    "hair_metal",
+    "pop"
+   ],
+   "you_know_them": false
+  },
+  {
+   "person_id": "person:producer011",
+   "name": "Lamont Fontaine",
+   "usual_fee": 4800.0,
+   "real_person": false,
+   "reputation": "high",
+   "styles": [
+    "pop"
+   ],
+   "you_know_them": false
+  },
+  {
+   "person_id": "person:producer003",
+   "name": "Eddie Greer",
+   "usual_fee": 4700.0,
+   "real_person": false,
+   "reputation": "high",
+   "styles": [
+    "hair_metal",
+    "pop"
+   ],
+   "you_know_them": false
+  },
+  {
+   "person_id": "person:producer000",
+   "name": "Vanessa Carter",
+   "usual_fee": 4700.0,
+   "real_person": false,
+   "reputation": "high",
+   "styles": [
+    "singer_songwriter",
+    "pop"
+   ],
+   "you_know_them": false
+  },
+  {
+   "person_id": "person:producer008",
+   "name": "Denise Pryor",
+   "usual_fee": 4600.0,
+   "real_person": false,
+   "reputation": "high",
+   "styles": [
+    "alternative",
+    "pop"
+   ],
+   "you_know_them": false
+  },
+  {
+   "person_id": "person:producer001",
+   "name": "Monique Coleman",
+   "usual_fee": 2300.0,
+   "real_person": false,
+   "reputation": "moderate",
+   "styles": [
+    "rnb",
+    "pop"
+   ],
+   "you_know_them": false
+  },
+  {
+   "person_id": "person:producer004",
+   "name": "Sonya Greer",
+   "usual_fee": 2000.0,
+   "real_person": false,
+   "reputation": "moderate",
+   "styles": [
+    "gangsta_rap",
+    "pop"
+   ],
+   "you_know_them": false
+  },
+  {
+   "person_id": "person:mutt_lange",
+   "name": "Robert John \"Mutt\" Lange",
+   "usual_fee": 150000.0,
+   "real_person": true,
+   "reputation": "very high",
+   "styles": [
+    "hair_metal",
+    "rock",
+    "pop"
+   ],
+   "you_know_them": false
+  },
+  {
+   "person_id": "person:quincy_jones",
+   "name": "Quincy Jones",
+   "usual_fee": 150000.0,
+   "real_person": true,
+   "reputation": "very high",
+   "styles": [
+    "pop",
+    "rnb",
+    "soul_ballad"
+   ],
+   "you_know_them": false
+  },
+  {
+   "person_id": "person:jimmy_jam",
+   "name": "Jimmy Jam",
+   "usual_fee": 80000.0,
+   "real_person": true,
+   "reputation": "very high",
+   "styles": [
+    "rnb",
+    "dance_pop",
+    "new_jack_swing"
+   ],
+   "you_know_them": false
+  },
+  {
+   "person_id": "person:teddy_riley",
+   "name": "Teddy Riley",
+   "usual_fee": 40000.0,
+   "real_person": true,
+   "reputation": "very high",
+   "styles": [
+    "new_jack_swing",
+    "rnb",
+    "hip_hop"
+   ],
+   "you_know_them": false
+  },
+  {
+   "person_id": "person:terry_lewis",
+   "name": "Terry Lewis",
+   "usual_fee": 80000.0,
+   "real_person": true,
+   "reputation": "very high",
+   "styles": [
+    "rnb",
+    "dance_pop",
+    "new_jack_swing"
+   ],
+   "you_know_them": false
+  },
+  {
+   "person_id": "person:hank_shocklee",
+   "name": "Hank Shocklee",
+   "usual_fee": 25000.0,
+   "real_person": true,
+   "reputation": "very high",
+   "styles": [
+    "hip_hop",
+    "gangsta_rap"
+   ],
+   "you_know_them": false
+  },
+  {
+   "person_id": "person:rick_rubin",
+   "name": "Rick Rubin",
+   "usual_fee": 40000.0,
+   "real_person": true,
+   "reputation": "very high",
+   "styles": [
+    "hip_hop",
+    "rock",
+    "hair_metal"
+   ],
+   "you_know_them": false
+  },
+  {
+   "person_id": "person:babyface",
+   "name": "Babyface",
+   "usual_fee": 50000.0,
+   "real_person": true,
+   "reputation": "very high",
+   "styles": [
+    "rnb",
+    "soul_ballad",
+    "new_jack_swing"
+   ],
+   "you_know_them": false
+  }
+ ],
+ "genres_available": [
+  "pop",
+  "dance_pop",
+  "rnb",
+  "new_jack_swing",
+  "soul_ballad",
+  "adult_contemporary",
+  "hip_hop",
+  "pop_rap",
+  "gangsta_rap",
+  "rock",
+  "hair_metal",
+  "alternative",
+  "singer_songwriter",
+  "latin_pop",
+  "house",
+  "country"
+ ],
+ "commands": {
+  "accept_offer": {
+   "desc": "Accept an open offer (recording contract, song pitch, booking).",
+   "args": {
+    "offer_id": {
+     "type": "str",
+     "required": true
+    }
+   }
+  },
+  "decline_offer": {
+   "desc": "Decline an open offer.",
+   "args": {
+    "offer_id": {
+     "type": "str",
+     "required": true
+    }
+   }
+  },
+  "record_song": {
+   "desc": "Book studio time to record a song with a producer. Takes studio_weeks; quality comes from the people involved, the budget and time, not the description.",
+   "args": {
+    "title": {
+     "type": "str",
+     "required": false
+    },
+    "song": {
+     "type": "str",
+     "required": true,
+     "desc": "a composition id from your songbook, or 'write_own'"
+    },
+    "cowriter": {
+     "type": "str",
+     "required": false,
+     "desc": "person id"
+    },
+    "producer": {
+     "type": "str",
+     "required": true,
+     "desc": "person id"
+    },
+    "genre": {
+     "type": "enum",
+     "required": true,
+     "enum": "genres"
+    },
+    "studio_weeks": {
+     "type": "int",
+     "required": true,
+     "min": 1,
+     "max": 8
+    },
+    "budget": {
+     "type": "float",
+     "required": true,
+     "min": 0,
+     "max": 500000,
+     "desc": "studio, musicians and mixing (USD), excluding the producer's fee"
+    },
+    "fee_offer": {
+     "type": "float",
+     "required": false,
+     "min": 0,
+     "desc": "fee offered to the producer (defaults to their usual fee)"
+    },
+    "ambition": {
+     "type": "float",
+     "required": false,
+     "min": 0,
+     "max": 1
+    },
+    "mood": {
+     "type": "float",
+     "required": false,
+     "min": -1,
+     "max": 1
+    }
+   }
+  },
+  "release_single": {
+   "desc": "Release a finished recording as a single (label approval needed if signed).",
+   "args": {
+    "recording_id": {
+     "type": "str",
+     "required": true
+    },
+    "date": {
+     "type": "date",
+     "required": false
+    },
+    "promo": {
+     "type": "enum",
+     "required": true,
+     "enum": [
+      "low",
+      "standard",
+      "high"
+     ]
+    },
+    "video": {
+     "type": "enum",
+     "required": false,
+     "enum": [
+      "none",
+      "low",
+      "standard",
+      "high"
+     ]
+    }
+   }
+  },
+  "release_album": {
+   "desc": "Release an album of at least 6 finished recordings.",
+   "args": {
+    "title": {
+     "type": "str",
+     "required": true
+    },
+    "recording_ids": {
+     "type": "list",
+     "required": true
+    },
+    "date": {
+     "type": "date",
+     "required": false
+    },
+    "promo": {
+     "type": "enum",
+     "required": false,
+     "enum": [
+      "low",
+      "standard",
+      "high"
+     ]
+    }
+   }
+  },
+  "gig": {
+   "desc": "Play local club dates: income, live buzz (which A&R notices) and stagecraft.",
+   "args": {
+    "weeks": {
+     "type": "int",
+     "required": true,
+     "min": 1,
+     "max": 12
+    },
+    "nights_per_week": {
+     "type": "int",
+     "required": true,
+     "min": 1,
+     "max": 5
+    }
+   }
+  },
+  "train": {
+   "desc": "Lessons or practice to improve a skill.",
+   "args": {
+    "skill": {
+     "type": "enum",
+     "required": true,
+     "enum": [
+      "vocal",
+      "performance",
+      "songwriting",
+      "media",
+      "production"
+     ]
+    },
+    "weeks": {
+     "type": "int",
+     "required": true,
+     "min": 1,
+     "max": 12
+    },
+    "spend_per_week": {
+     "type": "float",
+     "required": false,
+     "min": 0,
+     "max": 5000
+    }
+   }
+  },
+  "promote": {
+   "desc": "Personal promotion of a released single.",
+   "args": {
+    "recording_id": {
+     "type": "str",
+     "required": true
+    },
+    "kind": {
+     "type": "enum",
+     "required": true,
+     "enum": [
+      "radio_tour",
+      "club_tour",
+      "press_tour"
+     ]
+    },
+    "weeks": {
+     "type": "int",
+     "required": true,
+     "min": 1,
+     "max": 6
+    }
+   }
+  },
+  "set_day_job": {
+   "desc": "Keep or quit the day job.",
+   "args": {
+    "active": {
+     "type": "bool",
+     "required": true
+    }
+   }
+  },
+  "set_lifestyle": {
+   "desc": "Spending level.",
+   "args": {
+    "level": {
+     "type": "enum",
+     "required": true,
+     "enum": [
+      "modest",
+      "comfortable",
+      "lavish"
+     ]
+    }
+   }
+  },
+  "rest": {
+   "desc": "Take time off to recover energy and morale.",
+   "args": {
+    "weeks": {
+     "type": "int",
+     "required": true,
+     "min": 1,
+     "max": 8
+    }
+   }
+  },
+  "set_policy": {
+   "desc": "Standing orders for routine work your team handles without asking you.",
+   "args": {
+    "gigs_when_idle": {
+     "type": "int",
+     "required": false,
+     "min": 0,
+     "max": 5,
+     "desc": "club nights/week to keep booked when nothing else is on (0 = off)"
+    },
+    "training_when_idle": {
+     "type": "enum",
+     "required": false,
+     "enum": [
+      "vocal",
+      "performance",
+      "songwriting",
+      "media",
+      "production",
+      "none"
+     ]
+    },
+    "training_spend_per_week": {
+     "type": "float",
+     "required": false,
+     "min": 0,
+     "max": 2000
+    },
+    "manager_may_book_media": {
+     "type": "bool",
+     "required": false
+    },
+    "manager_may_book_gigs": {
+     "type": "bool",
+     "required": false
+    },
+    "rest_when_exhausted": {
+     "type": "bool",
+     "required": false
+    }
+   }
+  },
+  "hire_manager": {
+   "desc": "Offer a manager you know a management deal (they decide whether to take you on).",
+   "args": {
+    "person_id": {
+     "type": "str",
+     "required": true
+    },
+    "commission": {
+     "type": "float",
+     "required": true,
+     "min": 0.05,
+     "max": 0.25
+    }
+   }
+  },
+  "fire_manager": {
+   "desc": "End your management deal.",
+   "args": {}
+  }
+ },
+ "proposal_types": {
+  "introduce_person": {
+   "required": [
+    "name",
+    "role",
+    "context"
+   ],
+   "optional": [
+    "traits",
+    "attitude",
+    "affiliation"
+   ]
+  },
+  "opportunity": {
+   "required": [
+    "kind",
+    "context"
+   ],
+   "optional": [
+    "source",
+    "with",
+    "recording_id",
+    "venue"
+   ]
+  },
+  "relationship_moment": {
+   "required": [
+    "with",
+    "nature",
+    "valence"
+   ],
+   "optional": [
+    "private"
+   ]
+  },
+  "narrative_fact": {
+   "required": [
+    "text"
+   ],
+   "optional": [
+    "about"
+   ]
+  },
+  "creative_brief": {
+   "required": [
+    "concept"
+   ],
+   "optional": [
+    "mood",
+    "ambition",
+    "influences"
+   ]
+  }
+ },
+ "constraints": [
+  "Never state a number (sales, money, chart position, airplay) that is not in this packet.",
+  "Never decide outcomes: offers, bookings, signings, reviews and chart results come from the engine.",
+  "Anything with consequences (a new named industry person, an opportunity, a relationship change, a scandal, a purchase) must be returned as a proposal or decision, not narrated as done.",
+  "Real people may appear and speak in character, but do not invent serious scandals, illnesses or traumatic events for them.",
+  "The protagonist does not know other people's private memories; those are for characterisation only."
+ ]
+}
