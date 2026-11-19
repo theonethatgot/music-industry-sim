@@ -1,0 +1,49 @@
+{
+  "campaign": "session1",
+  "scenario": "us_1988_aspiring",
+  "seed": 1988,
+  "start_hash": "93c1d72a59a3802fd8c7",
+  "original_session_hash": "e3076df5dc16af509ffb",
+  "data_version": "3763906a35ea9667",
+  "turn_count": 1,
+  "in_world_date": "1988-09-18",
+  "pass_id": "session1-0002",
+  "state_hash": "043ba77c6a26049c3dc5",
+  "replay": {
+    "commands": 3,
+    "checked": 3,
+    "ok": true,
+    "mismatches": []
+  },
+  "turn_results": [
+    {
+      "turn": "0001.json",
+      "report": {
+        "decisions": [
+          {
+            "command": "set_policy",
+            "status": "accepted",
+            "summary": "Standing orders updated: training_when_idle=performance, training_spend_per_week=75, gigs_when_idle=2."
+          }
+        ],
+        "proposals": [],
+        "advance": {
+          "from": "1988-09-05",
+          "to": "1988-09-18",
+          "days": 13,
+          "interrupts": [
+            {
+              "reason": "offer",
+              "offer": "offer:n00034"
+            },
+            {
+              "reason": "showcase",
+              "event": 21035
+            }
+          ]
+        },
+        "packet": "/tmp/tmpepe5r4ds/session1/packets/pass_0002.md"
+      }
+    }
+  ]
+}
