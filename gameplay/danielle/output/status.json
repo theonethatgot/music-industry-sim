@@ -5,13 +5,13 @@
   "start_hash": "93c1d72a59a3802fd8c7",
   "original_session_hash": "e3076df5dc16af509ffb",
   "data_version": "3763906a35ea9667",
-  "turn_count": 1,
-  "in_world_date": "1988-09-18",
-  "pass_id": "session1-0002",
-  "state_hash": "043ba77c6a26049c3dc5",
+  "turn_count": 2,
+  "in_world_date": "1988-09-21",
+  "pass_id": "session1-0003",
+  "state_hash": "b76ded2258a52ef9edd8",
   "replay": {
-    "commands": 3,
-    "checked": 3,
+    "commands": 5,
+    "checked": 5,
     "ok": true,
     "mismatches": []
   },
@@ -42,7 +42,29 @@
             }
           ]
         },
-        "packet": "/tmp/tmpepe5r4ds/session1/packets/pass_0002.md"
+        "packet": "/tmp/tmpcuc5de77/session1/packets/pass_0002.md"
+      }
+    },
+    {
+      "turn": "0002.json",
+      "report": {
+        "decisions": [],
+        "proposals": [
+          {
+            "type": "introduce_person",
+            "status": "accepted",
+            "summary": "Linda Porter (manager) now exists in the world as person:n00001.",
+            "person": "person:n00001",
+            "event": 21043
+          }
+        ],
+        "advance": {
+          "from": "1988-09-18",
+          "to": "1988-09-21",
+          "days": 3,
+          "interrupts": []
+        },
+        "packet": "/tmp/tmpcuc5de77/session1/packets/pass_0003.md"
       }
     }
   ]
