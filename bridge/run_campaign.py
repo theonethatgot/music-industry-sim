@@ -37,6 +37,18 @@ def main() -> None:
         try:
             initial_hash = camp.world.state_hash()
             if initial_hash != EXPECTED_START_HASH:
+                original = json.loads((ROOT / "playtests/session1/packets/pass_0001.json").read_text(encoding="utf-8"))
+                regenerated = camp.last_packet()
+                changed = [key for key in sorted(set(original) | set(regenerated)) if original.get(key) != regenerated.get(key)]
+                print(f"Original data version: 3763906a35ea9667; regenerated: {camp.store.get_meta('data_version')}", flush=True)
+                print(f"Initial packet sections that differ: {changed}", flush=True)
+                for key in changed[:6]:
+                    old, new = original.get(key), regenerated.get(key)
+                    if isinstance(old, dict) and isinstance(new, dict):
+                        subkeys = [k for k in set(old) | set(new) if old.get(k) != new.get(k)]
+                        print(f"Section {key} different subkeys: {subkeys[:20]}", flush=True)
+                    else:
+                        print(f"Section {key}: old={str(old)[:160]} new={str(new)[:160]}", flush=True)
                 raise ValueError(f"Engine/data mismatch: initial hash {initial_hash} != {EXPECTED_START_HASH}; do not overwrite the campaign")
             results = []
             for path in paths:
