@@ -49,6 +49,16 @@ def main() -> None:
                         print(f"Section {key} different subkeys: {subkeys[:20]}", flush=True)
                     else:
                         print(f"Section {key}: old={str(old)[:160]} new={str(new)[:160]}", flush=True)
+                comparison = Campaign.create(Path(temp) / "comparison" / "session1", SCENARIO, SEED)
+                try:
+                    print(f"Second world hash: {comparison.world.state_hash()}", flush=True)
+                    d1, a1 = camp.world.to_state()
+                    d2, a2 = comparison.world.to_state()
+                    print(f"Different world document keys: {[k for k in d1 if d1[k] != d2[k]]}", flush=True)
+                    import numpy as np
+                    print(f"Different world array keys: {[k for k in a1 if not np.array_equal(a1[k],a2[k])]}", flush=True)
+                finally:
+                    comparison.close()
                 raise ValueError(f"Engine/data mismatch: initial hash {initial_hash} != {EXPECTED_START_HASH}; do not overwrite the campaign")
             results = []
             for path in paths:
