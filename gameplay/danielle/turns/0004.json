@@ -1,0 +1,18 @@
+{
+  "pass_id": "session1-0004",
+  "decisions": [],
+  "proposals": [
+    {
+      "type": "introduce_person",
+      "name": "Marianne Collins",
+      "role": "lawyer",
+      "context": "Linda Porter arranged an initial independent entertainment-law consultation for Danielle to review the open Sire Records agreement before the October 8 deadline; focus on the four album options, royalty recoupment and the recording budget. The consultation is exploratory, with no retained representation, bill or changed label terms yet.",
+      "traits": [
+        "cautious",
+        "disciplined"
+      ],
+      "attitude": "neutral"
+    }
+  ],
+  "advance": "1w"
+}
