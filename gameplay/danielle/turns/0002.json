@@ -1,0 +1,18 @@
+{
+  "pass_id": "session1-0002",
+  "decisions": [],
+  "proposals": [
+    {
+      "type": "introduce_person",
+      "name": "Linda Porter",
+      "role": "manager",
+      "context": "Following the September 17 Hollywood showcase, Michelle Hayes arranges an exploratory conversation between Danielle and Linda Porter, a Los Angeles independent talent manager. Danielle wants help evaluating Sire's offer and her next career steps. No representation agreement has been made.",
+      "traits": [
+        "cautious",
+        "disciplined"
+      ],
+      "attitude": "neutral"
+    }
+  ],
+  "advance": "3d"
+}
