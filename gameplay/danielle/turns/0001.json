@@ -1,0 +1,15 @@
+{
+  "pass_id": "session1-0001",
+  "decisions": [
+    {
+      "command": "set_policy",
+      "args": {
+        "training_when_idle": "performance",
+        "training_spend_per_week": 75,
+        "gigs_when_idle": 2
+      }
+    }
+  ],
+  "proposals": [],
+  "advance": "next"
+}
