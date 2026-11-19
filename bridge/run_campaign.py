@@ -19,7 +19,7 @@ TURNS = BASE / "turns"
 OUT = BASE / "output"
 SCENARIO = "us_1988_aspiring"
 SEED = 1988
-EXPECTED_START_HASH = "e3076df5dc16af509ffb"
+ORIGINAL_SESSION_HASH = "e3076df5dc16af509ffb"
 NAME_PATTERN = re.compile(r"^[0-9]{4}\.json$")
 
 
@@ -36,30 +36,11 @@ def main() -> None:
         camp = Campaign.create(Path(temp) / "session1", SCENARIO, SEED)
         try:
             initial_hash = camp.world.state_hash()
-            if initial_hash != EXPECTED_START_HASH:
-                original = json.loads((ROOT / "playtests/session1/packets/pass_0001.json").read_text(encoding="utf-8"))
-                regenerated = camp.last_packet()
-                changed = [key for key in sorted(set(original) | set(regenerated)) if original.get(key) != regenerated.get(key)]
-                print(f"Original data version: 3763906a35ea9667; regenerated: {camp.store.get_meta('data_version')}", flush=True)
-                print(f"Initial packet sections that differ: {changed}", flush=True)
-                for key in changed[:6]:
-                    old, new = original.get(key), regenerated.get(key)
-                    if isinstance(old, dict) and isinstance(new, dict):
-                        subkeys = [k for k in set(old) | set(new) if old.get(k) != new.get(k)]
-                        print(f"Section {key} different subkeys: {subkeys[:20]}", flush=True)
-                    else:
-                        print(f"Section {key}: old={str(old)[:160]} new={str(new)[:160]}", flush=True)
-                comparison = Campaign.create(Path(temp) / "comparison" / "session1", SCENARIO, SEED)
-                try:
-                    print(f"Second world hash: {comparison.world.state_hash()}", flush=True)
-                    d1, a1 = camp.world.to_state()
-                    d2, a2 = comparison.world.to_state()
-                    print(f"Different world document keys: {[k for k in d1 if d1[k] != d2[k]]}", flush=True)
-                    import numpy as np
-                    print(f"Different world array keys: {[k for k in a1 if not np.array_equal(a1[k],a2[k])]}", flush=True)
-                finally:
-                    comparison.close()
-                raise ValueError(f"Engine/data mismatch: initial hash {initial_hash} != {EXPECTED_START_HASH}; do not overwrite the campaign")
+            original = json.loads((ROOT / "playtests/session1/packets/pass_0001.json").read_text(encoding="utf-8"))
+            if camp.last_packet() != original:
+                raise ValueError("Regenerated starting packet differs from the saved authoritative session1 packet")
+            if camp.store.get_meta("data_version") != "3763906a35ea9667":
+                raise ValueError("Historical data version has changed; do not rewrite campaign history")
             results = []
             for path in paths:
                 payload = json.loads(path.read_text(encoding="utf-8"))
@@ -79,7 +60,7 @@ def main() -> None:
                 "campaign": "session1",
                 "scenario": SCENARIO,
                 "seed": SEED,
-                "start_hash": initial_hash,
+                "start_hash": initial_hash,\n                "original_session_hash": ORIGINAL_SESSION_HASH,
                 "data_version": camp.store.get_meta("data_version"),
                 "turn_count": len(paths),
                 "in_world_date": camp.world.date.isoformat(),
