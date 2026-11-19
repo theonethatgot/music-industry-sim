@@ -1,5 +1,5 @@
-# Los Angeles, autumn 1988: an unsigned singer — pass session1-0003
-**In-world date:** 1988-09-21 (this pass covers 1988-09-18 to 1988-09-21)
+# Los Angeles, autumn 1988: an unsigned singer — pass session1-0004
+**In-world date:** 1988-09-27 (this pass covers 1988-09-21 to 1988-09-27)
 
 > You are the narrator of a music-industry career simulation. The engine below is authoritative: use its facts, numbers and people; write immersive scenes, dialogue and atmosphere around them; and return the player's decisions plus any proposed developments in the JSON format at the end. The full rules are in `docs/narrator_contract.md` (paste once per conversation).
 
@@ -8,154 +8,157 @@
 - Background: Grew up singing in church; two years of community-college music theory; sings backing vocals on local sessions.
 - Genres: rnb, pop, dance_pop; persona: warm, determined, girl-next-door
 - Abilities as your team rates them (0–100): look 72, media 55, performance 63, production 20, songwriting 58, vocal 80
-- Wellbeing: energy low, stress low, morale high
+- Wellbeing: energy very low, stress moderate, morale high
 - Public recognition: 0.0% of the music-buying public; local live buzz: low.
 - Industry view: singles track record very low, momentum 0.0, critical standing low.
 - **Unsigned.**
 
 ## Pacing
-This pass covers 3 days. The clock stopped because: the requested time passed quietly. Give the moments that stopped the clock full scenes. Summarise routine stretches in a few evocative paragraphs. Choose the next 'advance' from what the protagonist is doing: 'next' runs until something needs attention (at most about 3 months); a few days for intense periods; weeks or months for routine.
+This pass covers 6 days. The clock stopped because: exhaustion. Give the moments that stopped the clock full scenes. Summarise routine stretches in a few evocative paragraphs. Choose the next 'advance' from what the protagonist is doing: 'next' runs until something needs attention (at most about 3 months); a few days for intense periods; weeks or months for routine.
 
 ## Your team and standing orders
-- Manager: none
-- Standing orders: gigs_when_idle=2, training_when_idle=performance, training_spend_per_week=75, manager_may_book_media=True, manager_may_book_gigs=True, rest_when_exhausted=True
+- Manager: **Linda Porter** `person:n00001` (15% commission since 1988-09-21)
+- Standing orders: gigs_when_idle=2, training_when_idle=none, training_spend_per_week=0, manager_may_book_media=True, manager_may_book_gigs=True, rest_when_exhausted=True
 - Always comes back to the player: signing or ending contracts (label, management, publishing); recording sessions (song, producer, budget); releases (which song, when, how much promotion); career changes (image, genre, label, city); spending more than about $2,000 of your own money; public statements and anything that could become news
+- Handled for you: Standing orders: you took a week off to recover; your team cleared the calendar.
 - What people are telling you: Carla Holloway: the old demo tape is rough; a properly recorded song would give labels and radio more to hear.
-- What people are telling you: People keep asking who manages you.
+- What people are telling you: You're running on empty; people around you can see it.
 
 ## Money
-Cash: **$2,388.58** · this period: +$613 / −$295 · lifestyle: modest · day job: Session backing vocalist and restaurant shifts (active)
+Cash: **$2,657.22** · this period: +$617 / −$349 · lifestyle: modest · day job: Session backing vocalist and restaurant shifts (active)
 
 ## Calendar
 - 1988-09-05 → 1988-10-02: club dates, 2 nights/week
 - 1988-09-05 → 1988-10-02: performance training
+- 1988-09-26 → 1988-10-02: time off
 
 ## What happened (news and events the protagonist knows about)
-- 1988-09-19 [official] Rick Astley - "It Would Take a Strong Strong Man" is the new #1 on the Billboard Hot 100 (chart dated 1988-10-01).
-- 1988-09-19 [official] New album: Denise Lambert - "Crazy Touch" on Epic Records.
-- 1988-09-19 [official] New single: U2 - "Desire" on Island Records.
-- 1988-09-19 [official] Hot shot debut on the Top Pop Albums: Silver Crew - "Only Heart" enters at #2.
-- 1988-09-19 [official] Bobby McFerrin - "Don't Worry, Be Happy" is the new #1 on the Adult Contemporary (chart dated 1988-10-01).
-- 1988-09-19 [official] RIAA: Rick Astley's "It Would Take a Strong Strong Man" (single) certified gold.
-- 1988-09-19 [official] RIAA: Electric Kings' "Diamond Tonight" (album) certified platinum.
-- 1988-09-19 [official] RIAA: Danny Tate's "Beat of Restless" (single) certified gold.
-- 1988-09-19 [official] RIAA: Erica Holloway's "Beat of Shadow" (album) certified platinum.
-- 1988-09-19 [official] RIAA: Michelle Moreno's "Rhythm Heart" (album) certified platinum.
-- 1988-09-19 [official] RIAA: Silver Crew's "Only Heart" (album) certified gold.
-- 1988-09-19 [official] RIAA: Concrete Society's "Time of Golden" (album) certified gold.
-- 1988-09-19 [reported] Danny Tate will perform on American Bandstand.
-- 1988-09-19 [reported] Yolanda Wilder will perform on American Bandstand.
+- 1988-09-26 [official] Standing orders: you took a week off to recover; your team cleared the calendar.
+- 1988-09-26 [official] Danny Tate - "Beat of Restless" is the new #1 on the Billboard Hot 100 (chart dated 1988-10-08).
+- 1988-09-26 [official] Denise Lambert - "Crazy Touch" is the new #1 on the Top Pop Albums (chart dated 1988-10-08).
+- 1988-09-26 [official] New single: Michael Jackson - "Smooth Criminal" on Epic Records.
+- 1988-09-26 [official] You are exhausted; your voice and stage energy are suffering.
+- 1988-09-26 [official] Hot shot debut on the Top Pop Albums: Denise Lambert - "Crazy Touch" enters at #1.
+- 1988-09-26 [official] Ray Pruitt - "Say It's Fire" is the new #1 on the Hot Black Singles (chart dated 1988-10-08).
+- 1988-09-26 [official] Bon Jovi - "Bad Medicine" is the new #1 on the Album Rock Tracks (chart dated 1988-10-08).
+- 1988-09-26 [official] New album: Anita Baker - "Giving You the Best That I Got" on Elektra Records.
+- 1988-09-26 [official] New single: Bobby Brown - "My Prerogative" on MCA Records.
+- 1988-09-26 [official] RIAA: Cherry Posse's "Can't Fight the Love" (album) certified gold.
+- 1988-09-26 [official] RIAA: Steve Delgado's "Fire Kiss" (album) certified gold.
+- 1988-09-26 [official] RIAA: Shawn Kowalski's "Givin' Up the Kiss" (album) certified gold.
+- 1988-09-26 [official] RIAA: Erica Shepherd's "Say It's Fire" (album) certified gold.
+- 1988-09-26 [official] RIAA: Denise Lambert's "Crazy Touch" (album) certified gold.
 
 ## Charts
 
-**Billboard Hot 100** — chart dated 1988-10-01 (method: rank_reports)
-  1. Rick Astley — It Would Take a Strong Strong Man (▲2, 8 wk)
-  2. Bobby McFerrin — Don't Worry, Be Happy (▲5, 10 wk)
-  3. Danny Tate — Beat of Restless (▲4, 8 wk)
-  4. Yolanda Wilder — Say It's Broken (▲6, 9 wk)
-  5. Paula Gaines — Only Love (▼1, 11 wk)
-  6. Jerome Greer — Girl of Restless (▼3, 18 wk)
-  7. Def Leppard — Love Bites (▲11, 4 wk)
-  8. Black Sisters — Can't Fight the Talk (=, 6 wk)
-  9. Vince Tate — Say It's Paradise (▲10, 11 wk)
- 10. Lamont Pruitt — Rhythm Kiss (▼9, 13 wk)
- 11. Michael Jackson — Another Part of Me (▼7, 11 wk)
- 12. Ray Pruitt — Say It's Fire (▲22, 4 wk)
- 13. Black Posse — Neon Love Affair (▲16, 17 wk)
- 14. Sugar Groove — Tonight Girl (▲25, 7 wk)
- 15. Denise Mercer — Diamond Dance (▲17, 9 wk)
- 16. Urban Dolls — Only Heart (▲18, 9 wk)
- 17. Bon Jovi — Bad Medicine (▼14, 4 wk)
- 18. Whitney Houston — One Moment in Time (▼12, 7 wk)
- 19. Jamal Pryor — Hold On to the Motion (▼13, 21 wk)
- 20. Concrete Society — Don't Stop the Lies (=, 11 wk)
+**Billboard Hot 100** — chart dated 1988-10-08 (method: rank_reports)
+  1. Danny Tate — Beat of Restless (▲3, 9 wk)
+  2. Rick Astley — It Would Take a Strong Strong Man (▼1, 9 wk)
+  3. Yolanda Wilder — Say It's Broken (▲4, 10 wk)
+  4. Bobby McFerrin — Don't Worry, Be Happy (▼2, 11 wk)
+  5. Vince Tate — Say It's Paradise (▲9, 12 wk)
+  6. Paula Gaines — Only Love (▼5, 12 wk)
+  7. Black Sisters — Can't Fight the Talk (▲8, 7 wk)
+  8. Ray Pruitt — Say It's Fire (▲12, 5 wk)
+  9. Def Leppard — Love Bites (▼7, 5 wk)
+ 10. Sugar Groove — Tonight Girl (▲14, 8 wk)
+ 11. Black Posse — Neon Love Affair (▲13, 18 wk)
+ 12. Denise Mercer — Diamond Dance (▲15, 10 wk)
+ 13. Anita Baker — Giving You the Best That I Got (▲57, 2 wk)
+ 14. Jerome Greer — Girl of Restless (▼6, 19 wk)
+ 15. Bon Jovi — Bad Medicine (▲17, 5 wk)
+ 16. Stacy Whitfield — Desire Girl (▲22, 9 wk)
+ 17. Lamont Pruitt — Rhythm Kiss (▼10, 14 wk)
+ 18. Carla Vaughn — Lies on Fire (▲31, 5 wk)
+ 19. Wild Groove — Say It's Diamond (▲21, 10 wk)
+ 20. Taylor Dayne — I'll Always Love You (▲26, 9 wk)
 
-**Top Pop Albums** — chart dated 1988-10-01 (method: rank_reports)
-  1. Michelle Moreno — Rhythm Heart (=, 4 wk)
-  2. Silver Crew — Only Heart (NEW, 1 wk)
-  3. Concrete Society — Time of Golden (NEW, 1 wk)
-  4. Shawn Bishop — Crazy Night (▼3, 8 wk)
-  5. George Michael — Faith (▼2, 50 wk)
-  6. Crystal Hayes — Summer Talk (▼4, 3 wk)
-  7. Brian Mercer — Danger Kiss (▼5, 8 wk)
-  8. Black Sisters — Hold On to the Street (▼6, 11 wk)
-  9. Shawn Kowalski — Givin' Up the Kiss (▲10, 2 wk)
- 10. Erica Shepherd — Say It's Fire (NEW, 1 wk)
- 11. Black Express — Promise of Summer (=, 2 wk)
- 12. Guns N' Roses — Appetite for Destruction (▼7, 63 wk)
- 13. Erica Holloway — Beat of Shadow (▼9, 8 wk)
- 14. Vince Tate — Broken Tonight (▼12, 3 wk)
- 15. Shawn Simms — Don't Stop the Games (NEW, 1 wk)
- 16. Lou Kowalski — Electric Girl (▼8, 4 wk)
- 17. Carla Rivers — Fire Talk (▼15, 9 wk)
- 18. Silver Cowboys — Hold On to the Night (▼13, 7 wk)
- 19. Michael Jackson — Bad (▼18, 58 wk)
- 20. Public Enemy — It Takes a Nation of Millions to Hold Us Back (▲23, 15 wk)
+**Top Pop Albums** — chart dated 1988-10-08 (method: rank_reports)
+  1. Denise Lambert — Crazy Touch (NEW, 1 wk)
+  2. Michelle Moreno — Rhythm Heart (▼1, 5 wk)
+  3. Silver Crew — Only Heart (▼2, 2 wk)
+  4. Concrete Society — Time of Golden (▼3, 2 wk)
+  5. George Michael — Faith (=, 51 wk)
+  6. Steel Avenue — Love Tonight (NEW, 1 wk)
+  7. Erica Shepherd — Say It's Fire (▲10, 2 wk)
+  8. Shawn Kowalski — Givin' Up the Kiss (▲9, 3 wk)
+  9. Shawn Bishop — Crazy Night (▼4, 9 wk)
+ 10. Crystal Hayes — Summer Talk (▼6, 4 wk)
+ 11. Black Sisters — Hold On to the Street (▼8, 12 wk)
+ 12. Black Express — Promise of Summer (▼11, 3 wk)
+ 13. Luther Vandross — Any Love (▲35, 3 wk)
+ 14. Erica Holloway — Beat of Shadow (▼13, 9 wk)
+ 15. Guns N' Roses — Appetite for Destruction (▼12, 64 wk)
+ 16. Brian Mercer — Danger Kiss (▼7, 9 wk)
+ 17. Vince Tate — Broken Tonight (▼14, 4 wk)
+ 18. Shawn Simms — Don't Stop the Games (▼15, 2 wk)
+ 19. Lou Kowalski — Electric Girl (▼16, 5 wk)
+ 20. Carla Rivers — Fire Talk (▼17, 10 wk)
 
-**Hot Black Singles** — chart dated 1988-10-01 (method: rank_reports)
-  1. Black Sisters — Can't Fight the Talk (=, 6 wk)
-  2. Yolanda Wilder — Say It's Broken (=, 9 wk)
-  3. Ray Pruitt — Say It's Fire (▲6, 5 wk)
-  4. Rick Astley — It Would Take a Strong Strong Man (▼3, 8 wk)
-  5. Jerome Greer — Girl of Restless (▼4, 18 wk)
-  6. Danny Tate — Beat of Restless (▼5, 8 wk)
-  7. Bobby McFerrin — Don't Worry, Be Happy (▲11, 10 wk)
-  8. Denise Mercer — Diamond Dance (▲14, 9 wk)
-  9. Dana Tate — Paradise Games (▲12, 6 wk)
- 10. Jeff Wilder — Summer Line (▼9, 10 wk)
+**Hot Black Singles** — chart dated 1988-10-08 (method: rank_reports)
+  1. Ray Pruitt — Say It's Fire (▲3, 6 wk)
+  2. Black Sisters — Can't Fight the Talk (▼1, 7 wk)
+  3. Danny Tate — Beat of Restless (▲6, 9 wk)
+  4. Rick Astley — It Would Take a Strong Strong Man (=, 9 wk)
+  5. Bobby McFerrin — Don't Worry, Be Happy (▲7, 11 wk)
+  6. Jerome Greer — Girl of Restless (▼5, 19 wk)
+  7. Anita Baker — Giving You the Best That I Got (▲43, 3 wk)
+  8. Karyn White — The Way You Love Me (▲13, 3 wk)
+  9. Denise Mercer — Diamond Dance (▼8, 10 wk)
+ 10. Tony Wilder — Desire Tonight (▲12, 7 wk)
 
-**Top Black Albums** — chart dated 1988-10-01 (method: rank_reports)
-  1. Public Enemy — It Takes a Nation of Millions to Hold Us Back (=, 15 wk)
-  2. Shawn Kowalski — Givin' Up the Kiss (▲3, 2 wk)
-  3. Michelle Moreno — Rhythm Heart (▼2, 4 wk)
-  4. Luther Vandross — Any Love (▲6, 2 wk)
-  5. Erica Shepherd — Say It's Fire (NEW, 1 wk)
-  6. Concrete Society — Time of Golden (NEW, 1 wk)
-  7. Silver Crew — Only Heart (NEW, 1 wk)
-  8. Run-DMC — Tougher Than Leather (▼4, 20 wk)
-  9. Gina Duvall — Golden Love Affair (NEW, 1 wk)
- 10. Crystal Hayes — Summer Talk (▼7, 3 wk)
+**Top Black Albums** — chart dated 1988-10-08 (method: rank_reports)
+  1. Public Enemy — It Takes a Nation of Millions to Hold Us Back (=, 16 wk)
+  2. Luther Vandross — Any Love (▲4, 3 wk)
+  3. Denise Lambert — Crazy Touch (NEW, 1 wk)
+  4. Erica Shepherd — Say It's Fire (▲5, 2 wk)
+  5. Silver Crew — Only Heart (▲7, 2 wk)
+  6. Concrete Society — Time of Golden (=, 2 wk)
+  7. Michelle Moreno — Rhythm Heart (▼3, 5 wk)
+  8. Shawn Kowalski — Givin' Up the Kiss (▼2, 3 wk)
+  9. Gina Duvall — Golden Love Affair (=, 2 wk)
+ 10. Run-DMC — Tougher Than Leather (▼8, 21 wk)
 
-**Adult Contemporary** — chart dated 1988-10-01 (method: station_reports)
-  1. Bobby McFerrin — Don't Worry, Be Happy (▲2, 7 wk)
-  2. Rick Astley — It Would Take a Strong Strong Man (▲3, 7 wk)
-  3. Whitney Houston — One Moment in Time (▲4, 7 wk)
-  4. Stacy Tate — Love Feeling (▼1, 10 wk)
-  5. Black Sisters — Can't Fight the Talk (▲8, 5 wk)
-  6. Danny Tate — Beat of Restless (=, 6 wk)
-  7. Vince Tate — Say It's Paradise (▲11, 6 wk)
-  8. Taylor Dayne — I'll Always Love You (▼7, 7 wk)
-  9. Terrence Sterling — Givin' Up the Dance (▼5, 14 wk)
- 10. Black Posse — Neon Love Affair (▲12, 12 wk)
+**Adult Contemporary** — chart dated 1988-10-08 (method: station_reports)
+  1. Bobby McFerrin — Don't Worry, Be Happy (=, 8 wk)
+  2. Rick Astley — It Would Take a Strong Strong Man (=, 8 wk)
+  3. Black Sisters — Can't Fight the Talk (▲5, 6 wk)
+  4. Whitney Houston — One Moment in Time (▼3, 8 wk)
+  5. Danny Tate — Beat of Restless (▲6, 7 wk)
+  6. Vince Tate — Say It's Paradise (▲7, 7 wk)
+  7. Carla Ellis — Say It's Electric (▲13, 16 wk)
+  8. Taylor Dayne — I'll Always Love You (=, 8 wk)
+  9. Terrence Sterling — Givin' Up the Dance (=, 15 wk)
+ 10. Lamont Pruitt — Rhythm Kiss (▲18, 11 wk)
 
-**Album Rock Tracks** — chart dated 1988-10-01 (method: station_reports)
-  1. Wild Groove — Say It's Diamond (=, 9 wk)
-  2. Bon Jovi — Bad Medicine (▲6, 4 wk)
-  3. Guns N' Roses — Sweet Child o' Mine (▲18, 14 wk)
-  4. Paula Delgado — Givin' Up the Groove (▲5, 14 wk)
-  5. Def Leppard — Love Bites (▲9, 3 wk)
-  6. Cherry Kings — Secret Love Affair (▼3, 16 wk)
-  7. Def Leppard — Pour Some Sugar on Me (▲21, 23 wk)
-  8. Midnight Crew — Velvet Feeling (▲15, 4 wk)
-  9. Crimson Sisters — Forever Boy (▼4, 10 wk)
- 10. Midnight Rebels — Say It's Angel (▲19, 4 wk)
+**Album Rock Tracks** — chart dated 1988-10-08 (method: station_reports)
+  1. Bon Jovi — Bad Medicine (▲2, 5 wk)
+  2. Wild Groove — Say It's Diamond (▼1, 10 wk)
+  3. Def Leppard — Love Bites (▲5, 4 wk)
+  4. Midnight Crew — Velvet Feeling (▲8, 5 wk)
+  5. Crimson Sisters — Forever Boy (▲9, 11 wk)
+  6. Paula Delgado — Givin' Up the Groove (▼4, 15 wk)
+  7. Cherry Kings — Secret Love Affair (▼6, 17 wk)
+  8. Midnight Rebels — Say It's Angel (▲10, 5 wk)
+  9. Lisa Valentine — Velvet Girl (▲12, 4 wk)
+ 10. Neon Cowboys — Don't Stop the Promise (▲13, 7 wk)
 
 ## Announced releases from notable artists
-- 1988-09-26: Anita Baker — "Giving You the Best That I Got" (album)
-- 1988-09-26: Michael Jackson — "Smooth Criminal" (single)
-- 1988-09-26: Eddie Nash — "Lover of Silent" (album)
-- 1988-09-26: Kim Monroe — "Say It's Midnight" (album)
-- 1988-09-26: Tony Delgado — "Can't Fight the Line" (album)
-- 1988-09-26: Steel Shadows — "Don't Stop the Dance" (album)
 - 1988-10-03: Bon Jovi — "New Jersey" (album)
 - 1988-10-03: U2 — "Rattle and Hum" (album)
 - 1988-10-03: Velvet Posse — "Givin' Up the Motion" (album)
 - 1988-10-03: Crystal Valentine — "Hold On to the Lies" (album)
+- 1988-10-03: Jerome Fontaine — "Shadow Girl" (album)
+- 1988-10-03: Paper Kings — "Promise on Fire" (album)
+- 1988-10-10: George Michael — "Kissing a Fool" (single)
+- 1988-10-10: Wild Thieves — "Shadow Tonight" (album)
+- 1988-10-10: Black Tigers — "Only Forever" (album)
+- 1988-10-10: Midnight Society — "Only Dream" (album)
 
 ## People in the protagonist's life (for characterisation)
 - **Carla Holloway** `person:pc_contact1` — producer, songwriter; traits: driven, loyal; toward you: close; recent: worked together on demos
 - **Michelle Hayes** `person:pc_contact2` — booker; traits: outgoing; toward you: friendly; recent: books you at a Hollywood club
-- **Linda Porter** `person:n00001` — manager; traits: cautious, disciplined; toward you: neutral; recent: Met Danielle Reyes: Following the September 17 Hollywood showcase, Michelle Hayes arranges an exploratory conversation between Danielle and Linda Porter, a Los Angeles independent talent manager. Danielle wants help evaluating Sire's offer and her next career steps. No representation agreement has been made.
+- **Linda Porter** `person:n00001` — manager; traits: cautious, disciplined; toward you: friendly; recent: Met Danielle Reyes: Following the September 17 Hollywood showcase, Michelle Hayes arranges an exploratory conversation between Danielle and Linda Porter, a Los Angeles independent talent manager. Danielle wants help evaluating Sire's offer and her next career steps. No representation agreement has been made. / Took on Danielle Reyes as a management client.
 
 ## Decisions available
 - OFFER `offer:n00032` (song_pitch) from Nicole Lambert, expires 1988-10-17: {"composition": "comp:n01735", "title": "Motion on Fire", "genre": "dance_pop", "writer": "Nicole Lambert", "deal": "writer keeps the publishing; earns mechanicals"}
@@ -175,7 +178,7 @@ Cash: **$2,388.58** · this period: +$613 / −$295 · lifestyle: modest · day 
 Return exactly one fenced ```json block with this shape; decisions are the player's choices (ask the player before committing to contracts, releases or major creative choices); proposals are developments you suggest that the engine will accept or reject:
 ```json
 {
-  "pass_id": "session1-0003",
+  "pass_id": "session1-0004",
   "decisions": [
     {
       "command": "record_song",
@@ -215,8 +218,8 @@ Return exactly one fenced ```json block with this shape; decisions are the playe
 _Ids, numbers and state the engine will hold you to. News, charts and the industry briefing above are authoritative as written; the complete packet is also saved as JSON next to this file._
 ```json
 {
- "pass_id": "session1-0003",
- "date": "1988-09-21",
+ "pass_id": "session1-0004",
+ "date": "1988-09-27",
  "protagonist": {
   "person_id": "person:pc_example_rnb_pop_singer",
   "act_id": "act:pc_example_rnb_pop_singer",
@@ -245,8 +248,8 @@ _Ids, numbers and state the engine will hold you to. News, charts and the indust
    "vocal": 80
   },
   "wellbeing": {
-   "energy": "low",
-   "stress": "low",
+   "energy": "very low",
+   "stress": "moderate",
    "morale": "high"
   },
   "public_recognition_pct": 0.0,
@@ -270,9 +273,9 @@ _Ids, numbers and state the engine will hold you to. News, charts and the indust
   "contract": null
  },
  "finances": {
-  "cash": 2388.58,
-  "period_income": 612.89,
-  "period_spending": 295.0,
+  "cash": 2657.22,
+  "period_income": 617.23,
+  "period_spending": 348.59,
   "day_job": {
    "title": "Session backing vocalist and restaurant shifts",
    "weekly_income": 260,
@@ -281,28 +284,35 @@ _Ids, numbers and state the engine will hold you to. News, charts and the indust
   "lifestyle": "modest",
   "recent": [
    {
-    "date": "1988-09-19",
+    "date": "1988-09-26",
     "amount": 260.0,
     "category": "wages",
     "memo": "Session backing vocalist and restaurant shifts",
     "in": true
    },
    {
-    "date": "1988-09-19",
+    "date": "1988-09-26",
     "amount": 220.0,
     "category": "living_costs",
     "memo": "modest",
     "in": false
    },
    {
-    "date": "1988-09-19",
-    "amount": 352.89,
+    "date": "1988-09-26",
+    "amount": 357.23,
     "category": "gig_fees",
     "memo": "club dates",
     "in": true
    },
    {
-    "date": "1988-09-19",
+    "date": "1988-09-26",
+    "amount": 53.59,
+    "category": "management_commission",
+    "memo": "club dates",
+    "in": false
+   },
+   {
+    "date": "1988-09-26",
     "amount": 75.0,
     "category": "training",
     "memo": "performance",
@@ -322,14 +332,25 @@ _Ids, numbers and state the engine will hold you to. News, charts and the indust
    "until": "1988-10-02",
    "what": "performance training",
    "kind": "training"
+  },
+  {
+   "date": "1988-09-26",
+   "until": "1988-10-02",
+   "what": "time off",
+   "kind": "rest"
   }
  ],
  "team": {
-  "manager": null,
+  "manager": {
+   "name": "Linda Porter",
+   "person_id": "person:n00001",
+   "commission": 0.15,
+   "since": "1988-09-21"
+  },
   "standing_orders": {
    "gigs_when_idle": 2,
-   "training_when_idle": "performance",
-   "training_spend_per_week": 75,
+   "training_when_idle": "none",
+   "training_spend_per_week": 0,
    "manager_may_book_media": true,
    "manager_may_book_gigs": true,
    "rest_when_exhausted": true
@@ -342,10 +363,12 @@ _Ids, numbers and state the engine will hold you to. News, charts and the indust
    "spending more than about $2,000 of your own money",
    "public statements and anything that could become news"
   ],
-  "handled_for_you_this_pass": [],
+  "handled_for_you_this_pass": [
+   "Standing orders: you took a week off to recover; your team cleared the calendar."
+  ],
   "what_people_are_telling_you": [
    "Carla Holloway: the old demo tape is rough; a properly recorded song would give labels and radio more to hear.",
-   "People keep asking who manages you."
+   "You're running on empty; people around you can see it."
   ]
  },
  "songbook": [],
@@ -405,10 +428,11 @@ _Ids, numbers and state the engine will hold you to. News, charts and the indust
     "disciplined"
    ],
    "your_feeling": "neutral",
-   "their_feeling_toward_you": "neutral",
+   "their_feeling_toward_you": "friendly",
    "their_trust": "low",
    "their_recent_memories_for_characterisation": [
-    "Met Danielle Reyes: Following the September 17 Hollywood showcase, Michelle Hayes arranges an exploratory conversation between Danielle and Linda Porter, a Los Angeles independent talent manager. Danielle wants help evaluating Sire's offer and her next career steps. No representation agreement has been made."
+    "Met Danielle Reyes: Following the September 17 Hollywood showcase, Michelle Hayes arranges an exploratory conversation between Danielle and Linda Porter, a Los Angeles independent talent manager. Danielle wants help evaluating Sire's offer and her next career steps. No representation agreement has been made.",
+    "Took on Danielle Reyes as a management client."
    ],
    "notes": "introduced in narration: Following the September 17 Hollywood showcase, Michelle Hayes arranges an exploratory conversation between Danielle and Linda Porter, a Los Angeles independent talent manager. Danielle wants help evaluating Sire's offer and her next career steps. No representation agreement "
   }
