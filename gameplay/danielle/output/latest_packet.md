@@ -1,5 +1,5 @@
-# Los Angeles, autumn 1988: an unsigned singer — pass session1-0011
-**In-world date:** 1988-11-01 (this pass covers 1988-10-31 to 1988-11-01)
+# Los Angeles, autumn 1988: an unsigned singer — pass session1-0012
+**In-world date:** 1988-11-23 (this pass covers 1988-11-01 to 1988-11-23)
 
 > You are the narrator of a music-industry career simulation. The engine below is authoritative: use its facts, numbers and people; write immersive scenes, dialogue and atmosphere around them; and return the player's decisions plus any proposed developments in the JSON format at the end. The full rules are in `docs/narrator_contract.md` (paste once per conversation).
 
@@ -11,154 +11,159 @@
 - Wellbeing: energy very low, stress moderate, morale high
 - Public recognition: 0.0% of the music-buying public; local live buzz: moderate.
 - Industry view: singles track record very low, momentum 0.0, critical standing low.
-- Signed to **Sire Records** since 1988-10-04: advance $43,000, royalty 11%, recording fund $149,000/album. Royalty account (estimate): $-50,200 (negative = still unrecouped; royalties are paid only after recoupment).
+- Signed to **Sire Records** since 1988-10-04: advance $43,000, royalty 11%, recording fund $149,000/album. Royalty account (estimate): $-72,200 (negative = still unrecouped; royalties are paid only after recoupment).
 
 ## Pacing
-This pass covers 1 days. The clock stopped because: a recording session finished. Give the moments that stopped the clock full scenes. Summarise routine stretches in a few evocative paragraphs. Choose the next 'advance' from what the protagonist is doing: 'next' runs until something needs attention (at most about 3 months); a few days for intense periods; weeks or months for routine.
+This pass covers 22 days. The clock stopped because: a recording session finished. Give the moments that stopped the clock full scenes. Summarise routine stretches in a few evocative paragraphs. Choose the next 'advance' from what the protagonist is doing: 'next' runs until something needs attention (at most about 3 months); a few days for intense periods; weeks or months for routine.
 
 ## Your team and standing orders
 - Manager: **Linda Porter** `person:n00001` (15% commission since 1988-09-21)
 - Standing orders: gigs_when_idle=0, training_when_idle=none, training_spend_per_week=0, manager_may_book_media=True, manager_may_book_gigs=False, rest_when_exhausted=True
 - Always comes back to the player: signing or ending contracts (label, management, publishing); recording sessions (song, producer, budget); releases (which song, when, how much promotion); career changes (image, genre, label, city); spending more than about $2,000 of your own money; public statements and anything that could become news
 - Handled for you: Standing orders: you took a week off to recover; your team cleared the calendar.
+- Handled for you: Standing orders: you took a week off to recover; your team cleared the calendar.
+- Handled for you: Standing orders: you took a week off to recover; your team cleared the calendar.
 - What people are telling you: You have 2 unrecorded song(s) in your songbook.
-- What people are telling you: Your label is waiting to hear which finished recording should be the single (1 ready).
+- What people are telling you: Your label is waiting to hear which finished recording should be the single (2 ready).
 - What people are telling you: You're running on empty; people around you can see it.
 
 ## Money
-Cash: **$39,866.22** · this period: +$260 / −$220 · lifestyle: modest · day job: Session backing vocalist and restaurant shifts (active)
+Cash: **$39,986.22** · this period: +$520 / −$440 · lifestyle: modest · day job: Session backing vocalist and restaurant shifts (active)
 
 ## Calendar
-- 1988-10-31 → 1988-11-06: time off
+- 1988-11-21 → 1988-11-27: time off
 
 ## What happened (news and events the protagonist knows about)
-- 1988-10-31 [official] Standing orders: you took a week off to recover; your team cleared the calendar.
-- 1988-10-31 [official] Finished recording "Say You Mean It".
-- 1988-10-31 [official] New album: Electric Angels - "Only Hot" on Warner Bros. Records.
-- 1988-10-31 [official] Hot shot debut on the Top Pop Albums: Savage Dolls - "Sweet Love" enters at #3.
-- 1988-10-31 [official] New single: Guns N' Roses - "Paradise City" on Geffen Records.
-- 1988-10-31 [official] Black Sisters - "Can't Fight the Talk" is the new #1 on the Adult Contemporary (chart dated 1988-11-12).
-- 1988-10-31 [official] RIAA: Bobby Brown's "Don't Be Cruel" (album) certified gold.
-- 1988-10-31 [official] RIAA: Bon Jovi's "New Jersey" (album) certified platinum.
-- 1988-10-31 [official] RIAA: Wild Tigers' "Only Tonight" (album) certified gold.
-- 1988-10-31 [official] RIAA: U2's "Rattle and Hum" (album) certified platinum.
-- 1988-10-31 [official] RIAA: Savage Dolls' "Sweet Love" (album) certified platinum.
-- 1988-10-31 [reported] Michael Jackson will perform on American Bandstand.
-- 1988-10-31 [reported] Carla Vaughn will perform on American Bandstand.
-- 1988-10-31 [reported] Danny Tate will perform on Saturday Night Live.
-- 1988-10-31 [reported] Anita Baker will perform on Showtime at the Apollo.
-- 1988-10-31 [reported] Ray Pruitt will perform on Showtime at the Apollo.
+- 1988-11-07 [official] Standing orders: you took a week off to recover; your team cleared the calendar.
+- 1988-11-07 [official] Michael Jackson - "Smooth Criminal" is the new #1 on the Billboard Hot 100 (chart dated 1988-11-19).
+- 1988-11-07 [official] Hot shot debut on the Top Pop Albums: Electric Angels - "Only Hot" enters at #10.
+- 1988-11-07 [official] New single: Bon Jovi - "Born to Be My Baby" on Mercury Records.
+- 1988-11-07 [official] Michael Jackson - "Smooth Criminal" is the new #1 on the Hot Black Singles (chart dated 1988-11-19).
+- 1988-11-14 [official] Standing orders: you took a week off to recover; your team cleared the calendar.
+- 1988-11-14 [official] Michael Jackson - "Bad" is the new #1 on the Top Pop Albums (chart dated 1988-11-26).
+- 1988-11-14 [official] New single: Phil Collins - "Two Hearts" on Atlantic Records.
+- 1988-11-14 [official] Hot shot debut on the Top Pop Albums: Black Crew - "Can't Fight the Fever" enters at #11.
+- 1988-11-14 [official] New single: Vanessa Williams - "Dreamin'" on Wing Records.
+- 1988-11-14 [official] Lisa Simms - "Say It's Diamond" is the new #1 on the Hot Black Singles (chart dated 1988-11-26).
+- 1988-11-14 [official] Michael Jackson - "Bad" is the new #1 on the Top Black Albums (chart dated 1988-11-26).
+- 1988-11-14 [official] Luther Vandross - "Any Love" is the new #1 on the Adult Contemporary (chart dated 1988-11-26).
+- 1988-11-21 [official] Standing orders: you took a week off to recover; your team cleared the calendar.
+- 1988-11-21 [official] New album: Brian Fontaine - "Real Thing" on Geffen Records.
+- 1988-11-21 [official] New album: Silver Avenue - "Thing on Fire" on RCA Records.
+- 1988-11-21 [official] Hot shot debut on the Top Pop Albums: Rob Brooks - "Heart on Fire" enters at #9.
+- 1988-11-22 [official] Finished recording "If You Want Me".
 
 ## Music
 - Songbook: "Motion on Fire" (dance_pop, by Nicole Lambert) `comp:n01735` — your read: hook 15, melody 11
 - Songbook: "Forever Love Affair" (rnb, by Sonya Whitfield) `comp:n01736` — your read: hook 58, melody 11
 - Recording "Say You Mean It" `rec:n02009` (rnb, prod. Carla Holloway): done — your team hears: a decent hook that takes a few listens; a weak melody; may wear out fast; solid production; a commanding vocal
+- Recording "If You Want Me" `rec:n02132` (rnb, prod. Lisa Sterling): done — your team hears: a decent hook that takes a few listens; a serviceable melody; moderately durable; thin or dated-sounding production; a capable vocal
 
 ## Charts
 
-**Billboard Hot 100** — chart dated 1988-11-12 (method: rank_reports)
-  1. Anita Baker — Giving You the Best That I Got (=, 7 wk)
-  2. Carla Vaughn — Lies on Fire (▲5, 10 wk)
-  3. Michael Jackson — Smooth Criminal (▲6, 5 wk)
-  4. Sugar Groove — Tonight Girl (▼2, 13 wk)
-  5. Luther Vandross — Any Love (▼3, 7 wk)
-  6. Denise Mercer — Diamond Dance (▼4, 15 wk)
-  7. Paper Avenue — My Fire Time (▲13, 7 wk)
-  8. Stacy Whitfield — Desire Girl (▼7, 14 wk)
-  9. Urban Dolls — Only Heart (=, 15 wk)
- 10. U2 — Desire (▲12, 5 wk)
- 11. Ray Pruitt — Say It's Fire (▼10, 10 wk)
- 12. Danny Tate — Beat of Restless (▼8, 14 wk)
- 13. Angela Pryor — Hold On to the Love (▼11, 6 wk)
- 14. Danny Gaines — Golden Girl (▲21, 4 wk)
- 15. Paula Abdul — (It's Just) The Way That You Love Me (▲19, 9 wk)
- 16. George Michael — Kissing a Fool (▲54, 3 wk)
- 17. Jerome Fontaine — Feeling of Real (▲23, 8 wk)
- 18. Crystal Machine — Don't Stop the Touch (▲39, 3 wk)
- 19. Electric Hearts — Don't Stop the Games (▼17, 12 wk)
- 20. Midnight Crew — Velvet Feeling (▼15, 9 wk)
+**Billboard Hot 100** — chart dated 1988-12-03 (method: rank_reports)
+  1. Michael Jackson — Smooth Criminal (=, 8 wk)
+  2. New Kids on the Block — You Got It (The Right Stuff) (▲3, 4 wk)
+  3. George Michael — Kissing a Fool (▲5, 6 wk)
+  4. Paper Avenue — My Fire Time (▼2, 10 wk)
+  5. Sugar Groove — Tonight Girl (▼4, 16 wk)
+  6. Luther Vandross — Any Love (=, 10 wk)
+  7. Def Leppard — Armageddon It (▲14, 4 wk)
+  8. Stacy Whitfield — Desire Girl (=, 17 wk)
+  9. Carla Vaughn — Lies on Fire (▼7, 13 wk)
+ 10. Concrete Express — Hold On to the Lover (▲19, 4 wk)
+ 11. Crystal Machine — Don't Stop the Touch (▲12, 6 wk)
+ 12. Lisa Simms — Say It's Diamond (▲21, 4 wk)
+ 13. Tasha Baxter — Hold On to the Motion (▲17, 8 wk)
+ 14. Electric Hearts — Don't Stop the Games (▲15, 15 wk)
+ 15. Danny Gaines — Golden Girl (▲18, 7 wk)
+ 16. Anita Baker — Giving You the Best That I Got (▼10, 10 wk)
+ 17. Shawn Coleman — Games on Fire (▲23, 6 wk)
+ 18. U2 — Desire (▼13, 8 wk)
+ 19. Urban Dolls — Only Heart (▼11, 18 wk)
+ 20. Denise Mercer — Diamond Dance (▼9, 18 wk)
 
-**Top Pop Albums** — chart dated 1988-11-12 (method: rank_reports)
-  1. Anita Baker — Giving You the Best That I Got (=, 5 wk)
-  2. Luther Vandross — Any Love (=, 8 wk)
-  3. Savage Dolls — Sweet Love (NEW, 1 wk)
-  4. Paula Gaines — Dream Eyes (▼3, 2 wk)
-  5. Wild Thieves — Shadow Tonight (▼4, 3 wk)
-  6. Erica Tate — Night of Neon (▲9, 2 wk)
-  7. U2 — Rattle and Hum (▼6, 4 wk)
-  8. Crystal Carter — Hold On to the Heart (▲14, 3 wk)
-  9. Silver Machine — Givin' Up the Line (▼8, 3 wk)
- 10. Bon Jovi — New Jersey (▼5, 4 wk)
- 11. Michael Jackson — Bad (▲19, 64 wk)
- 12. Black Tigers — Only Forever (▼7, 3 wk)
- 13. Steel Shadows — Don't Stop the Dance (▼12, 5 wk)
- 14. George Michael — Faith (▲18, 56 wk)
- 15. Paper Kings — Promise on Fire (▼13, 4 wk)
- 16. Denise Lambert — Crazy Touch (▼10, 6 wk)
- 17. Crystal Valentine — Hold On to the Lies (▼11, 4 wk)
- 18. Silver Crew — Only Heart (▼16, 7 wk)
- 19. Michelle Moreno — Rhythm Heart (▼15, 10 wk)
- 20. Velvet Posse — Givin' Up the Motion (▼17, 4 wk)
+**Top Pop Albums** — chart dated 1988-12-03 (method: rank_reports)
+  1. Michael Jackson — Bad (=, 67 wk)
+  2. Anita Baker — Giving You the Best That I Got (=, 8 wk)
+  3. Luther Vandross — Any Love (▲4, 11 wk)
+  4. Savage Dolls — Sweet Love (▼3, 4 wk)
+  5. Black Crew — Can't Fight the Fever (▲11, 2 wk)
+  6. George Michael — Faith (▲7, 59 wk)
+  7. Electric Angels — Only Hot (▼5, 3 wk)
+  8. Wild Thieves — Shadow Tonight (▲9, 6 wk)
+  9. Rob Brooks — Heart on Fire (NEW, 1 wk)
+ 10. Paula Gaines — Dream Eyes (▼6, 5 wk)
+ 11. New Kids on the Block — Hangin' Tough (▲20, 15 wk)
+ 12. U2 — Rattle and Hum (▼8, 7 wk)
+ 13. Cherry Posse — Groove of Sweet (▲15, 2 wk)
+ 14. Erica Tate — Night of Neon (▼10, 5 wk)
+ 15. Stacy Whitfield — Can't Fight the Kiss (▲16, 2 wk)
+ 16. Silver Machine — Givin' Up the Line (▼13, 6 wk)
+ 17. Bon Jovi — New Jersey (▼12, 7 wk)
+ 18. Crystal Carter — Hold On to the Heart (▼14, 6 wk)
+ 19. Denise Lambert — Crazy Touch (▼17, 9 wk)
+ 20. Vince Nash — Can't Fight the Night (NEW, 1 wk)
 
-**Hot Black Singles** — chart dated 1988-11-12 (method: rank_reports)
-  1. Anita Baker — Giving You the Best That I Got (=, 8 wk)
-  2. Michael Jackson — Smooth Criminal (▲4, 5 wk)
-  3. Luther Vandross — Any Love (=, 8 wk)
-  4. Bobby Brown — My Prerogative (▲5, 4 wk)
-  5. Denise Mercer — Diamond Dance (▲10, 15 wk)
-  6. Ray Pruitt — Say It's Fire (▼2, 11 wk)
-  7. Sugar Groove — Tonight Girl (▼6, 13 wk)
-  8. Yolanda Lambert — Velvet Dance (▲9, 6 wk)
-  9. Jerome Fontaine — Feeling of Real (▼7, 9 wk)
- 10. Carla Vaughn — Lies on Fire (▲18, 9 wk)
+**Hot Black Singles** — chart dated 1988-12-03 (method: rank_reports)
+  1. George Michael — Kissing a Fool (▲4, 6 wk)
+  2. Lisa Simms — Say It's Diamond (▼1, 4 wk)
+  3. Bobby Brown — My Prerogative (▼2, 7 wk)
+  4. Yolanda Lambert — Velvet Dance (▼3, 9 wk)
+  5. New Kids on the Block — You Got It (The Right Stuff) (▲12, 4 wk)
+  6. Luther Vandross — Any Love (▼5, 11 wk)
+  7. Lou Pryor — Givin' Up the Fever (▲30, 3 wk)
+  8. Paper Avenue — My Fire Time (▲10, 9 wk)
+  9. Shawn Coleman — Games on Fire (=, 7 wk)
+ 10. Tasha Baxter — Hold On to the Motion (▲11, 8 wk)
 
-**Top Black Albums** — chart dated 1988-11-12 (method: rank_reports)
-  1. Anita Baker — Giving You the Best That I Got (=, 5 wk)
-  2. Savage Dolls — Sweet Love (NEW, 1 wk)
-  3. Luther Vandross — Any Love (▼2, 8 wk)
-  4. Michael Jackson — Bad (▲10, 64 wk)
-  5. Crystal Carter — Hold On to the Heart (▼4, 3 wk)
-  6. Silver Machine — Givin' Up the Line (▼3, 3 wk)
-  7. Erica Tate — Night of Neon (▼6, 2 wk)
-  8. Public Enemy — It Takes a Nation of Millions to Hold Us Back (▼5, 21 wk)
-  9. Paula Gaines — Dream Eyes (▼8, 2 wk)
- 10. Bobby Brown — Don't Be Cruel (▼9, 21 wk)
+**Top Black Albums** — chart dated 1988-12-03 (method: rank_reports)
+  1. Michael Jackson — Bad (=, 67 wk)
+  2. Anita Baker — Giving You the Best That I Got (=, 8 wk)
+  3. Luther Vandross — Any Love (=, 11 wk)
+  4. Savage Dolls — Sweet Love (=, 4 wk)
+  5. Cherry Posse — Groove of Sweet (▲6, 2 wk)
+  6. Rob Brooks — Heart on Fire (NEW, 1 wk)
+  7. Electric Angels — Only Hot (▼5, 3 wk)
+  8. Bobby Brown — Don't Be Cruel (=, 24 wk)
+  9. Erica Tate — Night of Neon (▼7, 5 wk)
+ 10. Black Crew — Can't Fight the Fever (▲15, 2 wk)
 
-**Adult Contemporary** — chart dated 1988-11-12 (method: station_reports)
-  1. Black Sisters — Can't Fight the Talk (▲4, 11 wk)
-  2. Anita Baker — Giving You the Best That I Got (▼1, 6 wk)
-  3. Danny Tate — Beat of Restless (▼2, 12 wk)
-  4. Luther Vandross — Any Love (▼3, 6 wk)
-  5. Bobby McFerrin — Don't Worry, Be Happy (▲6, 13 wk)
-  6. Sugar Groove — Tonight Girl (▲11, 8 wk)
-  7. Electric Hearts — Don't Stop the Games (▲13, 8 wk)
-  8. Vince Tate — Say It's Paradise (▼5, 12 wk)
-  9. Taylor Dayne — I'll Always Love You (=, 13 wk)
- 10. Paper Avenue — My Fire Time (▲17, 5 wk)
+**Adult Contemporary** — chart dated 1988-12-03 (method: station_reports)
+  1. Luther Vandross — Any Love (=, 9 wk)
+  2. Rick Astley — It Would Take a Strong Strong Man (▲3, 16 wk)
+  3. Carla Vaughn — Lies on Fire (▲5, 10 wk)
+  4. Black Sisters — Can't Fight the Talk (▼2, 14 wk)
+  5. George Michael — Kissing a Fool (▼4, 4 wk)
+  6. Paper Avenue — My Fire Time (=, 8 wk)
+  7. New Kids on the Block — You Got It (The Right Stuff) (▲8, 3 wk)
+  8. Urban Dolls — Only Heart (▲9, 14 wk)
+  9. Sugar Groove — Tonight Girl (▲10, 11 wk)
+ 10. Shawn Coleman — Games on Fire (▲11, 6 wk)
 
-**Album Rock Tracks** — chart dated 1988-11-12 (method: station_reports)
-  1. Midnight Crew — Velvet Feeling (=, 10 wk)
-  2. Bon Jovi — Bad Medicine (▲3, 10 wk)
-  3. Angela Pryor — Hold On to the Love (▲6, 6 wk)
-  4. Savage Dolls — Boy on Fire (=, 9 wk)
-  5. U2 — Desire (▲7, 5 wk)
-  6. Danny Gaines — Golden Girl (▲12, 4 wk)
-  7. Midnight Rebels — Say It's Angel (▼2, 10 wk)
-  8. Crimson Sisters — Forever Boy (▲10, 16 wk)
-  9. Midnight Avenue — Sweet Rain (▲11, 6 wk)
- 10. Crystal Kowalski — Street of Neon (▼8, 15 wk)
+**Album Rock Tracks** — chart dated 1988-12-03 (method: station_reports)
+  1. U2 — Desire (▲2, 8 wk)
+  2. Def Leppard — Armageddon It (▲5, 3 wk)
+  3. Midnight Rebels — Say It's Angel (▼1, 13 wk)
+  4. Angela Pryor — Hold On to the Love (▼3, 9 wk)
+  5. Danny Gaines — Golden Girl (▲6, 7 wk)
+  6. Savage Dolls — Boy on Fire (▲8, 12 wk)
+  7. Crystal Machine — Don't Stop the Touch (=, 6 wk)
+  8. Crystal Kowalski — Street of Neon (▲15, 18 wk)
+  9. Def Leppard — Love Bites (▲23, 12 wk)
+ 10. Steel Angels — Lies of Danger (▲13, 6 wk)
 
 ## Announced releases from notable artists
-- 1988-11-07: Bon Jovi — "Born to Be My Baby" (single)
-- 1988-11-07: Vanessa Valentine — "Can't Fight the Eyes" (single)
-- 1988-11-07: Concrete Dolls — "Hold On to the Touch" (album)
-- 1988-11-07: Black Crew — "Can't Fight the Fever" (album)
-- 1988-11-07: Stacy Whitfield — "Can't Fight the Kiss" (album)
-- 1988-11-07: Silver Express — "Velvet Line" (album)
-- 1988-11-07: Cherry Posse — "Groove of Sweet" (album)
-- 1988-11-14: Phil Collins — "Two Hearts" (single)
-- 1988-11-14: R.E.M. — "Green" (album)
-- 1988-11-14: Vanessa Williams — "Dreamin'" (single)
+- 1988-11-28: Tracy Pruitt — "Paradise Dance" (album)
+- 1988-11-28: Midnight Angels — "Only Dream" (album)
+- 1988-12-05: Greg Bishop — "Shadow Street" (single)
+- 1988-12-05: Eddie Gaines — "Givin' Up the Rain" (single)
+- 1988-12-05: Angela Holloway — "Say It's Broken" (album)
+- 1988-12-05: Carla Ellis — "Say It's Electric" (album)
+- 1988-12-05: Tracy Moreno — "Don't Stop the Night" (album)
+- 1988-12-12: Bobby Brown — "Roni" (single)
+- 1988-12-12: Derek Vaughn — "Only Rhythm" (single)
+- 1988-12-12: Stacy Vaughn — "Only Danger" (single)
 
 ## People in the protagonist's life (for characterisation)
 - **Carla Holloway** `person:pc_contact1` — producer, songwriter; traits: driven, loyal; toward you: close; recent: worked together on demos / Started recording "Say You Mean It" with Danielle Reyes.
@@ -173,8 +178,6 @@ Cash: **$39,866.22** · this period: +$260 / −$220 · lifestyle: modest · day
 - 1988-10-17: Linda is arranging informal conversations with Sire staff producer Lisa Sterling about the longer album plan, without appointing her or spending additional recording funds yet. Danielle is limiting this initial Carla session to a manageable trial rather than commencing an intensive album schedule while still fatigued.
 
 ## Decisions available
-- OFFER `offer:n00036` (song_pitch) from Sonya Greer, expires 1988-11-14: {"composition": "comp:n01945", "title": "Silent Tonight", "genre": "pop", "writer": "Sonya Greer", "deal": "writer keeps the publishing; earns mechanicals"}
-- OFFER `offer:n00037` (song_pitch) from Greg Whitfield, expires 1988-11-14: {"composition": "comp:n01946", "title": "Don't Stop the Motion", "genre": "rnb", "writer": "Greg Whitfield", "deal": "writer keeps the publishing; earns mechanicals"}
 - OFFER `offer:n00042` (song_pitch) from Michelle Rivers, expires 1988-12-12: {"composition": "comp:n02136", "title": "Wild Dance", "genre": "dance_pop", "writer": "Michelle Rivers", "deal": "writer keeps the publishing; earns mechanicals"}
 - OFFER `offer:n00043` (song_pitch) from Lamont Brooks, expires 1988-12-12: {"composition": "comp:n02137", "title": "Silent Groove", "genre": "rnb", "writer": "Lamont Brooks", "deal": "writer keeps the publishing; earns mechanicals"}
 - OFFER `offer:n00044` (song_pitch) from Denise Pryor, expires 1988-12-12: {"composition": "comp:n02138", "title": "Hold On to the Street", "genre": "dance_pop", "writer": "Denise Pryor", "deal": "writer keeps the publishing; earns mechanicals"}
@@ -192,7 +195,7 @@ Cash: **$39,866.22** · this period: +$260 / −$220 · lifestyle: modest · day
 Return exactly one fenced ```json block with this shape; decisions are the player's choices (ask the player before committing to contracts, releases or major creative choices); proposals are developments you suggest that the engine will accept or reject:
 ```json
 {
-  "pass_id": "session1-0011",
+  "pass_id": "session1-0012",
   "decisions": [
     {
       "command": "record_song",
@@ -232,8 +235,8 @@ Return exactly one fenced ```json block with this shape; decisions are the playe
 _Ids, numbers and state the engine will hold you to. News, charts and the industry briefing above are authoritative as written; the complete packet is also saved as JSON next to this file._
 ```json
 {
- "pass_id": "session1-0011",
- "date": "1988-11-01",
+ "pass_id": "session1-0012",
+ "date": "1988-11-23",
  "protagonist": {
   "person_id": "person:pc_example_rnb_pop_singer",
   "act_id": "act:pc_example_rnb_pop_singer",
@@ -297,14 +300,14 @@ _Ids, numbers and state the engine will hold you to. News, charts and the indust
     "term": "1 album firm + 4 label options"
    },
    "since": "1988-10-04",
-   "royalty_account_estimate": -50200.0,
+   "royalty_account_estimate": -72200.0,
    "recoupment_note": "negative = still unrecouped; royalties are paid only after recoupment"
   }
  },
  "finances": {
-  "cash": 39866.22,
-  "period_income": 260.0,
-  "period_spending": 220.0,
+  "cash": 39986.22,
+  "period_income": 520.0,
+  "period_spending": 440.0,
   "day_job": {
    "title": "Session backing vocalist and restaurant shifts",
    "weekly_income": 260,
@@ -313,14 +316,28 @@ _Ids, numbers and state the engine will hold you to. News, charts and the indust
   "lifestyle": "modest",
   "recent": [
    {
-    "date": "1988-10-31",
+    "date": "1988-11-14",
     "amount": 260.0,
     "category": "wages",
     "memo": "Session backing vocalist and restaurant shifts",
     "in": true
    },
    {
-    "date": "1988-10-31",
+    "date": "1988-11-14",
+    "amount": 220.0,
+    "category": "living_costs",
+    "memo": "modest",
+    "in": false
+   },
+   {
+    "date": "1988-11-21",
+    "amount": 260.0,
+    "category": "wages",
+    "memo": "Session backing vocalist and restaurant shifts",
+    "in": true
+   },
+   {
+    "date": "1988-11-21",
     "amount": 220.0,
     "category": "living_costs",
     "memo": "modest",
@@ -330,8 +347,8 @@ _Ids, numbers and state the engine will hold you to. News, charts and the indust
  },
  "calendar": [
   {
-   "date": "1988-10-31",
-   "until": "1988-11-06",
+   "date": "1988-11-21",
+   "until": "1988-11-27",
    "what": "time off",
    "kind": "rest"
   }
@@ -360,11 +377,13 @@ _Ids, numbers and state the engine will hold you to. News, charts and the indust
    "public statements and anything that could become news"
   ],
   "handled_for_you_this_pass": [
+   "Standing orders: you took a week off to recover; your team cleared the calendar.",
+   "Standing orders: you took a week off to recover; your team cleared the calendar.",
    "Standing orders: you took a week off to recover; your team cleared the calendar."
   ],
   "what_people_are_telling_you": [
    "You have 2 unrecorded song(s) in your songbook.",
-   "Your label is waiting to hear which finished recording should be the single (1 ready).",
+   "Your label is waiting to hear which finished recording should be the single (2 ready).",
    "You're running on empty; people around you can see it."
   ]
  },
@@ -435,6 +454,40 @@ _Ids, numbers and state the engine will hold you to. News, charts and the indust
     "dance_hook": 60,
     "ambition": 48,
     "singability": 25
+   }
+  },
+  {
+   "recording_id": "rec:n02132",
+   "title": "If You Want Me",
+   "genre": "rnb",
+   "status": "done",
+   "producers": [
+    "Lisa Sterling"
+   ],
+   "started": "1988-11-01",
+   "completed": "1988-11-22",
+   "has_video": false,
+   "single_release": null,
+   "brief": [
+    "Danielle Reyes and Carla Holloway write a direct, memorable, emotionally honest R&B song about mutual commitment, with a clearly lifting chorus and a late-1980s danceable rhythmic foundation. Sire staff producer Lisa Sterling brings polished arrangement ideas and a contemporary crossover edge withou"
+   ],
+   "impression": [
+    "a decent hook that takes a few listens",
+    "a serviceable melody",
+    "moderately durable",
+    "thin or dated-sounding production",
+    "a capable vocal"
+   ],
+   "team_rating": {
+    "hook": 61,
+    "melody": 58,
+    "depth": 52,
+    "production": 26,
+    "vocal_delivery": 55,
+    "signature": 61,
+    "dance_hook": 59,
+    "ambition": 57,
+    "singability": 62
    }
   }
  ],
@@ -569,48 +622,6 @@ _Ids, numbers and state the engine will hold you to. News, charts and the indust
   }
  ],
  "open_offers": [
-  {
-   "offer_id": "offer:n00036",
-   "kind": "song_pitch",
-   "from": "Sonya Greer",
-   "terms": {
-    "composition": "comp:n01945",
-    "title": "Silent Tonight",
-    "genre": "pop",
-    "writer": "Sonya Greer",
-    "deal": "writer keeps the publishing; earns mechanicals"
-   },
-   "expires": "1988-11-14",
-   "your_impression_0_1": {
-    "melody": 0.41,
-    "lyric_craft": 0.36,
-    "structure": 0.56,
-    "hook": 0.51,
-    "depth": 0.31,
-    "singability": 0.72
-   }
-  },
-  {
-   "offer_id": "offer:n00037",
-   "kind": "song_pitch",
-   "from": "Greg Whitfield",
-   "terms": {
-    "composition": "comp:n01946",
-    "title": "Don't Stop the Motion",
-    "genre": "rnb",
-    "writer": "Greg Whitfield",
-    "deal": "writer keeps the publishing; earns mechanicals"
-   },
-   "expires": "1988-11-14",
-   "your_impression_0_1": {
-    "melody": 0.94,
-    "lyric_craft": 0.61,
-    "structure": 0.88,
-    "hook": 0.4,
-    "depth": 0.51,
-    "singability": 0.33
-   }
-  },
   {
    "offer_id": "offer:n00042",
    "kind": "song_pitch",

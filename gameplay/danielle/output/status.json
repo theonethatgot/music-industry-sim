@@ -5,10 +5,10 @@
   "start_hash": "d858ca757aa65c6e9e06",
   "original_session_hash": "e3076df5dc16af509ffb",
   "data_version": "3763906a35ea9667",
-  "turn_count": 10,
-  "in_world_date": "1988-11-01",
-  "pass_id": "session1-0011",
-  "state_hash": "04dc61a6b7debf85cf83",
+  "turn_count": 11,
+  "in_world_date": "1988-11-23",
+  "pass_id": "session1-0012",
+  "state_hash": "cbeda8d66e7a866ad9ab",
   "replay": {
     "commands": 21,
     "checked": 21,
@@ -18,11 +18,11 @@
   "verification": {
     "mode": "checkpoint_resume",
     "resumed_after_turn": 10,
-    "new_turns_applied": 0,
+    "new_turns_applied": 1,
     "full_replay_performed": false,
     "last_full_replay_turn": 10,
     "sqlite_quick_check": "ok",
-    "elapsed_seconds": 1.78
+    "elapsed_seconds": 7.7
   },
   "turn_results": [
     {
@@ -266,6 +266,38 @@
           ]
         },
         "packet": "pass_0011.md"
+      }
+    },
+    {
+      "turn": "0011.json",
+      "report": {
+        "decisions": [
+          {
+            "command": "record_song",
+            "status": "accepted",
+            "summary": "Recording \"If You Want Me\" with Lisa Sterling until 1988-11-22 (fee $8,000, budget $14,000).",
+            "recording": "rec:n02132"
+          }
+        ],
+        "proposals": [
+          {
+            "type": "creative_brief",
+            "status": "accepted",
+            "summary": "Brief stored; it will shape the next recording session's direction (mood and creative risk), not its quality."
+          }
+        ],
+        "advance": {
+          "from": "1988-11-01",
+          "to": "1988-11-23",
+          "days": 22,
+          "interrupts": [
+            {
+              "reason": "recording_done",
+              "recording": "rec:n02132"
+            }
+          ]
+        },
+        "packet": "pass_0012.md"
       }
     }
   ]
