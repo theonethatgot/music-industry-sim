@@ -5,10 +5,10 @@
   "start_hash": "d858ca757aa65c6e9e06",
   "original_session_hash": "e3076df5dc16af509ffb",
   "data_version": "3763906a35ea9667",
-  "turn_count": 13,
-  "in_world_date": "1988-12-15",
-  "pass_id": "session1-0014",
-  "state_hash": "b5a4d5723d20dd7e446c",
+  "turn_count": 14,
+  "in_world_date": "1989-03-09",
+  "pass_id": "session1-0015",
+  "state_hash": "34042aa44eafc0b181e2",
   "replay": {
     "commands": 21,
     "checked": 21,
@@ -17,12 +17,12 @@
   },
   "verification": {
     "mode": "checkpoint_resume",
-    "resumed_after_turn": 12,
+    "resumed_after_turn": 13,
     "new_turns_applied": 1,
     "full_replay_performed": false,
     "last_full_replay_turn": 10,
     "sqlite_quick_check": "ok",
-    "elapsed_seconds": 5.13
+    "elapsed_seconds": 8.34
   },
   "turn_results": [
     {
@@ -358,6 +358,26 @@
           ]
         },
         "packet": "pass_0014.md"
+      }
+    },
+    {
+      "turn": "0014.json",
+      "report": {
+        "decisions": [
+          {
+            "command": "release_single",
+            "status": "rejected",
+            "reason": "Sire Records doesn't hear a single in \"Wild Dance\" and won't release it as one."
+          }
+        ],
+        "proposals": [],
+        "advance": {
+          "from": "1988-12-15",
+          "to": "1989-03-09",
+          "days": 84,
+          "interrupts": []
+        },
+        "packet": "pass_0015.md"
       }
     }
   ]
