@@ -1,0 +1,5 @@
+# Pin versions used by the verified November 2026 GitHub Actions runner.
+# This avoids silent environment changes between cached snapshots.
+numpy==2.4.6
+PyYAML==6.0.3
+pytest==9.2.0
