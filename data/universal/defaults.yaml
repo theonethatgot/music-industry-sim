@@ -123,7 +123,7 @@ wellbeing:                 # daily relaxation toward a workload-dependent target
   exhausted_below: 0.25    # standing orders book rest below this
 
 development:               # A&R review and artist development (tier C, see docs/QA_REPORT_v0.4.md)
-  threshold: 0.575         # review score needed to green-light a single (calibrated: docs/QA_REPORT_v0.4.md)
+  threshold: 0.575         # review score needed to green-light a single (calibrated: docs/QA_REPORT_v0.4.md §3)
   commercial_weight: 0.68   # share of the review given to commercial potential (vs craft), shifted by label risk
   track_record_weight: 0.15
   focus_weight: 0.10
