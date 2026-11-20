@@ -5,13 +5,13 @@
   "start_hash": "93c1d72a59a3802fd8c7",
   "original_session_hash": "e3076df5dc16af509ffb",
   "data_version": "3763906a35ea9667",
-  "turn_count": 6,
-  "in_world_date": "1988-10-14",
-  "pass_id": "session1-0007",
-  "state_hash": "782703287b2e78b6ad45",
+  "turn_count": 7,
+  "in_world_date": "1988-10-17",
+  "pass_id": "session1-0008",
+  "state_hash": "5b346bd5fec615521178",
   "replay": {
-    "commands": 13,
-    "checked": 13,
+    "commands": 15,
+    "checked": 15,
     "ok": true,
     "mismatches": []
   },
@@ -42,7 +42,7 @@
             }
           ]
         },
-        "packet": "/tmp/tmpvw2ctgun/session1/packets/pass_0002.md"
+        "packet": "/tmp/tmpgaggn8_x/session1/packets/pass_0002.md"
       }
     },
     {
@@ -64,7 +64,7 @@
           "days": 3,
           "interrupts": []
         },
-        "packet": "/tmp/tmpvw2ctgun/session1/packets/pass_0003.md"
+        "packet": "/tmp/tmpgaggn8_x/session1/packets/pass_0003.md"
       }
     },
     {
@@ -94,7 +94,7 @@
             }
           ]
         },
-        "packet": "/tmp/tmpvw2ctgun/session1/packets/pass_0004.md"
+        "packet": "/tmp/tmpgaggn8_x/session1/packets/pass_0004.md"
       }
     },
     {
@@ -116,7 +116,7 @@
           "days": 7,
           "interrupts": []
         },
-        "packet": "/tmp/tmpvw2ctgun/session1/packets/pass_0005.md"
+        "packet": "/tmp/tmpgaggn8_x/session1/packets/pass_0005.md"
       }
     },
     {
@@ -137,7 +137,7 @@
           "days": 3,
           "interrupts": []
         },
-        "packet": "/tmp/tmpvw2ctgun/session1/packets/pass_0006.md"
+        "packet": "/tmp/tmpgaggn8_x/session1/packets/pass_0006.md"
       }
     },
     {
@@ -164,7 +164,21 @@
           "days": 7,
           "interrupts": []
         },
-        "packet": "/tmp/tmpvw2ctgun/session1/packets/pass_0007.md"
+        "packet": "/tmp/tmpgaggn8_x/session1/packets/pass_0007.md"
+      }
+    },
+    {
+      "turn": "0007.json",
+      "report": {
+        "decisions": [],
+        "proposals": [],
+        "advance": {
+          "from": "1988-10-14",
+          "to": "1988-10-17",
+          "days": 3,
+          "interrupts": []
+        },
+        "packet": "/tmp/tmpgaggn8_x/session1/packets/pass_0008.md"
       }
     }
   ]

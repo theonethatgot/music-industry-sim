@@ -1,5 +1,5 @@
-# Los Angeles, autumn 1988: an unsigned singer — pass session1-0007
-**In-world date:** 1988-10-14 (this pass covers 1988-10-07 to 1988-10-14)
+# Los Angeles, autumn 1988: an unsigned singer — pass session1-0008
+**In-world date:** 1988-10-17 (this pass covers 1988-10-14 to 1988-10-17)
 
 > You are the narrator of a music-industry career simulation. The engine below is authoritative: use its facts, numbers and people; write immersive scenes, dialogue and atmosphere around them; and return the player's decisions plus any proposed developments in the JSON format at the end. The full rules are in `docs/narrator_contract.md` (paste once per conversation).
 
@@ -14,37 +14,19 @@
 - Signed to **Sire Records** since 1988-10-04: advance $43,000, royalty 11%, recording fund $149,000/album. Royalty account (estimate): $-43,000 (negative = still unrecouped; royalties are paid only after recoupment).
 
 ## Pacing
-This pass covers 7 days. The clock stopped because: the requested time passed quietly. Give the moments that stopped the clock full scenes. Summarise routine stretches in a few evocative paragraphs. Choose the next 'advance' from what the protagonist is doing: 'next' runs until something needs attention (at most about 3 months); a few days for intense periods; weeks or months for routine.
+This pass covers 3 days. The clock stopped because: the requested time passed quietly. Give the moments that stopped the clock full scenes. Summarise routine stretches in a few evocative paragraphs. Choose the next 'advance' from what the protagonist is doing: 'next' runs until something needs attention (at most about 3 months); a few days for intense periods; weeks or months for routine.
 
 ## Your team and standing orders
 - Manager: **Linda Porter** `person:n00001` (15% commission since 1988-09-21)
 - Standing orders: gigs_when_idle=0, training_when_idle=none, training_spend_per_week=0, manager_may_book_media=True, manager_may_book_gigs=False, rest_when_exhausted=True
 - Always comes back to the player: signing or ending contracts (label, management, publishing); recording sessions (song, producer, budget); releases (which song, when, how much promotion); career changes (image, genre, label, city); spending more than about $2,000 of your own money; public statements and anything that could become news
-- Handled for you: Standing orders: you took a week off to recover; your team cleared the calendar.
 - What people are telling you: You're running on empty; people around you can see it.
 
 ## Money
-Cash: **$39,746.22** · this period: +$260 / −$220 · lifestyle: modest · day job: Session backing vocalist and restaurant shifts (active)
-
-## Calendar
-- 1988-10-10 → 1988-10-16: time off
+Cash: **$39,746.22** · this period: +$0 / −$0 · lifestyle: modest · day job: Session backing vocalist and restaurant shifts (active)
 
 ## What happened (news and events the protagonist knows about)
-- 1988-10-10 [official] Standing orders: you took a week off to recover; your team cleared the calendar.
-- 1988-10-10 [official] Danny Tate - "Beat of Restless" is the new #1 on the Billboard Hot 100 (chart dated 1988-10-22).
-- 1988-10-10 [official] New single: George Michael - "Kissing a Fool" on Columbia Records.
-- 1988-10-10 [reported] Elektra Records is stepping up promotion behind Anita Baker's "Giving You the Best That I Got" after a stronger-than-expected response.
-- 1988-10-10 [official] New album: Crystal Carter - "Hold On to the Heart" on Columbia Records.
-- 1988-10-10 [official] Hot shot debut on the Top Pop Albums: U2 - "Rattle and Hum" enters at #4.
-- 1988-10-10 [official] Black Sisters - "Can't Fight the Talk" is the new #1 on the Adult Contemporary (chart dated 1988-10-22).
-- 1988-10-10 [official] RIAA: Public Enemy's "It Takes a Nation of Millions to Hold Us Back" (album) certified platinum.
-- 1988-10-10 [official] RIAA: Vince Simms' "Only Paradise" (album) certified gold.
-- 1988-10-10 [official] RIAA: Carla Rivers' "Fire Talk" (album) certified platinum.
-- 1988-10-10 [official] RIAA: Bon Jovi's "New Jersey" (album) certified gold.
-- 1988-10-10 [official] RIAA: Luther Vandross' "Any Love" (album) certified platinum.
-- 1988-10-10 [official] RIAA: U2's "Rattle and Hum" (album) certified gold.
-- 1988-10-10 [official] RIAA: Velvet Posse's "Givin' Up the Motion" (album) certified gold.
-- 1988-10-10 [official] RIAA: Crystal Valentine's "Hold On to the Lies" (album) certified gold.
+- 1988-10-17 [official] A quiet stretch.
 
 ## Charts
 
@@ -182,7 +164,7 @@ Cash: **$39,746.22** · this period: +$260 / −$220 · lifestyle: modest · day
 Return exactly one fenced ```json block with this shape; decisions are the player's choices (ask the player before committing to contracts, releases or major creative choices); proposals are developments you suggest that the engine will accept or reject:
 ```json
 {
-  "pass_id": "session1-0007",
+  "pass_id": "session1-0008",
   "decisions": [
     {
       "command": "record_song",
@@ -222,8 +204,8 @@ Return exactly one fenced ```json block with this shape; decisions are the playe
 _Ids, numbers and state the engine will hold you to. News, charts and the industry briefing above are authoritative as written; the complete packet is also saved as JSON next to this file._
 ```json
 {
- "pass_id": "session1-0007",
- "date": "1988-10-14",
+ "pass_id": "session1-0008",
+ "date": "1988-10-17",
  "protagonist": {
   "person_id": "person:pc_example_rnb_pop_singer",
   "act_id": "act:pc_example_rnb_pop_singer",
@@ -293,39 +275,17 @@ _Ids, numbers and state the engine will hold you to. News, charts and the indust
  },
  "finances": {
   "cash": 39746.22,
-  "period_income": 260.0,
-  "period_spending": 220.0,
+  "period_income": 0,
+  "period_spending": 0,
   "day_job": {
    "title": "Session backing vocalist and restaurant shifts",
    "weekly_income": 260,
    "active": true
   },
   "lifestyle": "modest",
-  "recent": [
-   {
-    "date": "1988-10-10",
-    "amount": 260.0,
-    "category": "wages",
-    "memo": "Session backing vocalist and restaurant shifts",
-    "in": true
-   },
-   {
-    "date": "1988-10-10",
-    "amount": 220.0,
-    "category": "living_costs",
-    "memo": "modest",
-    "in": false
-   }
-  ]
+  "recent": []
  },
- "calendar": [
-  {
-   "date": "1988-10-10",
-   "until": "1988-10-16",
-   "what": "time off",
-   "kind": "rest"
-  }
- ],
+ "calendar": [],
  "team": {
   "manager": {
    "name": "Linda Porter",
@@ -349,9 +309,7 @@ _Ids, numbers and state the engine will hold you to. News, charts and the indust
    "spending more than about $2,000 of your own money",
    "public statements and anything that could become news"
   ],
-  "handled_for_you_this_pass": [
-   "Standing orders: you took a week off to recover; your team cleared the calendar."
-  ],
+  "handled_for_you_this_pass": [],
   "what_people_are_telling_you": [
    "You're running on empty; people around you can see it."
   ]
