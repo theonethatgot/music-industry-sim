@@ -5,10 +5,10 @@
   "start_hash": "d858ca757aa65c6e9e06",
   "original_session_hash": "e3076df5dc16af509ffb",
   "data_version": "3763906a35ea9667",
-  "turn_count": 12,
-  "in_world_date": "1988-11-23",
-  "pass_id": "session1-0013",
-  "state_hash": "2e4921cdb92840c12b3a",
+  "turn_count": 13,
+  "in_world_date": "1988-12-15",
+  "pass_id": "session1-0014",
+  "state_hash": "b5a4d5723d20dd7e446c",
   "replay": {
     "commands": 21,
     "checked": 21,
@@ -17,12 +17,12 @@
   },
   "verification": {
     "mode": "checkpoint_resume",
-    "resumed_after_turn": 11,
+    "resumed_after_turn": 12,
     "new_turns_applied": 1,
     "full_replay_performed": false,
     "last_full_replay_turn": 10,
     "sqlite_quick_check": "ok",
-    "elapsed_seconds": 6.64
+    "elapsed_seconds": 5.13
   },
   "turn_results": [
     {
@@ -326,6 +326,38 @@
         "proposals": [],
         "advance": null,
         "packet": "pass_0013.md"
+      }
+    },
+    {
+      "turn": "0013.json",
+      "report": {
+        "decisions": [
+          {
+            "command": "record_song",
+            "status": "accepted",
+            "summary": "Recording \"Wild Dance\" with Carla Holloway until 1988-12-14 (fee $1,200, budget $12,500).",
+            "recording": "rec:n02276"
+          }
+        ],
+        "proposals": [
+          {
+            "type": "creative_brief",
+            "status": "accepted",
+            "summary": "Brief stored; it will shape the next recording session's direction (mood and creative risk), not its quality."
+          }
+        ],
+        "advance": {
+          "from": "1988-11-23",
+          "to": "1988-12-15",
+          "days": 22,
+          "interrupts": [
+            {
+              "reason": "recording_done",
+              "recording": "rec:n02276"
+            }
+          ]
+        },
+        "packet": "pass_0014.md"
       }
     }
   ]
