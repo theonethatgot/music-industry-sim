@@ -1,5 +1,5 @@
-# Los Angeles, autumn 1988: an unsigned singer — pass session1-0012
-**In-world date:** 1988-11-23 (this pass covers 1988-11-01 to 1988-11-23)
+# Los Angeles, autumn 1988: an unsigned singer — pass session1-0013
+**In-world date:** 1988-11-23: the story begins (news below covers the two weeks before)
 
 > You are the narrator of a music-industry career simulation. The engine below is authoritative: use its facts, numbers and people; write immersive scenes, dialogue and atmosphere around them; and return the player's decisions plus any proposed developments in the JSON format at the end. The full rules are in `docs/narrator_contract.md` (paste once per conversation).
 
@@ -14,48 +14,31 @@
 - Signed to **Sire Records** since 1988-10-04: advance $43,000, royalty 11%, recording fund $149,000/album. Royalty account (estimate): $-72,200 (negative = still unrecouped; royalties are paid only after recoupment).
 
 ## Pacing
-This pass covers 22 days. The clock stopped because: a recording session finished. Give the moments that stopped the clock full scenes. Summarise routine stretches in a few evocative paragraphs. Choose the next 'advance' from what the protagonist is doing: 'next' runs until something needs attention (at most about 3 months); a few days for intense periods; weeks or months for routine.
+This pass covers 0 days. The clock stopped because: a recording session finished. Give the moments that stopped the clock full scenes. Summarise routine stretches in a few evocative paragraphs. Choose the next 'advance' from what the protagonist is doing: 'next' runs until something needs attention (at most about 3 months); a few days for intense periods; weeks or months for routine.
 
 ## Your team and standing orders
 - Manager: **Linda Porter** `person:n00001` (15% commission since 1988-09-21)
 - Standing orders: gigs_when_idle=0, training_when_idle=none, training_spend_per_week=0, manager_may_book_media=True, manager_may_book_gigs=False, rest_when_exhausted=True
 - Always comes back to the player: signing or ending contracts (label, management, publishing); recording sessions (song, producer, budget); releases (which song, when, how much promotion); career changes (image, genre, label, city); spending more than about $2,000 of your own money; public statements and anything that could become news
-- Handled for you: Standing orders: you took a week off to recover; your team cleared the calendar.
-- Handled for you: Standing orders: you took a week off to recover; your team cleared the calendar.
-- Handled for you: Standing orders: you took a week off to recover; your team cleared the calendar.
-- What people are telling you: You have 2 unrecorded song(s) in your songbook.
+- What people are telling you: You have 5 unrecorded song(s) in your songbook.
 - What people are telling you: Your label is waiting to hear which finished recording should be the single (2 ready).
 - What people are telling you: You're running on empty; people around you can see it.
 
 ## Money
-Cash: **$39,986.22** · this period: +$520 / −$440 · lifestyle: modest · day job: Session backing vocalist and restaurant shifts (active)
+Cash: **$39,986.22** · this period: +$0 / −$0 · lifestyle: modest · day job: Session backing vocalist and restaurant shifts (active)
 
 ## Calendar
 - 1988-11-21 → 1988-11-27: time off
 
 ## What happened (news and events the protagonist knows about)
-- 1988-11-07 [official] Standing orders: you took a week off to recover; your team cleared the calendar.
-- 1988-11-07 [official] Michael Jackson - "Smooth Criminal" is the new #1 on the Billboard Hot 100 (chart dated 1988-11-19).
-- 1988-11-07 [official] Hot shot debut on the Top Pop Albums: Electric Angels - "Only Hot" enters at #10.
-- 1988-11-07 [official] New single: Bon Jovi - "Born to Be My Baby" on Mercury Records.
-- 1988-11-07 [official] Michael Jackson - "Smooth Criminal" is the new #1 on the Hot Black Singles (chart dated 1988-11-19).
-- 1988-11-14 [official] Standing orders: you took a week off to recover; your team cleared the calendar.
-- 1988-11-14 [official] Michael Jackson - "Bad" is the new #1 on the Top Pop Albums (chart dated 1988-11-26).
-- 1988-11-14 [official] New single: Phil Collins - "Two Hearts" on Atlantic Records.
-- 1988-11-14 [official] Hot shot debut on the Top Pop Albums: Black Crew - "Can't Fight the Fever" enters at #11.
-- 1988-11-14 [official] New single: Vanessa Williams - "Dreamin'" on Wing Records.
-- 1988-11-14 [official] Lisa Simms - "Say It's Diamond" is the new #1 on the Hot Black Singles (chart dated 1988-11-26).
-- 1988-11-14 [official] Michael Jackson - "Bad" is the new #1 on the Top Black Albums (chart dated 1988-11-26).
-- 1988-11-14 [official] Luther Vandross - "Any Love" is the new #1 on the Adult Contemporary (chart dated 1988-11-26).
-- 1988-11-21 [official] Standing orders: you took a week off to recover; your team cleared the calendar.
-- 1988-11-21 [official] New album: Brian Fontaine - "Real Thing" on Geffen Records.
-- 1988-11-21 [official] New album: Silver Avenue - "Thing on Fire" on RCA Records.
-- 1988-11-21 [official] Hot shot debut on the Top Pop Albums: Rob Brooks - "Heart on Fire" enters at #9.
-- 1988-11-22 [official] Finished recording "If You Want Me".
+- 1988-11-23 [official] A quiet stretch.
 
 ## Music
 - Songbook: "Motion on Fire" (dance_pop, by Nicole Lambert) `comp:n01735` — your read: hook 15, melody 11
 - Songbook: "Forever Love Affair" (rnb, by Sonya Whitfield) `comp:n01736` — your read: hook 58, melody 11
+- Songbook: "Wild Dance" (dance_pop, by Michelle Rivers) `comp:n02136` — your read: hook 69, melody 67
+- Songbook: "Silent Groove" (rnb, by Lamont Brooks) `comp:n02137` — your read: hook 65, melody 51
+- Songbook: "Hold On to the Street" (dance_pop, by Denise Pryor) `comp:n02138` — your read: hook 31, melody 52
 - Recording "Say You Mean It" `rec:n02009` (rnb, prod. Carla Holloway): done — your team hears: a decent hook that takes a few listens; a weak melody; may wear out fast; solid production; a commanding vocal
 - Recording "If You Want Me" `rec:n02132` (rnb, prod. Lisa Sterling): done — your team hears: a decent hook that takes a few listens; a serviceable melody; moderately durable; thin or dated-sounding production; a capable vocal
 
@@ -178,9 +161,6 @@ Cash: **$39,986.22** · this period: +$520 / −$440 · lifestyle: modest · day
 - 1988-10-17: Linda is arranging informal conversations with Sire staff producer Lisa Sterling about the longer album plan, without appointing her or spending additional recording funds yet. Danielle is limiting this initial Carla session to a manageable trial rather than commencing an intensive album schedule while still fatigued.
 
 ## Decisions available
-- OFFER `offer:n00042` (song_pitch) from Michelle Rivers, expires 1988-12-12: {"composition": "comp:n02136", "title": "Wild Dance", "genre": "dance_pop", "writer": "Michelle Rivers", "deal": "writer keeps the publishing; earns mechanicals"}
-- OFFER `offer:n00043` (song_pitch) from Lamont Brooks, expires 1988-12-12: {"composition": "comp:n02137", "title": "Silent Groove", "genre": "rnb", "writer": "Lamont Brooks", "deal": "writer keeps the publishing; earns mechanicals"}
-- OFFER `offer:n00044` (song_pitch) from Denise Pryor, expires 1988-12-12: {"composition": "comp:n02138", "title": "Hold On to the Street", "genre": "dance_pop", "writer": "Denise Pryor", "deal": "writer keeps the publishing; earns mechanicals"}
 - Producers you could approach: Lisa Sterling `person:producer_sire` (high, usual fee $8,000, staff producer at Sire Records); Carla Holloway `person:pc_contact1` (high, usual fee $1,200); Robert John "Mutt" Lange `person:mutt_lange` (very high, usual fee $150,000); Quincy Jones `person:quincy_jones` (very high, usual fee $150,000); Jimmy Jam `person:jimmy_jam` (very high, usual fee $80,000); Teddy Riley `person:teddy_riley` (very high, usual fee $40,000); Terry Lewis `person:terry_lewis` (very high, usual fee $80,000); Hank Shocklee `person:hank_shocklee` (very high, usual fee $25,000); Rick Rubin `person:rick_rubin` (very high, usual fee $40,000); Babyface `person:babyface` (very high, usual fee $50,000); Bruce Fairbairn `person:bruce_fairbairn` (very high, usual fee $60,000); Dr. Dre `person:dr_dre` (very high, usual fee $15,000)
 - Commands: `accept_offer` — Accept an open offer (recording contract, song pitch, booking).; `decline_offer` — Decline an open offer.; `record_song` — Book studio time to record a song with a producer. Takes studio_weeks; quality comes from the people involved, the budget and time, not the description.; `release_single` — Release a finished recording as a single (label approval needed if signed).; `release_album` — Release an album of at least 6 finished recordings.; `gig` — Play local club dates: income, live buzz (which A&R notices) and stagecraft.; `train` — Lessons or practice to improve a skill.; `promote` — Personal promotion of a released single.; `set_day_job` — Keep or quit the day job.; `set_lifestyle` — Spending level.; `rest` — Take time off to recover energy and morale.; `set_policy` — Standing orders for routine work your team handles without asking you.; `hire_manager` — Offer a manager you know a management deal (they decide whether to take you on).; `fire_manager` — End your management deal.
 
@@ -195,7 +175,7 @@ Cash: **$39,986.22** · this period: +$520 / −$440 · lifestyle: modest · day
 Return exactly one fenced ```json block with this shape; decisions are the player's choices (ask the player before committing to contracts, releases or major creative choices); proposals are developments you suggest that the engine will accept or reject:
 ```json
 {
-  "pass_id": "session1-0012",
+  "pass_id": "session1-0013",
   "decisions": [
     {
       "command": "record_song",
@@ -235,7 +215,7 @@ Return exactly one fenced ```json block with this shape; decisions are the playe
 _Ids, numbers and state the engine will hold you to. News, charts and the industry briefing above are authoritative as written; the complete packet is also saved as JSON next to this file._
 ```json
 {
- "pass_id": "session1-0012",
+ "pass_id": "session1-0013",
  "date": "1988-11-23",
  "protagonist": {
   "person_id": "person:pc_example_rnb_pop_singer",
@@ -306,44 +286,15 @@ _Ids, numbers and state the engine will hold you to. News, charts and the indust
  },
  "finances": {
   "cash": 39986.22,
-  "period_income": 520.0,
-  "period_spending": 440.0,
+  "period_income": 0,
+  "period_spending": 0,
   "day_job": {
    "title": "Session backing vocalist and restaurant shifts",
    "weekly_income": 260,
    "active": true
   },
   "lifestyle": "modest",
-  "recent": [
-   {
-    "date": "1988-11-14",
-    "amount": 260.0,
-    "category": "wages",
-    "memo": "Session backing vocalist and restaurant shifts",
-    "in": true
-   },
-   {
-    "date": "1988-11-14",
-    "amount": 220.0,
-    "category": "living_costs",
-    "memo": "modest",
-    "in": false
-   },
-   {
-    "date": "1988-11-21",
-    "amount": 260.0,
-    "category": "wages",
-    "memo": "Session backing vocalist and restaurant shifts",
-    "in": true
-   },
-   {
-    "date": "1988-11-21",
-    "amount": 220.0,
-    "category": "living_costs",
-    "memo": "modest",
-    "in": false
-   }
-  ]
+  "recent": []
  },
  "calendar": [
   {
@@ -376,13 +327,9 @@ _Ids, numbers and state the engine will hold you to. News, charts and the indust
    "spending more than about $2,000 of your own money",
    "public statements and anything that could become news"
   ],
-  "handled_for_you_this_pass": [
-   "Standing orders: you took a week off to recover; your team cleared the calendar.",
-   "Standing orders: you took a week off to recover; your team cleared the calendar.",
-   "Standing orders: you took a week off to recover; your team cleared the calendar."
-  ],
+  "handled_for_you_this_pass": [],
   "what_people_are_telling_you": [
-   "You have 2 unrecorded song(s) in your songbook.",
+   "You have 5 unrecorded song(s) in your songbook.",
    "Your label is waiting to hear which finished recording should be the single (2 ready).",
    "You're running on empty; people around you can see it."
   ]
@@ -418,6 +365,54 @@ _Ids, numbers and state the engine will hold you to. News, charts and the indust
     "hook": 0.58,
     "depth": 0.43,
     "singability": 0.44
+   }
+  },
+  {
+   "composition_id": "comp:n02136",
+   "title": "Wild Dance",
+   "genre": "dance_pop",
+   "writers": [
+    "Michelle Rivers"
+   ],
+   "your_impression": {
+    "melody": 0.67,
+    "lyric_craft": 0.42,
+    "structure": 0.57,
+    "hook": 0.69,
+    "depth": 0.86,
+    "singability": 0.63
+   }
+  },
+  {
+   "composition_id": "comp:n02137",
+   "title": "Silent Groove",
+   "genre": "rnb",
+   "writers": [
+    "Lamont Brooks"
+   ],
+   "your_impression": {
+    "melody": 0.51,
+    "lyric_craft": 0.57,
+    "structure": 0.56,
+    "hook": 0.65,
+    "depth": 0.3,
+    "singability": 0.66
+   }
+  },
+  {
+   "composition_id": "comp:n02138",
+   "title": "Hold On to the Street",
+   "genre": "dance_pop",
+   "writers": [
+    "Denise Pryor"
+   ],
+   "your_impression": {
+    "melody": 0.52,
+    "lyric_craft": 0.15,
+    "structure": 0.42,
+    "hook": 0.31,
+    "depth": 0.61,
+    "singability": 0.29
    }
   }
  ],
@@ -621,71 +616,7 @@ _Ids, numbers and state the engine will hold you to. News, charts and the indust
    "about": []
   }
  ],
- "open_offers": [
-  {
-   "offer_id": "offer:n00042",
-   "kind": "song_pitch",
-   "from": "Michelle Rivers",
-   "terms": {
-    "composition": "comp:n02136",
-    "title": "Wild Dance",
-    "genre": "dance_pop",
-    "writer": "Michelle Rivers",
-    "deal": "writer keeps the publishing; earns mechanicals"
-   },
-   "expires": "1988-12-12",
-   "your_impression_0_1": {
-    "melody": 0.67,
-    "lyric_craft": 0.42,
-    "structure": 0.57,
-    "hook": 0.69,
-    "depth": 0.86,
-    "singability": 0.63
-   }
-  },
-  {
-   "offer_id": "offer:n00043",
-   "kind": "song_pitch",
-   "from": "Lamont Brooks",
-   "terms": {
-    "composition": "comp:n02137",
-    "title": "Silent Groove",
-    "genre": "rnb",
-    "writer": "Lamont Brooks",
-    "deal": "writer keeps the publishing; earns mechanicals"
-   },
-   "expires": "1988-12-12",
-   "your_impression_0_1": {
-    "melody": 0.51,
-    "lyric_craft": 0.57,
-    "structure": 0.56,
-    "hook": 0.65,
-    "depth": 0.3,
-    "singability": 0.66
-   }
-  },
-  {
-   "offer_id": "offer:n00044",
-   "kind": "song_pitch",
-   "from": "Denise Pryor",
-   "terms": {
-    "composition": "comp:n02138",
-    "title": "Hold On to the Street",
-    "genre": "dance_pop",
-    "writer": "Denise Pryor",
-    "deal": "writer keeps the publishing; earns mechanicals"
-   },
-   "expires": "1988-12-12",
-   "your_impression_0_1": {
-    "melody": 0.52,
-    "lyric_craft": 0.15,
-    "structure": 0.42,
-    "hook": 0.31,
-    "depth": 0.61,
-    "singability": 0.29
-   }
-  }
- ],
+ "open_offers": [],
  "producers_for_hire": [
   {
    "person_id": "person:producer_sire",

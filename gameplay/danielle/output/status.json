@@ -5,10 +5,10 @@
   "start_hash": "d858ca757aa65c6e9e06",
   "original_session_hash": "e3076df5dc16af509ffb",
   "data_version": "3763906a35ea9667",
-  "turn_count": 11,
+  "turn_count": 12,
   "in_world_date": "1988-11-23",
-  "pass_id": "session1-0012",
-  "state_hash": "cbeda8d66e7a866ad9ab",
+  "pass_id": "session1-0013",
+  "state_hash": "2e4921cdb92840c12b3a",
   "replay": {
     "commands": 21,
     "checked": 21,
@@ -18,11 +18,11 @@
   "verification": {
     "mode": "checkpoint_resume",
     "resumed_after_turn": 11,
-    "new_turns_applied": 0,
+    "new_turns_applied": 1,
     "full_replay_performed": false,
     "last_full_replay_turn": 10,
     "sqlite_quick_check": "ok",
-    "elapsed_seconds": 1.08
+    "elapsed_seconds": 6.64
   },
   "turn_results": [
     {
@@ -298,6 +298,34 @@
           ]
         },
         "packet": "pass_0012.md"
+      }
+    },
+    {
+      "turn": "0012.json",
+      "report": {
+        "decisions": [
+          {
+            "command": "accept_offer",
+            "status": "accepted",
+            "summary": "\"Wild Dance\" by Michelle Rivers is now in your songbook (comp:n02136).",
+            "composition": "comp:n02136"
+          },
+          {
+            "command": "accept_offer",
+            "status": "accepted",
+            "summary": "\"Silent Groove\" by Lamont Brooks is now in your songbook (comp:n02137).",
+            "composition": "comp:n02137"
+          },
+          {
+            "command": "accept_offer",
+            "status": "accepted",
+            "summary": "\"Hold On to the Street\" by Denise Pryor is now in your songbook (comp:n02138).",
+            "composition": "comp:n02138"
+          }
+        ],
+        "proposals": [],
+        "advance": null,
+        "packet": "pass_0013.md"
       }
     }
   ]
