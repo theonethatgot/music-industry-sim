@@ -8,3 +8,4 @@ campaigns/
 *.egg-info/
 .pytest_cache/
 playtests/*/campaign.sqlite
+.bridge_cache/
