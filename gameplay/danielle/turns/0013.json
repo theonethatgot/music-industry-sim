@@ -1,0 +1,26 @@
+{
+  "pass_id": "session1-0013",
+  "decisions": [
+    {
+      "command": "record_song",
+      "args": {
+        "song": "comp:n02136",
+        "producer": "person:pc_contact1",
+        "genre": "dance_pop",
+        "studio_weeks": 3,
+        "budget": 12500,
+        "ambition": 0.63,
+        "mood": 0.25
+      }
+    }
+  ],
+  "proposals": [
+    {
+      "type": "creative_brief",
+      "concept": "Danielle's most promising available composition 'Wild Dance' has stronger provisional hook and melody than other pitched material. Produce as a rhythmically exciting late-1988 dance-pop/R&B crossover, highlighting her strong vocals and building a powerful chorus. Carla Holloway produces with more studio time, session musicians and mixing resources than her first recording. No predetermined song quality, label approval, sales or chart success.",
+      "mood": 0.25,
+      "ambition": 0.63
+    }
+  ],
+  "advance": "next"
+}
