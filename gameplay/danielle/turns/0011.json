@@ -1,0 +1,28 @@
+{
+  "pass_id": "session1-0011",
+  "decisions": [
+    {
+      "command": "record_song",
+      "args": {
+        "song": "write_own",
+        "title": "If You Want Me",
+        "cowriter": "person:pc_contact1",
+        "producer": "person:producer_sire",
+        "genre": "rnb",
+        "studio_weeks": 3,
+        "budget": 14000,
+        "ambition": 0.62,
+        "mood": 0.2
+      }
+    }
+  ],
+  "proposals": [
+    {
+      "type": "creative_brief",
+      "concept": "Danielle Reyes and Carla Holloway write a direct, memorable, emotionally honest R&B song about mutual commitment, with a clearly lifting chorus and a late-1980s danceable rhythmic foundation. Sire staff producer Lisa Sterling brings polished arrangement ideas and a contemporary crossover edge without burying Danielle's strong vocal personality. Creative intention only; do not assume any particular song quality, hit or label approval.",
+      "mood": 0.2,
+      "ambition": 0.62
+    }
+  ],
+  "advance": "4w"
+}
