@@ -5,13 +5,13 @@
   "start_hash": "93c1d72a59a3802fd8c7",
   "original_session_hash": "e3076df5dc16af509ffb",
   "data_version": "3763906a35ea9667",
-  "turn_count": 9,
-  "in_world_date": "1988-10-31",
-  "pass_id": "session1-0010",
-  "state_hash": "55db3df6d48ba55577da",
+  "turn_count": 10,
+  "in_world_date": "1988-11-01",
+  "pass_id": "session1-0011",
+  "state_hash": "236509790228bbb9cdb3",
   "replay": {
-    "commands": 19,
-    "checked": 19,
+    "commands": 21,
+    "checked": 21,
     "ok": true,
     "mismatches": []
   },
@@ -42,7 +42,7 @@
             }
           ]
         },
-        "packet": "/tmp/tmpughydmdz/session1/packets/pass_0002.md"
+        "packet": "/tmp/tmp4zdgsplg/session1/packets/pass_0002.md"
       }
     },
     {
@@ -64,7 +64,7 @@
           "days": 3,
           "interrupts": []
         },
-        "packet": "/tmp/tmpughydmdz/session1/packets/pass_0003.md"
+        "packet": "/tmp/tmp4zdgsplg/session1/packets/pass_0003.md"
       }
     },
     {
@@ -94,7 +94,7 @@
             }
           ]
         },
-        "packet": "/tmp/tmpughydmdz/session1/packets/pass_0004.md"
+        "packet": "/tmp/tmp4zdgsplg/session1/packets/pass_0004.md"
       }
     },
     {
@@ -116,7 +116,7 @@
           "days": 7,
           "interrupts": []
         },
-        "packet": "/tmp/tmpughydmdz/session1/packets/pass_0005.md"
+        "packet": "/tmp/tmp4zdgsplg/session1/packets/pass_0005.md"
       }
     },
     {
@@ -137,7 +137,7 @@
           "days": 3,
           "interrupts": []
         },
-        "packet": "/tmp/tmpughydmdz/session1/packets/pass_0006.md"
+        "packet": "/tmp/tmp4zdgsplg/session1/packets/pass_0006.md"
       }
     },
     {
@@ -164,7 +164,7 @@
           "days": 7,
           "interrupts": []
         },
-        "packet": "/tmp/tmpughydmdz/session1/packets/pass_0007.md"
+        "packet": "/tmp/tmp4zdgsplg/session1/packets/pass_0007.md"
       }
     },
     {
@@ -178,7 +178,7 @@
           "days": 3,
           "interrupts": []
         },
-        "packet": "/tmp/tmpughydmdz/session1/packets/pass_0008.md"
+        "packet": "/tmp/tmp4zdgsplg/session1/packets/pass_0008.md"
       }
     },
     {
@@ -223,7 +223,7 @@
           "days": 7,
           "interrupts": []
         },
-        "packet": "/tmp/tmpughydmdz/session1/packets/pass_0009.md"
+        "packet": "/tmp/tmp4zdgsplg/session1/packets/pass_0009.md"
       }
     },
     {
@@ -237,7 +237,26 @@
           "days": 7,
           "interrupts": []
         },
-        "packet": "/tmp/tmpughydmdz/session1/packets/pass_0010.md"
+        "packet": "/tmp/tmp4zdgsplg/session1/packets/pass_0010.md"
+      }
+    },
+    {
+      "turn": "0010.json",
+      "report": {
+        "decisions": [],
+        "proposals": [],
+        "advance": {
+          "from": "1988-10-31",
+          "to": "1988-11-01",
+          "days": 1,
+          "interrupts": [
+            {
+              "reason": "recording_done",
+              "recording": "rec:n02009"
+            }
+          ]
+        },
+        "packet": "/tmp/tmp4zdgsplg/session1/packets/pass_0011.md"
       }
     }
   ]
