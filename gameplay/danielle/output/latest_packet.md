@@ -1,5 +1,5 @@
-# Los Angeles, autumn 1988: an unsigned singer — pass session1-0009
-**In-world date:** 1988-10-24 (this pass covers 1988-10-17 to 1988-10-24)
+# Los Angeles, autumn 1988: an unsigned singer — pass session1-0010
+**In-world date:** 1988-10-31 (this pass covers 1988-10-24 to 1988-10-31)
 
 > You are the narrator of a music-industry career simulation. The engine below is authoritative: use its facts, numbers and people; write immersive scenes, dialogue and atmosphere around them; and return the player's decisions plus any proposed developments in the JSON format at the end. The full rules are in `docs/narrator_contract.md` (paste once per conversation).
 
@@ -25,27 +25,27 @@ This pass covers 7 days. The clock stopped because: the requested time passed qu
 - What people are telling you: You're running on empty; people around you can see it.
 
 ## Money
-Cash: **$39,786.22** · this period: +$260 / −$220 · lifestyle: modest · day job: Session backing vocalist and restaurant shifts (active)
+Cash: **$39,826.22** · this period: +$260 / −$220 · lifestyle: modest · day job: Session backing vocalist and restaurant shifts (active)
 
 ## Calendar
 - 1988-10-17 → 1988-10-31: recording "Say You Mean It" with Carla Holloway
 
 ## What happened (news and events the protagonist knows about)
-- 1988-10-17 [official] Standing orders: you took a week off to recover; your team cleared the calendar.
-- 1988-10-17 [official] Anita Baker - "Giving You the Best That I Got" is the new #1 on the Billboard Hot 100 (chart dated 1988-10-29).
-- 1988-10-17 [reported] Arista Records is stepping up promotion behind Electric Hearts's "Don't Stop the Games" after a stronger-than-expected response.
-- 1988-10-17 [official] New single: New Kids on the Block - "You Got It (The Right Stuff)" on Columbia Records.
-- 1988-10-17 [official] New album: Paula Gaines - "Dream Eyes" on Atlantic Records.
-- 1988-10-17 [official] New single: Concrete Express - "Hold On to the Lover" on Columbia Records.
-- 1988-10-17 [official] Hot shot debut on the Top Pop Albums: Wild Thieves - "Shadow Tonight" enters at #3.
-- 1988-10-17 [official] Luther Vandross - "Any Love" is the new #1 on the Hot Black Singles (chart dated 1988-10-29).
-- 1988-10-17 [official] Midnight Crew - "Velvet Feeling" is the new #1 on the Album Rock Tracks (chart dated 1988-10-29).
-- 1988-10-17 [official] RIAA: George Michael's "Faith" (album) certified 13x platinum.
-- 1988-10-17 [official] RIAA: Anita Baker's "Giving You the Best That I Got" (album) certified 2x platinum.
-- 1988-10-17 [official] RIAA: Michael Jackson's "Smooth Criminal" (single) certified gold.
-- 1988-10-17 [official] RIAA: Denise Lambert's "Crazy Touch" (album) certified platinum.
-- 1988-10-17 [official] RIAA: Steel Avenue's "Love Tonight" (album) certified gold.
-- 1988-10-17 [official] RIAA: Wild Thieves' "Shadow Tonight" (album) certified gold.
+- 1988-10-24 [official] Standing orders: you took a week off to recover; your team cleared the calendar.
+- 1988-10-24 [reported] Epic Records is stepping up promotion behind Michael Jackson's "Smooth Criminal" after a stronger-than-expected response.
+- 1988-10-24 [official] New single: Def Leppard - "Armageddon It" on Mercury Records.
+- 1988-10-24 [official] Hot shot debut on the Top Pop Albums: Paula Gaines - "Dream Eyes" enters at #3.
+- 1988-10-24 [official] Anita Baker - "Giving You the Best That I Got" is the new #1 on the Hot Black Singles (chart dated 1988-11-05).
+- 1988-10-24 [official] Anita Baker - "Giving You the Best That I Got" is the new #1 on the Adult Contemporary (chart dated 1988-11-05).
+- 1988-10-24 [official] RIAA: Angela Wilder's "Don't Stop the Lies" (album) certified gold.
+- 1988-10-24 [official] RIAA: Black Express' "Promise of Summer" (album) certified gold.
+- 1988-10-24 [official] RIAA: Paper Kings' "Promise on Fire" (album) certified gold.
+- 1988-10-24 [official] RIAA: Black Tigers' "Only Forever" (album) certified gold.
+- 1988-10-24 [official] RIAA: Paula Gaines' "Dream Eyes" (album) certified gold.
+- 1988-10-24 [official] RIAA: Erica Tate's "Night of Neon" (album) certified gold.
+- 1988-10-24 [reported] Michael Jackson will perform on American Bandstand.
+- 1988-10-24 [reported] Danny Tate will perform on American Bandstand.
+- 1988-10-24 [reported] Carla Vaughn will perform on Saturday Night Live.
 
 ## Music
 - Songbook: "Motion on Fire" (dance_pop, by Nicole Lambert) `comp:n01735` — your read: hook 15, melody 11
@@ -54,109 +54,109 @@ Cash: **$39,786.22** · this period: +$260 / −$220 · lifestyle: modest · day
 
 ## Charts
 
-**Billboard Hot 100** — chart dated 1988-10-29 (method: rank_reports)
-  1. Anita Baker — Giving You the Best That I Got (▲7, 5 wk)
-  2. Danny Tate — Beat of Restless (▼1, 12 wk)
-  3. Vince Tate — Say It's Paradise (=, 15 wk)
-  4. Sugar Groove — Tonight Girl (▲9, 11 wk)
-  5. Rick Astley — It Would Take a Strong Strong Man (▼2, 12 wk)
-  6. Denise Mercer — Diamond Dance (▼4, 13 wk)
-  7. Carla Vaughn — Lies on Fire (▼5, 8 wk)
-  8. Stacy Whitfield — Desire Girl (▲10, 12 wk)
-  9. Ray Pruitt — Say It's Fire (▼8, 8 wk)
- 10. Luther Vandross — Any Love (▼6, 5 wk)
- 11. Urban Dolls — Only Heart (▲13, 13 wk)
- 12. Michael Jackson — Smooth Criminal (▲36, 3 wk)
- 13. Midnight Crew — Velvet Feeling (▲16, 7 wk)
- 14. U2 — Desire (▲21, 3 wk)
- 15. Electric Hearts — Don't Stop the Games (=, 10 wk)
- 16. Black Sisters — Can't Fight the Talk (▼11, 10 wk)
- 17. Angela Pryor — Hold On to the Love (▲23, 4 wk)
- 18. Yolanda Wilder — Say It's Broken (▼12, 13 wk)
- 19. Midnight Rebels — Say It's Angel (▼18, 7 wk)
- 20. Paula Abdul — (It's Just) The Way That You Love Me (▲24, 7 wk)
+**Billboard Hot 100** — chart dated 1988-11-05 (method: rank_reports)
+  1. Anita Baker — Giving You the Best That I Got (=, 6 wk)
+  2. Sugar Groove — Tonight Girl (▲4, 12 wk)
+  3. Luther Vandross — Any Love (▲10, 6 wk)
+  4. Denise Mercer — Diamond Dance (▲6, 14 wk)
+  5. Carla Vaughn — Lies on Fire (▲7, 9 wk)
+  6. Michael Jackson — Smooth Criminal (▲12, 4 wk)
+  7. Stacy Whitfield — Desire Girl (▲8, 13 wk)
+  8. Danny Tate — Beat of Restless (▼2, 13 wk)
+  9. Urban Dolls — Only Heart (▲11, 14 wk)
+ 10. Ray Pruitt — Say It's Fire (▼9, 9 wk)
+ 11. Angela Pryor — Hold On to the Love (▲17, 5 wk)
+ 12. U2 — Desire (▲14, 4 wk)
+ 13. Paper Avenue — My Fire Time (▲23, 6 wk)
+ 14. Vince Tate — Say It's Paradise (▼3, 16 wk)
+ 15. Midnight Crew — Velvet Feeling (▼13, 8 wk)
+ 16. Rick Astley — It Would Take a Strong Strong Man (▼5, 13 wk)
+ 17. Electric Hearts — Don't Stop the Games (▼15, 11 wk)
+ 18. Black Sisters — Can't Fight the Talk (▼16, 11 wk)
+ 19. Paula Abdul — (It's Just) The Way That You Love Me (▲20, 8 wk)
+ 20. Midnight Rebels — Say It's Angel (▼19, 8 wk)
 
-**Top Pop Albums** — chart dated 1988-10-29 (method: rank_reports)
-  1. Anita Baker — Giving You the Best That I Got (=, 3 wk)
-  2. Luther Vandross — Any Love (=, 6 wk)
-  3. Wild Thieves — Shadow Tonight (NEW, 1 wk)
-  4. U2 — Rattle and Hum (=, 2 wk)
-  5. Bon Jovi — New Jersey (▲7, 2 wk)
-  6. Steel Shadows — Don't Stop the Dance (▼3, 3 wk)
-  7. Crystal Valentine — Hold On to the Lies (▼6, 2 wk)
-  8. Denise Lambert — Crazy Touch (▼5, 4 wk)
-  9. Black Tigers — Only Forever (NEW, 1 wk)
- 10. Paper Kings — Promise on Fire (▲12, 2 wk)
- 11. Michelle Moreno — Rhythm Heart (▼8, 8 wk)
- 12. Crystal Carter — Hold On to the Heart (NEW, 1 wk)
- 13. Velvet Posse — Givin' Up the Motion (=, 2 wk)
- 14. Silver Crew — Only Heart (▼9, 5 wk)
- 15. George Michael — Faith (▼14, 54 wk)
- 16. Steel Avenue — Love Tonight (▼10, 4 wk)
- 17. Silver Machine — Givin' Up the Line (NEW, 1 wk)
- 18. Erica Shepherd — Say It's Fire (▼11, 5 wk)
- 19. Midnight Society — Only Dream (NEW, 1 wk)
- 20. Concrete Society — Time of Golden (▼15, 5 wk)
+**Top Pop Albums** — chart dated 1988-11-05 (method: rank_reports)
+  1. Anita Baker — Giving You the Best That I Got (=, 4 wk)
+  2. Luther Vandross — Any Love (=, 7 wk)
+  3. Paula Gaines — Dream Eyes (NEW, 1 wk)
+  4. Wild Thieves — Shadow Tonight (▼3, 2 wk)
+  5. Bon Jovi — New Jersey (=, 3 wk)
+  6. U2 — Rattle and Hum (▼4, 3 wk)
+  7. Black Tigers — Only Forever (▲9, 2 wk)
+  8. Silver Machine — Givin' Up the Line (▲17, 2 wk)
+  9. Erica Tate — Night of Neon (NEW, 1 wk)
+ 10. Denise Lambert — Crazy Touch (▼8, 5 wk)
+ 11. Crystal Valentine — Hold On to the Lies (▼7, 3 wk)
+ 12. Steel Shadows — Don't Stop the Dance (▼6, 4 wk)
+ 13. Paper Kings — Promise on Fire (▼10, 3 wk)
+ 14. Crystal Carter — Hold On to the Heart (▼12, 2 wk)
+ 15. Michelle Moreno — Rhythm Heart (▼11, 9 wk)
+ 16. Silver Crew — Only Heart (▼14, 6 wk)
+ 17. Velvet Posse — Givin' Up the Motion (▼13, 3 wk)
+ 18. George Michael — Faith (▼15, 55 wk)
+ 19. Michael Jackson — Bad (▲27, 63 wk)
+ 20. Steel Avenue — Love Tonight (▼16, 5 wk)
 
-**Hot Black Singles** — chart dated 1988-10-29 (method: rank_reports)
-  1. Luther Vandross — Any Love (▲6, 6 wk)
-  2. Anita Baker — Giving You the Best That I Got (=, 6 wk)
-  3. Ray Pruitt — Say It's Fire (▼1, 9 wk)
-  4. Danny Tate — Beat of Restless (=, 12 wk)
-  5. Rick Astley — It Would Take a Strong Strong Man (=, 12 wk)
-  6. Michael Jackson — Smooth Criminal (▲34, 3 wk)
-  7. Jerome Fontaine — Feeling of Real (▲11, 7 wk)
-  8. Tony Wilder — Desire Tonight (▲9, 10 wk)
-  9. Black Sisters — Can't Fight the Talk (▼3, 10 wk)
- 10. Yolanda Lambert — Velvet Dance (▲14, 4 wk)
+**Hot Black Singles** — chart dated 1988-11-05 (method: rank_reports)
+  1. Anita Baker — Giving You the Best That I Got (▲2, 7 wk)
+  2. Ray Pruitt — Say It's Fire (▲3, 10 wk)
+  3. Luther Vandross — Any Love (▼1, 7 wk)
+  4. Michael Jackson — Smooth Criminal (▲6, 4 wk)
+  5. Bobby Brown — My Prerogative (▲13, 3 wk)
+  6. Sugar Groove — Tonight Girl (▲14, 12 wk)
+  7. Jerome Fontaine — Feeling of Real (=, 8 wk)
+  8. Danny Tate — Beat of Restless (▼4, 13 wk)
+  9. Yolanda Lambert — Velvet Dance (▲10, 5 wk)
+ 10. Denise Mercer — Diamond Dance (▲19, 14 wk)
 
-**Top Black Albums** — chart dated 1988-10-29 (method: rank_reports)
-  1. Anita Baker — Giving You the Best That I Got (=, 3 wk)
-  2. Luther Vandross — Any Love (=, 6 wk)
-  3. Public Enemy — It Takes a Nation of Millions to Hold Us Back (=, 19 wk)
-  4. Silver Machine — Givin' Up the Line (NEW, 1 wk)
-  5. Crystal Carter — Hold On to the Heart (NEW, 1 wk)
-  6. Denise Lambert — Crazy Touch (▼4, 4 wk)
-  7. Karyn White — Karyn White (▲8, 4 wk)
-  8. Paper Kings — Promise on Fire (▼7, 2 wk)
-  9. Silver Crew — Only Heart (▼6, 5 wk)
- 10. Concrete Society — Time of Golden (▼5, 5 wk)
+**Top Black Albums** — chart dated 1988-11-05 (method: rank_reports)
+  1. Anita Baker — Giving You the Best That I Got (=, 4 wk)
+  2. Luther Vandross — Any Love (=, 7 wk)
+  3. Silver Machine — Givin' Up the Line (▲4, 2 wk)
+  4. Crystal Carter — Hold On to the Heart (▲5, 2 wk)
+  5. Public Enemy — It Takes a Nation of Millions to Hold Us Back (▼3, 20 wk)
+  6. Erica Tate — Night of Neon (NEW, 1 wk)
+  7. Denise Lambert — Crazy Touch (▼6, 5 wk)
+  8. Paula Gaines — Dream Eyes (NEW, 1 wk)
+  9. Bobby Brown — Don't Be Cruel (▲14, 20 wk)
+ 10. Michael Jackson — Bad (▲21, 63 wk)
 
-**Adult Contemporary** — chart dated 1988-10-29 (method: station_reports)
-  1. Black Sisters — Can't Fight the Talk (=, 9 wk)
-  2. Danny Tate — Beat of Restless (▲6, 10 wk)
-  3. Taylor Dayne — I'll Always Love You (▲7, 11 wk)
-  4. Anita Baker — Giving You the Best That I Got (=, 4 wk)
-  5. Vince Tate — Say It's Paradise (=, 10 wk)
-  6. Luther Vandross — Any Love (▲10, 4 wk)
-  7. Lamont Monroe — Touch of Diamond (▲8, 15 wk)
-  8. Bobby McFerrin — Don't Worry, Be Happy (▲30, 11 wk)
-  9. Sugar Groove — Tonight Girl (▲11, 6 wk)
- 10. Lamont Pruitt — Rhythm Kiss (▼9, 14 wk)
+**Adult Contemporary** — chart dated 1988-11-05 (method: station_reports)
+  1. Anita Baker — Giving You the Best That I Got (▲4, 5 wk)
+  2. Danny Tate — Beat of Restless (=, 11 wk)
+  3. Luther Vandross — Any Love (▲6, 5 wk)
+  4. Black Sisters — Can't Fight the Talk (▼1, 10 wk)
+  5. Vince Tate — Say It's Paradise (=, 11 wk)
+  6. Bobby McFerrin — Don't Worry, Be Happy (▲8, 12 wk)
+  7. Carla Vaughn — Lies on Fire (▲13, 6 wk)
+  8. Lamont Pruitt — Rhythm Kiss (▲10, 15 wk)
+  9. Taylor Dayne — I'll Always Love You (▼3, 12 wk)
+ 10. Urban Dolls — Only Heart (▲14, 10 wk)
 
-**Album Rock Tracks** — chart dated 1988-10-29 (method: station_reports)
-  1. Midnight Crew — Velvet Feeling (▲2, 8 wk)
-  2. Bon Jovi — Bad Medicine (▼1, 8 wk)
-  3. Midnight Rebels — Say It's Angel (▲5, 8 wk)
-  4. Lisa Valentine — Velvet Girl (▲6, 7 wk)
-  5. Angela Pryor — Hold On to the Love (▼4, 4 wk)
-  6. Savage Dolls — Boy on Fire (▲10, 7 wk)
-  7. Def Leppard — Love Bites (▲17, 7 wk)
-  8. Wild Groove — Say It's Diamond (▲19, 13 wk)
-  9. Crystal Kowalski — Street of Neon (▲13, 13 wk)
- 10. U2 — Desire (▲11, 3 wk)
+**Album Rock Tracks** — chart dated 1988-11-05 (method: station_reports)
+  1. Midnight Crew — Velvet Feeling (=, 9 wk)
+  2. Midnight Rebels — Say It's Angel (▲3, 9 wk)
+  3. Bon Jovi — Bad Medicine (▼2, 9 wk)
+  4. Savage Dolls — Boy on Fire (▲6, 8 wk)
+  5. Lisa Valentine — Velvet Girl (▼4, 8 wk)
+  6. Angela Pryor — Hold On to the Love (▼5, 5 wk)
+  7. U2 — Desire (▲10, 4 wk)
+  8. Crystal Kowalski — Street of Neon (▲9, 14 wk)
+  9. Guns N' Roses — Sweet Child o' Mine (▲21, 19 wk)
+ 10. Crimson Sisters — Forever Boy (▲15, 15 wk)
 
 ## Announced releases from notable artists
-- 1988-10-24: Def Leppard — "Armageddon It" (single)
-- 1988-10-24: Lamont Ortega — "Only Thunder" (album)
-- 1988-10-24: Savage Dolls — "Sweet Love" (album)
-- 1988-10-24: Nicole Lambert — "Neon Talk" (album)
-- 1988-10-24: Paper Express — "Don't Stop the Motion" (album)
-- 1988-10-24: Crystal Baxter — "Desire Lies" (album)
-- 1988-10-24: Wild Dolls — "Can't Fight the Touch" (album)
 - 1988-10-31: Guns N' Roses — "Paradise City" (single)
 - 1988-10-31: Electric Angels — "Only Hot" (album)
 - 1988-11-07: Bon Jovi — "Born to Be My Baby" (single)
+- 1988-11-07: Vanessa Valentine — "Can't Fight the Eyes" (single)
+- 1988-11-07: Concrete Dolls — "Hold On to the Touch" (album)
+- 1988-11-07: Black Crew — "Can't Fight the Fever" (album)
+- 1988-11-07: Stacy Whitfield — "Can't Fight the Kiss" (album)
+- 1988-11-07: Silver Express — "Velvet Line" (album)
+- 1988-11-07: Cherry Posse — "Groove of Sweet" (album)
+- 1988-11-14: Phil Collins — "Two Hearts" (single)
 
 ## People in the protagonist's life (for characterisation)
 - **Carla Holloway** `person:pc_contact1` — producer, songwriter; traits: driven, loyal; toward you: close; recent: worked together on demos / Started recording "Say You Mean It" with Danielle Reyes.
@@ -187,7 +187,7 @@ Cash: **$39,786.22** · this period: +$260 / −$220 · lifestyle: modest · day
 Return exactly one fenced ```json block with this shape; decisions are the player's choices (ask the player before committing to contracts, releases or major creative choices); proposals are developments you suggest that the engine will accept or reject:
 ```json
 {
-  "pass_id": "session1-0009",
+  "pass_id": "session1-0010",
   "decisions": [
     {
       "command": "record_song",
@@ -227,8 +227,8 @@ Return exactly one fenced ```json block with this shape; decisions are the playe
 _Ids, numbers and state the engine will hold you to. News, charts and the industry briefing above are authoritative as written; the complete packet is also saved as JSON next to this file._
 ```json
 {
- "pass_id": "session1-0009",
- "date": "1988-10-24",
+ "pass_id": "session1-0010",
+ "date": "1988-10-31",
  "protagonist": {
   "person_id": "person:pc_example_rnb_pop_singer",
   "act_id": "act:pc_example_rnb_pop_singer",
@@ -297,7 +297,7 @@ _Ids, numbers and state the engine will hold you to. News, charts and the indust
   }
  },
  "finances": {
-  "cash": 39786.22,
+  "cash": 39826.22,
   "period_income": 260.0,
   "period_spending": 220.0,
   "day_job": {
@@ -308,14 +308,14 @@ _Ids, numbers and state the engine will hold you to. News, charts and the indust
   "lifestyle": "modest",
   "recent": [
    {
-    "date": "1988-10-17",
+    "date": "1988-10-24",
     "amount": 260.0,
     "category": "wages",
     "memo": "Session backing vocalist and restaurant shifts",
     "in": true
    },
    {
-    "date": "1988-10-17",
+    "date": "1988-10-24",
     "amount": 220.0,
     "category": "living_costs",
     "memo": "modest",
