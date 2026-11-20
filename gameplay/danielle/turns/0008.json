@@ -1,0 +1,44 @@
+{
+  "pass_id": "session1-0008",
+  "decisions": [
+    {
+      "command": "accept_offer",
+      "args": {
+        "offer_id": "offer:n00032"
+      }
+    },
+    {
+      "command": "accept_offer",
+      "args": {
+        "offer_id": "offer:n00033"
+      }
+    },
+    {
+      "command": "record_song",
+      "args": {
+        "song": "write_own",
+        "title": "Say You Mean It",
+        "cowriter": "person:pc_contact1",
+        "producer": "person:pc_contact1",
+        "genre": "rnb",
+        "studio_weeks": 2,
+        "budget": 6000,
+        "ambition": 0.58,
+        "mood": 0.2
+      }
+    }
+  ],
+  "proposals": [
+    {
+      "type": "creative_brief",
+      "concept": "An intimate but rhythmically assured debut R&B song co-written by Danielle Reyes and Carla Holloway, centering Danielle's expressive voice, memorable conversational lyrics and a warm late-1980s groove. Melodic R&B foundation with subtle dance-pop crossover possibilities, no imitation or guaranteed hit.",
+      "mood": 0.2,
+      "ambition": 0.58
+    },
+    {
+      "type": "narrative_fact",
+      "text": "Linda is arranging informal conversations with Sire staff producer Lisa Sterling about the longer album plan, without appointing her or spending additional recording funds yet. Danielle is limiting this initial Carla session to a manageable trial rather than commencing an intensive album schedule while still fatigued."
+    }
+  ],
+  "advance": "1w"
+}
