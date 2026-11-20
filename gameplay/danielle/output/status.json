@@ -2,18 +2,27 @@
   "campaign": "session1",
   "scenario": "us_1988_aspiring",
   "seed": 1988,
-  "start_hash": "93c1d72a59a3802fd8c7",
+  "start_hash": "d858ca757aa65c6e9e06",
   "original_session_hash": "e3076df5dc16af509ffb",
   "data_version": "3763906a35ea9667",
   "turn_count": 10,
   "in_world_date": "1988-11-01",
   "pass_id": "session1-0011",
-  "state_hash": "236509790228bbb9cdb3",
+  "state_hash": "04dc61a6b7debf85cf83",
   "replay": {
     "commands": 21,
     "checked": 21,
     "ok": true,
     "mismatches": []
+  },
+  "verification": {
+    "mode": "full_rebuild",
+    "resumed_after_turn": 0,
+    "new_turns_applied": 10,
+    "full_replay_performed": true,
+    "last_full_replay_turn": 10,
+    "sqlite_quick_check": "ok",
+    "elapsed_seconds": 98.6
   },
   "turn_results": [
     {
@@ -42,7 +51,7 @@
             }
           ]
         },
-        "packet": "/tmp/tmp4zdgsplg/session1/packets/pass_0002.md"
+        "packet": "pass_0002.md"
       }
     },
     {
@@ -64,7 +73,7 @@
           "days": 3,
           "interrupts": []
         },
-        "packet": "/tmp/tmp4zdgsplg/session1/packets/pass_0003.md"
+        "packet": "pass_0003.md"
       }
     },
     {
@@ -94,7 +103,7 @@
             }
           ]
         },
-        "packet": "/tmp/tmp4zdgsplg/session1/packets/pass_0004.md"
+        "packet": "pass_0004.md"
       }
     },
     {
@@ -116,7 +125,7 @@
           "days": 7,
           "interrupts": []
         },
-        "packet": "/tmp/tmp4zdgsplg/session1/packets/pass_0005.md"
+        "packet": "pass_0005.md"
       }
     },
     {
@@ -137,7 +146,7 @@
           "days": 3,
           "interrupts": []
         },
-        "packet": "/tmp/tmp4zdgsplg/session1/packets/pass_0006.md"
+        "packet": "pass_0006.md"
       }
     },
     {
@@ -164,7 +173,7 @@
           "days": 7,
           "interrupts": []
         },
-        "packet": "/tmp/tmp4zdgsplg/session1/packets/pass_0007.md"
+        "packet": "pass_0007.md"
       }
     },
     {
@@ -178,7 +187,7 @@
           "days": 3,
           "interrupts": []
         },
-        "packet": "/tmp/tmp4zdgsplg/session1/packets/pass_0008.md"
+        "packet": "pass_0008.md"
       }
     },
     {
@@ -223,7 +232,7 @@
           "days": 7,
           "interrupts": []
         },
-        "packet": "/tmp/tmp4zdgsplg/session1/packets/pass_0009.md"
+        "packet": "pass_0009.md"
       }
     },
     {
@@ -237,7 +246,7 @@
           "days": 7,
           "interrupts": []
         },
-        "packet": "/tmp/tmp4zdgsplg/session1/packets/pass_0010.md"
+        "packet": "pass_0010.md"
       }
     },
     {
@@ -256,7 +265,7 @@
             }
           ]
         },
-        "packet": "/tmp/tmp4zdgsplg/session1/packets/pass_0011.md"
+        "packet": "pass_0011.md"
       }
     }
   ]
