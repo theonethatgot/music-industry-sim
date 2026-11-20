@@ -1,0 +1,13 @@
+{
+  "pass_id": "session1-0005",
+  "decisions": [
+    {
+      "command": "accept_offer",
+      "args": {
+        "offer_id": "offer:n00034"
+      }
+    }
+  ],
+  "proposals": [],
+  "advance": "3d"
+}
