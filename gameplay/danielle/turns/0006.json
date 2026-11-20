@@ -1,0 +1,22 @@
+{
+  "pass_id": "session1-0006",
+  "decisions": [
+    {
+      "command": "set_policy",
+      "args": {
+        "gigs_when_idle": 0,
+        "training_when_idle": "none",
+        "training_spend_per_week": 0,
+        "manager_may_book_gigs": false,
+        "rest_when_exhausted": true
+      }
+    }
+  ],
+  "proposals": [
+    {
+      "type": "narrative_fact",
+      "text": "Danielle, Linda and Carla agree to develop a debut project anchored in melodic R&B with room for credible dance-pop crossover. They will consider the outside song pitches and hear Sire staff producer Lisa Sterling's suggestions without making commitments. An initial Carla co-written recording should be modestly funded and wait until Danielle has recovered."
+    }
+  ],
+  "advance": "1w"
+}
