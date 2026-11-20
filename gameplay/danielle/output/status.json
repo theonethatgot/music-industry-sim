@@ -2,16 +2,16 @@
   "campaign": "session1",
   "scenario": "us_1988_aspiring",
   "seed": 1988,
-  "start_hash": "93c1d72a59a3802fd8c7",
+  "start_hash": "d858ca757aa65c6e9e06",
   "original_session_hash": "e3076df5dc16af509ffb",
   "data_version": "3763906a35ea9667",
-  "turn_count": 4,
-  "in_world_date": "1988-10-04",
-  "pass_id": "session1-0005",
-  "state_hash": "3a790583a773b1347a06",
+  "turn_count": 5,
+  "in_world_date": "1988-10-07",
+  "pass_id": "session1-0006",
+  "state_hash": "51d350941bd4fdf3736c",
   "replay": {
-    "commands": 9,
-    "checked": 9,
+    "commands": 11,
+    "checked": 11,
     "ok": true,
     "mismatches": []
   },
@@ -42,7 +42,7 @@
             }
           ]
         },
-        "packet": "/tmp/tmp2ch53f5m/session1/packets/pass_0002.md"
+        "packet": "/tmp/tmpl14af7yz/session1/packets/pass_0002.md"
       }
     },
     {
@@ -64,7 +64,7 @@
           "days": 3,
           "interrupts": []
         },
-        "packet": "/tmp/tmp2ch53f5m/session1/packets/pass_0003.md"
+        "packet": "/tmp/tmpl14af7yz/session1/packets/pass_0003.md"
       }
     },
     {
@@ -94,7 +94,7 @@
             }
           ]
         },
-        "packet": "/tmp/tmp2ch53f5m/session1/packets/pass_0004.md"
+        "packet": "/tmp/tmpl14af7yz/session1/packets/pass_0004.md"
       }
     },
     {
@@ -116,7 +116,28 @@
           "days": 7,
           "interrupts": []
         },
-        "packet": "/tmp/tmp2ch53f5m/session1/packets/pass_0005.md"
+        "packet": "/tmp/tmpl14af7yz/session1/packets/pass_0005.md"
+      }
+    },
+    {
+      "turn": "0005.json",
+      "report": {
+        "decisions": [
+          {
+            "command": "accept_offer",
+            "status": "accepted",
+            "summary": "Signed with Sire Records: $43,000 advance, 11% royalty, 1 album firm + 4 label options.",
+            "contract": "contract:n00445"
+          }
+        ],
+        "proposals": [],
+        "advance": {
+          "from": "1988-10-04",
+          "to": "1988-10-07",
+          "days": 3,
+          "interrupts": []
+        },
+        "packet": "/tmp/tmpl14af7yz/session1/packets/pass_0006.md"
       }
     }
   ]
