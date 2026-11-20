@@ -210,7 +210,17 @@ def _job(args):
 
 
 def main():
-    args = [a for a in sys.argv[1:] if not a.startswith("--")]
+    flags_with_values = {"--json", "--workers"}
+    args, skip = [], False
+    for a in sys.argv[1:]:
+        if skip:
+            skip = False
+            continue
+        if a in flags_with_values:
+            skip = True
+            continue
+        if not a.startswith("--"):
+            args.append(a)
     n_eng = int(args[0]) if len(args) > 0 else 10
     n_other = int(args[1]) if len(args) > 1 else 4
     weeks = int(args[2]) if len(args) > 2 else 52

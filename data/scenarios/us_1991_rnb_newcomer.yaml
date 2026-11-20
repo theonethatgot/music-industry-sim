@@ -15,5 +15,5 @@ circumstances:
     - {template: local_producer, relation: "your producer since high school", affinity: 0.6, trust: 0.6}
   demo: {songs: 3, quality: 0.6}
   scheduled: []
-world: {structural_history: on, contingent_history: intents, real_person_policy: default, fictional_npc_acts: 480}
+world: {structural_history: on, contingent_history: intents, real_person_policy: default, fictional_npc_acts: 1400}
 notes: "Real-artist intents in the bundled dataset are thin after mid-1990; generated acts fill the field. The 1991 SoundScan/BDS chart changes occur during play."

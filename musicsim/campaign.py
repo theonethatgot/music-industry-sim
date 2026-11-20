@@ -68,7 +68,7 @@ def build_world(scenario: dict, seed: int, character: dict | None = None, burn_i
         _load_orgs(world, m)
         _load_industry_people(world, m)
         _load_real_acts(world, m)
-        _generate_fictional(world, m, int(scenario.get("world", {}).get("fictional_npc_acts", 480)))
+        _generate_fictional(world, m, int(scenario.get("world", {}).get("fictional_npc_acts", 1400)))
     advance(world, (start - t0).days, stop_on_interrupt=False)
     world.flags["burn_in"] = False
     world.interrupts = []

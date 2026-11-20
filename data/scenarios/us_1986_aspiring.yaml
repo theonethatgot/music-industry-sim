@@ -15,5 +15,5 @@ circumstances:
     - {template: local_producer, relation: "a friend who makes beats in his apartment", affinity: 0.5, trust: 0.5}
   demo: {songs: 1, quality: 0.45}
   scheduled: []
-world: {structural_history: on, contingent_history: intents, real_person_policy: default, fictional_npc_acts: 480}
+world: {structural_history: on, contingent_history: intents, real_person_policy: default, fictional_npc_acts: 1400}
 notes: "Real-artist intents in the bundled dataset are thin before 1988; generated acts fill the field."

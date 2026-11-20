@@ -25,4 +25,4 @@ world:
   structural_history: on
   contingent_history: intents
   real_person_policy: default
-  fictional_npc_acts: 480
+  fictional_npc_acts: 1400
