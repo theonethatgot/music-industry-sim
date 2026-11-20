@@ -6,6 +6,9 @@ on:
       - chatgpt/danielle-playtest
     paths:
       - 'gameplay/danielle/turns/*.json'
+      - 'bridge/run_campaign.py'
+      - 'bridge/requirements-lock.txt'
+      - '.github/workflows/music-playtest.yml'
   workflow_dispatch:
 
 permissions:
@@ -28,9 +31,18 @@ jobs:
       - uses: actions/setup-python@v5
         with:
           python-version: '3.11'
-      - name: Install the engine dependencies
-        run: python -m pip install -r requirements.txt
-      - name: Rebuild and verify Danielle's campaign
+          cache: pip
+          cache-dependency-path: bridge/requirements-lock.txt
+      - name: Install pinned engine dependencies
+        run: python -m pip install -r bridge/requirements-lock.txt
+      - name: Restore verified checkpoint candidate
+        uses: actions/cache@v4
+        with:
+          path: .bridge_cache
+          key: danielle-v2-${{ hashFiles('musicsim/**/*.py', 'data/**/*.yaml', 'bridge/requirements-lock.txt') }}-${{ hashFiles('gameplay/danielle/turns/*.json') }}
+          restore-keys: |
+            danielle-v2-${{ hashFiles('musicsim/**/*.py', 'data/**/*.yaml', 'bridge/requirements-lock.txt') }}-
+      - name: Resume or rebuild, validate, and produce narrator packet
         run: python -m bridge.run_campaign
       - name: Publish the latest narrator packet and run report
         run: |
