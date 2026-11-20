@@ -126,6 +126,9 @@ def account_week(world, market: str) -> dict:
                "lesson_days": {k: v[0] for k, v in lesson_days.items()}, "activities": sorted(worked)}
     world.flags["last_week"] = summary
     if rest_days:
+        log = world.flags.setdefault("rest_log", [])
+        log.append([summary["week_to"], rest_days, summary["energy"][0], summary["energy"][1]])
+        del log[:-52]
         eid = world.emit("wellbeing", "rest_week", [pid], summary)
         job = (world.flags.get("day_job") or {}).get("active")
         change = "recovered" if wb["energy"] > e0 + 0.02 else "barely recovered" if wb["energy"] >= e0 else "kept sliding"

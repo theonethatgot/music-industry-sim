@@ -208,16 +208,23 @@ def scout(world, market: str):
     if week % cfg["scout_interval_weeks"]:
         return
     unsigned = [a for a in sorted(world.acts.values(), key=lambda a: a.id)
-                if a.active and not a.label and a.home_market == market and a.live_buzz > 0.08
-                and a.controller == "npc"]
+                if a.active and not a.label and a.home_market == market and a.live_buzz > 0.08]
+    # an open offer already on the table from a label is not repeated
+    open_from = {(o.source, o.target) for o in world.offers.values()
+                 if o.kind == "recording_contract" and o.status == "open"}
     for org in label_orgs(world, market):
         size = org.params.get("size", 1.0)
         if not rng.chance(world.seed, min(0.9, 0.25 * size + 0.1), "scout_active", org.id, week):
             continue
         for act in unsigned:
-            if not rng.chance(world.seed, 0.15, "scout_sees", org.id, act.id, week):
+            if (org.id, act.id) in open_from:
                 continue
-            ev = evaluate(world, org, act, "scouting")
+            # independent records that are selling get noticed (sales and airplay reach A&R desks)
+            selling = sum(r.sold for r in world.releases.values() if r.act == act.id and r.label is None)
+            p_see = min(0.9, 0.15 + selling / 40000.0)
+            if not rng.chance(world.seed, p_see, "scout_sees", org.id, act.id, week):
+                continue
+            ev = evaluate(world, org, act, "scouting", bonus=min(0.15, selling / 200000.0))
             if ev["interested"]:
                 make_offer(world, org, act, ev)
 

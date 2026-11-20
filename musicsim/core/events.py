@@ -25,6 +25,8 @@ class EventLog:
 
     def __init__(self, next_id: int = 1):
         self.next_id = next_id
+        self.watch: set | None = None          # optional entities whose event types are tallied (QA tooling)
+        self.tally: dict[str, int] = {}
         self.pending: list[Event] = []
         # small in-memory index of recent events (for digests); rebuilt from disk on load
         self.recent: list[Event] = []
@@ -43,6 +45,8 @@ class EventLog:
             public=public,
         )
         self.next_id += 1
+        if self.watch and self.watch.intersection(ev.entities):
+            self.tally[type_] = self.tally.get(type_, 0) + 1
         self.pending.append(ev)
         self.recent.append(ev)
         if len(self.recent) > 4000:

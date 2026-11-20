@@ -45,6 +45,7 @@ consumption:
   wallet_slack: 1.3         # tolerated overspend vs average daily budget before rationing
   reorder_weeks: 1.5
   initial_ship_weeks: 3.0
+  indie_weekly_capacity: 6000   # units/week an unsigned act's independent distribution can press and place
 
 radio:
   w_fit: 1.4
@@ -138,4 +139,5 @@ development:               # A&R review and artist development (tier C, see docs
   patience_days: 330       # nothing releasable this long (scaled up by track record) -> label may drop the act
   warning_share: 0.7
   drop_hazard_weekly: 0.06
+  single_spacing_weeks: 11 # labels give each single its run before the next one (US norm ~3 months, tier C)
   study_release_all: false # calibration only: release vetoed NPC singles anyway and record the verdict

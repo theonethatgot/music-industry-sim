@@ -326,6 +326,10 @@ def weekly(world, market: str):
     meeting_set = st.get("meeting") and st["meeting"] >= today.isoformat()
     if planned:
         return
+    # a single still in its promotion run is "moving"
+    singles = _released_singles(world, act)
+    if singles and (today - max(dates.parse(r.date) for r in singles)).days < 7 * C["single_spacing_weeks"]:
+        return
     # routine check-in when nothing is moving
     due = st.get("next_checkin") or (anchor + dt.timedelta(weeks=C["first_checkin_weeks"])).isoformat()
     if not meeting_set and not in_progress and today.isoformat() >= due:

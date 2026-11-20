@@ -104,6 +104,8 @@ def weekly_restock(world, market: str, week_units: dict):
         need = week_units[rid] * wks - rel.stock
         if rel.stockout_days:
             need *= 1.15
+        if rel.label is None:      # independent distribution: limited pressing and retail placement
+            need = min(need, world.config["consumption.indie_weekly_capacity"])
         if need > 50:
             _ship(world, rel, need)
         rel.stockout_days = 0

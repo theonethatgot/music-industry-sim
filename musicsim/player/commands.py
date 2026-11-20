@@ -232,6 +232,19 @@ def _cmd_accept_offer(world, a):
     return _reject(f"offers of kind {off.kind} cannot be accepted this way")
 
 
+def _label_slot(world, act, date):
+    """Labels space an act's singles so each gets its promotion run (config: development.single_spacing_weeks)."""
+    gap = world.config.tree["development"]["single_spacing_weeks"]
+    singles = [dates.parse(r.date) for r in world.releases.values()
+               if r.act == act.id and r.kind == "single" and r.status in ("released", "planned")]
+    if not singles:
+        return date, False
+    earliest = max(singles) + dt.timedelta(weeks=gap)
+    if date >= earliest:
+        return date, False
+    return acts_sys.release_day(world, _market(world), earliest), True
+
+
 def _accept_label_proposal(world, off):
     """Act on a label's development proposal. The player decides; the label pays within the
     recording fund (recoupable); results come from the same creative maths as any session."""
@@ -247,7 +260,7 @@ def _accept_label_proposal(world, off):
     if t["action"] == "release_master":
         if rec is None or rec.single_release or rec.status != "done":
             return _reject("that master is no longer available to release")
-        date = _default_release_date(world)
+        date, _ = _label_slot(world, act, _default_release_date(world))
         rel = acts_sys.plan_single(world, _market(world), act, rec, date, tier=t["promo"])
         rel.review = {"via": "development_meeting"}
         return _ok(f"{org.name} will release \"{rec.title}\" on {date.isoformat()} with {t['promo']} promotion.",
@@ -419,11 +432,14 @@ def _cmd_release_single(world, a):
                                "strengths", "weaknesses", "fit", "remedies")})
         cap = tier_for(rv, act)
         granted = PROMO[min(PROMO.index(tier), PROMO.index(cap))]
+        date, spaced = _label_slot(world, act, date)
         rel = acts_sys.plan_single(world, m, act, rec, date, tier=granted)
         rel.review = {k: rv[k] for k in ("score", "threshold", "approve", "margin", "craft", "commercial")}
         if video != "none" and not rec.video and labels_sys._video_era(world, m):
             labels_sys.commission_video(world, m, rec, org, video if PROMO.index(video) <= PROMO.index(granted) else granted)
         note = "" if granted == tier else f" (the label approved {granted} promotion, not {tier})"
+        if spaced:
+            note += f"; the label scheduled it for {date.isoformat()} so it doesn't compete with your current single"
         return _ok(f"{org.name} will release \"{rec.title}\" on {date.isoformat()} with {granted} promotion{note}.",
                    release=rel.id)
     pid = _pid(world)

@@ -20,7 +20,35 @@ import tempfile
 from pathlib import Path
 
 sys.path.insert(0, str(Path(__file__).resolve().parents[1]))
-from musicsim.campaign_io import Campaign  # noqa: E402
+from musicsim.campaign import build_world, load_character, load_scenario  # noqa: E402
+from musicsim.campaign_io import Campaign, advance_days, apply_submission  # noqa: E402
+from musicsim.narrator import packet as packet_mod  # noqa: E402
+from musicsim.sim import advance as sim_advance  # noqa: E402
+
+
+class FastCampaign:
+    """The same play loop as Campaign (packets, submissions, advances) without writing snapshots to disk.
+    Used for throughput; persistence and replay are verified separately with the real Campaign."""
+
+    def __init__(self, seed):
+        sc = load_scenario("us_1988_aspiring")
+        self.world = build_world(sc, seed, load_character(sc["protagonist"]["character"]))
+        self.seq = 0
+        self._pk = packet_mod.build(self.world, None, "fast", None)
+
+    def last_packet(self):
+        return self._pk
+
+    def submit(self, payload):
+        self.seq += 1
+        apply_submission(self.world, payload, self.seq * 100)
+        adv = sim_advance(self.world, advance_days(payload.get("advance")), stop_on_interrupt=True)
+        self.world.events.drain()
+        self._pk = packet_mod.build(self.world, None, "fast", self._pk["date"])
+        return {"advance": adv}
+
+    def close(self):
+        pass
 
 
 def engaged(pk, mem):
@@ -102,8 +130,10 @@ STRATEGIES = {"engaged": engaged, "passive": passive, "overworked": overworked, 
 
 def run(strategy: str, seed: int, weeks: int, tmp: Path) -> dict:
     path = tmp / f"{strategy}_{seed}" / "session"
-    c = Campaign.create(path, "us_1988_aspiring", seed)
+    real = seed in (1, 1988) and strategy == "engaged" and weeks <= 30
+    c = Campaign.create(path, "us_1988_aspiring", seed) if real else FastCampaign(seed)
     w = c.world
+    w.events.watch = {w.player["act"], w.player["person"]}
     start = w.date
     stop = (start + dt.timedelta(weeks=weeks)).isoformat()
     mem = {"tried": set(), "start_plus_6m": (start + dt.timedelta(weeks=26)).isoformat()}
@@ -142,18 +172,16 @@ def run(strategy: str, seed: int, weeks: int, tmp: Path) -> dict:
             stats = st["stats"]
     peaks = [stats.get(r.tracks[0], {}).get("peak") for r in released if r.kind == "single"]
     peaks = [p for p in peaks if p]
-    ev = c.store.events_for(act.id, limit=5000)
-    kinds = {}
-    for e in ev:
-        kinds[e["type"]] = kinds.get(e["type"], 0) + 1
-    rest_reports = [n for n in w.news if n["kind"] == "wellbeing" and n["text"].startswith("Time off")]
+    kinds = dict(w.events.tally)
+    rest_reports = w.flags.get("rest_log", [])
     out = {
         "strategy": strategy, "seed": seed, "passes": passes, "end": w.date.isoformat(),
         "max_gap_days": max(gaps or [0]), "max_signed_gap_days": max(signed_gaps or [0]),
         "very_low_energy_days": low_days, "longest_very_low_streak_days": low_streak,
         "final_energy": round(w.people[w.player["person"]].wellbeing["energy"], 2),
         "auto_rests": kinds.get("auto_rest", 0), "rest_weeks_reported": len(rest_reports),
-        "rest_without_recovery": sum("kept sliding" in n["text"] for n in rest_reports),
+        "rest_without_recovery": sum(1 for r in rest_reports if r[3] <= r[2]),
+        "mean_energy_gain_per_rest_week": round(sum(r[3] - r[2] for r in rest_reports) / max(1, len(rest_reports)), 3),
         "signed": signed_on, "label": act.label,
         "singles_requested_rejected": kinds.get("label_review", 0),
         "development_meetings": kinds.get("development_meeting", 0),
@@ -165,7 +193,7 @@ def run(strategy: str, seed: int, weeks: int, tmp: Path) -> dict:
         "recognition_pct": c.last_packet()["protagonist"]["public_recognition_pct"],
         "cash": round(w.ledger.balance(w.player["person"])), "royalty_account": round(act.unrecouped),
     }
-    replay = c.replay() if seed in (1, 1988) else None
+    replay = c.replay() if real else None
     if replay is not None:
         out["replay_ok"] = replay["ok"]
     c.close()
@@ -188,6 +216,9 @@ def main():
     weeks = int(args[2]) if len(args) > 2 else 52
     out_json = sys.argv[sys.argv.index("--json") + 1] if "--json" in sys.argv else None
     plan = [("engaged", s) for s in [1988] + list(range(1, n_eng + 1))]
+    if "--replay-check" in sys.argv:
+        plan = [("engaged", 1988), ("engaged", 1)]
+        weeks = min(weeks, 26)
     plan += [(k, s) for k in ("passive", "overworked", "recovering") for s in range(1, n_other + 1)]
     workers = int(sys.argv[sys.argv.index("--workers") + 1]) if "--workers" in sys.argv else 1
     from multiprocessing import Pool

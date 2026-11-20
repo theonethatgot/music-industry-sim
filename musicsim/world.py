@@ -150,6 +150,7 @@ class World:
         state_hash is only comparable on one platform. This fingerprint compares outcomes across machines
         (it can still differ if a last-bit difference happens to flip a threshold)."""
         doc, arrays = self.to_state()
+        doc.pop("interrupts", None)      # transient: depends on where advance calls start and stop
 
         def q(x):
             if isinstance(x, float):
@@ -171,6 +172,7 @@ class World:
 
     def state_hash(self) -> str:
         doc, arrays = self.to_state()
+        doc.pop("interrupts", None)      # transient: why the last advance stopped, not world state
         h = hashlib.sha256()
         h.update(json.dumps(doc, sort_keys=True, default=str).encode())
         for k in sorted(arrays):

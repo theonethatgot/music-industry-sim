@@ -148,3 +148,17 @@ def test_review_values_commercial_signals_not_just_craft(tmp_path):
     b = dev.review_master(w, org, act, flat, "t")
     assert a["commercial"] > b["commercial"] and a["score"] > b["score"]
     c.close()
+
+
+def test_label_spaces_singles(tmp_path):
+    c, w, org = _signed(tmp_path)
+    a = _master(w, "First", hook=0.9, production=0.85, vocal=0.85, melody=0.85)
+    b = _master(w, "Second", hook=0.9, production=0.85, vocal=0.85, melody=0.85)
+    r1 = cmds.apply(w, {"command": "release_single", "args": {"recording_id": a.id, "promo": "standard"}})
+    r2 = cmds.apply(w, {"command": "release_single", "args": {"recording_id": b.id, "promo": "standard"}})
+    assert r1["status"] == r2["status"] == "accepted"
+    d1, d2 = (w.releases[r["release"]].date for r in (r1, r2))
+    import datetime as dt
+    assert (dt.date.fromisoformat(d2) - dt.date.fromisoformat(d1)).days >= 7 * 11 - 6
+    assert "doesn't compete" in r2["summary"]
+    c.close()
