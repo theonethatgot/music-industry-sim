@@ -1,0 +1,15 @@
+{
+  "pass_id": "session1-0014",
+  "decisions": [
+    {
+      "command": "release_single",
+      "args": {
+        "recording_id": "rec:n02276",
+        "promo": "high",
+        "video": "standard"
+      }
+    }
+  ],
+  "proposals": [],
+  "advance": "next"
+}
