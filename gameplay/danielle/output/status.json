@@ -16,13 +16,13 @@
     "mismatches": []
   },
   "verification": {
-    "mode": "full_rebuild",
-    "resumed_after_turn": 0,
-    "new_turns_applied": 10,
-    "full_replay_performed": true,
+    "mode": "checkpoint_resume",
+    "resumed_after_turn": 10,
+    "new_turns_applied": 0,
+    "full_replay_performed": false,
     "last_full_replay_turn": 10,
     "sqlite_quick_check": "ok",
-    "elapsed_seconds": 98.6
+    "elapsed_seconds": 1.78
   },
   "turn_results": [
     {
