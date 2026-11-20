@@ -7,7 +7,6 @@ on:
     paths:
       - 'gameplay/danielle/turns/*.json'
       - 'bridge/run_campaign.py'
-      - 'bridge/MILESTONES.md'
       - 'bridge/requirements-lock.txt'
       - '.github/workflows/music-playtest.yml'
   workflow_dispatch:
