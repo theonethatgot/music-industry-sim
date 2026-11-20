@@ -139,12 +139,28 @@ def weekly(world, market: str):
     today = world.date.isoformat()
     soon = (world.date + dt.timedelta(days=27)).isoformat()
     wb = p.wellbeing
-    # rest when exhausted
-    if pol["rest_when_exhausted"] and wb.get("energy", 1) < 0.2 and not _busy(world, today, today, ("rest",)):
-        res = cmds._cmd_rest(world, {"weeks": 1})
-        if res["status"] == "accepted":
-            eid = world.emit("team", "auto_rest", [act.id], {"energy": wb["energy"]})
-            _news(world, "Standing orders: you took a week off to recover; your team cleared the calendar.", 0.6, eid=eid)
+    # rest when exhausted: book genuinely protected time off (after any studio session already under way)
+    from .wellbeing import clear_routine, in_studio, resting
+    threshold = world.config.tree["wellbeing"]["exhausted_below"]
+    if pol["rest_when_exhausted"] and wb.get("energy", 1) < threshold \
+            and not resting(world, pid, today, (world.date + dt.timedelta(days=6)).isoformat()):
+        start = world.date
+        studio = in_studio(world, pid, today, (world.date + dt.timedelta(days=13)).isoformat())
+        if studio:
+            start = dates.parse(studio["end"]) + dt.timedelta(days=1)
+        end = start + dt.timedelta(days=6)
+        if not _busy(world, start.isoformat(), end.isoformat(), ("radio_tour", "club_tour", "press_tour")):
+            cancelled = clear_routine(world, pid, start.isoformat(), end.isoformat(), reason="auto rest")
+            world.commitments.append({"kind": "rest", "who": pid, "start": start.isoformat(), "end": end.isoformat(),
+                                      "label": "time off (standing orders)", "exclusive": True})
+            eid = world.emit("team", "auto_rest", [act.id], {"energy": wb["energy"], "start": start.isoformat(),
+                                                             "end": end.isoformat(), "cancelled": cancelled["items"]})
+            what = (" and cancelled " + "; ".join(cancelled["items"])) if cancelled["items"] else ""
+            after = f" once the studio session ends on {studio['end']}" if studio else ""
+            job = (world.flags.get("day_job") or {}).get("active")
+            _news(world, f"Standing orders: you're running on empty, so your team booked time off "
+                         f"{start.isoformat()} to {end.isoformat()}{after}{what}"
+                         + (" (the day job continues)" if job else "") + ".", 0.6, eid=eid)
     # keep club dates booked
     n = int(pol["gigs_when_idle"])
     if n and not _busy(world, today, soon, ("gigs", "radio_tour", "club_tour", "press_tour", "rest")):
@@ -173,12 +189,17 @@ def weekly(world, market: str):
                                        Draws(world.seed, "manager_media", m.id, today))
             if res["status"] == "accepted":
                 _news(world, f"{m.name} landed you press coverage. {res['summary']}", 0.5, [m.id], res.get("event"))
-        if pol["manager_may_book_gigs"] and dr.chance("tries_gig", 0.08 + 0.25 * skill_m):
+        protected = resting(world, pid, today, (world.date + dt.timedelta(days=6)).isoformat())
+        if protected and pol["manager_may_book_gigs"]:
+            world.emit("team", "manager_held_off", [m.id, act.id], {"reason": "protected time off"}, public=False)
+        if pol["manager_may_book_gigs"] and not protected and dr.chance("tries_gig", 0.08 + 0.25 * skill_m):
             res = props._p_opportunity(world, {"kind": "gig_offer", "context": f"a bigger date found by {m.name}"},
                                        Draws(world.seed, "manager_gig", m.id, today))
             if res["status"] == "accepted":
                 pay_commission(world, float(res.get("fee", 0)), "manager-booked gig")
                 _news(world, f"{m.name} booked a better-paid show. {res['summary']}", 0.5, [m.id], res.get("event"))
+        if act.label and single is None:
+            _manager_pushes_label(world, m, act, skill_m, dr)
         if not act.label and act.live_buzz > 0.25 and dr.chance("tries_showcase", 0.05 + 0.15 * skill_m):
             if not any(s["kind"] == "showcase" and s["date"] >= today for s in world.schedule):
                 res = props._p_opportunity(world, {"kind": "showcase", "context": f"set up by {m.name}"},
@@ -186,6 +207,35 @@ def weekly(world, market: str):
                 if res["status"] == "accepted":
                     _news(world, f"{m.name} set up a label showcase. {res['summary']}", 0.7, [m.id], res.get("event"))
     world.flags["advice"] = advice(world)
+
+
+def _manager_pushes_label(world, m, act, skill_m, dr):
+    """A manager with a signed client and no single out works the label: asks for a meeting, or
+    brings songs from their own network. They don't spend the client's money or the label's."""
+    from ..systems import development as dev
+    st = dev.state(world)
+    today = world.date
+    planned = any(r.act == act.id and r.status == "planned" for r in world.releases.values())
+    if planned:
+        return
+    meeting = st.get("meeting")
+    soon = (today + dt.timedelta(days=10)).isoformat()
+    org = world.orgs[f"org:{act.label}"]
+    stalled = (today - dev._anchor(world, act)).days >= 42
+    if stalled and (not meeting or meeting > soon) and dr.chance("presses_label", 0.10 + 0.30 * skill_m):
+        when = today + dt.timedelta(days=4 + int(dr.uniform("when") * 4))
+        dev.schedule_meeting(world, act, when, f"requested by {m.name}")
+        eid = world.emit("team", "manager_presses_label", [m.id, act.id, org.id], {"meeting": when.isoformat()})
+        _news(world, f"{m.name} pressed {org.name} for a sit-down about the single; A&R agreed to meet on "
+                     f"{when.isoformat()}.", 0.6, [m.id, org.id], eid)
+    elif stalled and dr.chance("brings_song", 0.05 + 0.15 * skill_m):
+        pitched = dev._label_pitches(world, org, act, 1, f"manager{today.isoformat()}")
+        for x in pitched:
+            world.offers[x["offer_id"]].terms["via"] = m.name
+        if pitched:
+            eid = world.emit("team", "manager_brings_song", [m.id, act.id], {"songs": pitched})
+            _news(world, f"{m.name} brought in a song from their network: \"{pitched[0]['title']}\" by "
+                         f"{pitched[0]['writer']}.", 0.5, [m.id], eid)
 
 
 def advice(world) -> list[str]:

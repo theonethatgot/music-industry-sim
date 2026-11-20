@@ -155,6 +155,11 @@ def cmd_briefing(a):
     c.close()
 
 
+def cmd_migrate(a):
+    res = Campaign.migrate(a.dir, a.note or "")
+    print(json.dumps(res, indent=1))
+
+
 def cmd_replay(a):
     c = Campaign.open(a.dir)
     res = c.replay()
@@ -184,6 +189,7 @@ def main(argv=None):
     p = sp.add_parser("why"); p.add_argument("dir"); p.add_argument("subject"); p.set_defaults(fn=cmd_why)
     p = sp.add_parser("replay"); p.add_argument("dir"); p.set_defaults(fn=cmd_replay)
     p = sp.add_parser("briefing"); p.add_argument("dir"); p.set_defaults(fn=cmd_briefing)
+    p = sp.add_parser("migrate"); p.add_argument("dir"); p.add_argument("--note"); p.set_defaults(fn=cmd_migrate)
     p = sp.add_parser("scenarios"); p.set_defaults(fn=cmd_scenarios)
     a = ap.parse_args(argv)
     return a.fn(a) or 0

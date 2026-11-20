@@ -19,6 +19,8 @@ CREATE TABLE IF NOT EXISTS chart_runs (chart TEXT, week_end TEXT, issue_date TEX
 CREATE TABLE IF NOT EXISTS song_weeks (song TEXT, market TEXT, week_end TEXT, data TEXT,
                                        PRIMARY KEY (song, market, week_end));
 CREATE TABLE IF NOT EXISTS passes (pass_no INTEGER PRIMARY KEY, date TEXT, packet TEXT);
+CREATE TABLE IF NOT EXISTS checkpoints (seq INTEGER PRIMARY KEY, engine_version TEXT, date TEXT, hash TEXT,
+                                        doc TEXT, arrays BLOB);
 """
 
 
@@ -131,6 +133,16 @@ class Store:
         else:
             r = self.db.execute("SELECT pass_no, packet FROM passes WHERE pass_no=?", (pass_no,)).fetchone()
         return json.loads(r[1]) if r else None
+
+    def write_checkpoint(self, seq: int, engine_version: str, date: str, state_hash: str, doc: dict, blob: bytes):
+        self.db.execute("REPLACE INTO checkpoints VALUES (?,?,?,?,?,?)",
+                        (seq, engine_version, date, state_hash, json.dumps(doc, default=str), blob))
+
+    def read_checkpoint(self, seq: int):
+        r = self.db.execute("SELECT engine_version, date, hash, doc, arrays FROM checkpoints WHERE seq=?",
+                            (seq,)).fetchone()
+        return None if r is None else {"engine_version": r[0], "date": r[1], "hash": r[2], "doc": json.loads(r[3]),
+                                       "arrays": r[4]}
 
     def commit(self):
         self.db.commit()

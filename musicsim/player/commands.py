@@ -10,10 +10,9 @@ import datetime as dt
 import numpy as np
 
 from ..core import dates, rng
-from ..core.rng import Draws
 from ..systems import acts as acts_sys
 from ..systems import labels as labels_sys
-from ..systems.creative import craft_score, describe, produce_recording, write_composition
+from ..systems.creative import describe, produce_recording, write_composition
 
 PROMO = ["low", "standard", "high"]
 VIDEO = ["none", "low", "standard", "high"]
@@ -66,8 +65,13 @@ def _schema():
                              "weeks": {"type": "int", "required": True, "min": 1, "max": 6}}},
         "set_day_job": {"desc": "Keep or quit the day job.", "args": {"active": {"type": "bool", "required": True}}},
         "set_lifestyle": {"desc": "Spending level.", "args": {"level": {"type": "enum", "required": True, "enum": LIFESTYLE}}},
-        "rest": {"desc": "Take time off to recover energy and morale.",
-                 "args": {"weeks": {"type": "int", "required": True, "min": 1, "max": 8}}},
+        "rest": {"desc": "Protected time off to recover energy. Club dates and lessons inside the window are "
+                         "cancelled (and resume afterwards) unless keep_bookings is true.",
+                 "args": {"weeks": {"type": "int", "required": True, "min": 1, "max": 8},
+                          "keep_bookings": {"type": "bool", "required": False}}},
+        "cancel_bookings": {"desc": "Cancel upcoming routine bookings (club dates, lessons) from today.",
+                            "args": {"kind": {"type": "enum", "required": True,
+                                              "enum": ["gigs", "training", "all_routine"]}}},
         "set_policy": {"desc": "Standing orders for routine work your team handles without asking you.",
                        "args": {"gigs_when_idle": {"type": "int", "required": False, "min": 0, "max": 5,
                                                    "desc": "club nights/week to keep booked when nothing else is on (0 = off)"},
@@ -219,11 +223,72 @@ def _cmd_accept_offer(world, a):
         world.flags.setdefault("songbook", []).append(comp.id)
         return _ok(f"\"{comp.title}\" by {world.people[off.source].name} is now in your songbook ({comp.id}).",
                    composition=comp.id)
+    if off.kind == "label_proposal":
+        return _accept_label_proposal(world, off)
     if off.kind == "booking":
         off.status = "accepted"
         world.schedule.append(dict(off.terms["schedule"]))
         return _ok(f"Booked: {off.terms.get('summary', 'appearance')}.")
     return _reject(f"offers of kind {off.kind} cannot be accepted this way")
+
+
+def _accept_label_proposal(world, off):
+    """Act on a label's development proposal. The player decides; the label pays within the
+    recording fund (recoupable); results come from the same creative maths as any session."""
+    from ..systems.creative import produce_recording
+    act = _act(world)
+    org = world.orgs[off.source]
+    if act.label is None or f"org:{act.label}" != org.id:
+        return _reject("that label no longer has you under contract")
+    t = off.terms
+    rec = world.recordings.get(t.get("recording_id", ""))
+    off.status = "accepted"
+    world.pending = [p for p in world.pending if p.get("id") != off.id]
+    if t["action"] == "release_master":
+        if rec is None or rec.single_release or rec.status != "done":
+            return _reject("that master is no longer available to release")
+        date = _default_release_date(world)
+        rel = acts_sys.plan_single(world, _market(world), act, rec, date, tier=t["promo"])
+        rel.review = {"via": "development_meeting"}
+        return _ok(f"{org.name} will release \"{rec.title}\" on {date.isoformat()} with {t['promo']} promotion.",
+                   release=rel.id)
+    if t["action"] in ("remix", "recut_vocal"):
+        if rec is None:
+            return _reject("that master no longer exists")
+        busy = [r for r in world.recordings.values() if r.act == act.id and r.status == "in_production"]
+        if busy:
+            return _reject(f"you are already recording \"{busy[0].title}\"")
+        cost = float(t["fee"]) + float(t["budget"])
+        world.flags["recording_fund_used"] = world.flags.get("recording_fund_used", 0.0) + cost
+        act.unrecouped -= cost
+        world.ledger.transfer(world.date, org.id, t["producer"], float(t["fee"]), "producer_fee", rec.title)
+        world.ledger.transfer(world.date, org.id, "ext:studios", float(t["budget"]), "studio_costs", rec.title)
+        comp = world.compositions[rec.composition]
+        key = f"{t['action']}#{rec.id}#{world.date.isoformat()}"
+        prev_status = comp.status
+        new = produce_recording(world, comp, act.id, [t["producer"]], rec.genre, budget=float(t["budget"]),
+                                weeks=int(t["weeks"]), key=key, ambition=rec.attrs.get("ambition"),
+                                payer=org.id, notes=list(rec.notes) + [f"{t['action'].replace('_', ' ')} of {rec.id}"])
+        comp.status = prev_status
+        if t["action"] == "remix":
+            new.attrs["vocal_delivery"] = rec.attrs["vocal_delivery"]       # the original vocal performance is kept
+            new.title = f"{rec.title} (Remix)"
+        else:
+            for k in ("production", "arrangement", "signature", "dance_hook", "accessibility"):
+                new.attrs[k] = rec.attrs[k]                                  # only the vocal is re-cut
+            new.title = f"{rec.title} (New Vocal)"
+            new.producers = list(rec.producers) + [t["producer"]]
+        new.style = list(rec.style)
+        end = world.date + dt.timedelta(days=7 * int(t["weeks"]))
+        world.commitments.append({"kind": "recording", "who": _pid(world), "recording": new.id,
+                                  "start": world.date.isoformat(), "end": end.isoformat(),
+                                  "label": f"{t['action'].replace('_', ' ')} of \"{rec.title}\" with {t['producer_name']}",
+                                  "exclusive": False})
+        world.emit("labels", "development_session", [org.id, act.id, rec.id, new.id],
+                   {"action": t["action"], "producer": t["producer"], "cost": cost})
+        return _ok(f"{t['action'].replace('_', ' ').capitalize()} of \"{rec.title}\" with {t['producer_name']} "
+                   f"until {end.isoformat()} (${cost:,.0f} from the recording fund, recoupable).", recording=new.id)
+    return _reject(f"unknown proposal action {t['action']}")
 
 
 def _cmd_decline_offer(world, a):
@@ -311,7 +376,8 @@ def _cmd_record_song(world, a):
     r["affinity"] = round(r["affinity"] + 0.05, 3)
     world.remember(prod_id, f"Started recording \"{title}\" with {act.name}.", [act.id], valence=0.2, salience=0.4)
     world.remember(pid, f"Started recording \"{title}\" with {prod.name}.", [prod_id], valence=0.3, salience=0.6)
-    return _ok(f"Recording \"{title}\" with {prod.name} until {end.isoformat()} (fee ${fee:,.0f}, budget ${budget:,.0f}).",
+    return _ok(f"Recording \"{title}\" with {prod.name}: sessions through {end.isoformat()} (fee ${fee:,.0f}, "
+               f"budget ${budget:,.0f}); the finished master is in hand the next morning.",
                recording=rec.id)
 
 
@@ -337,15 +403,24 @@ def _cmd_release_single(world, a):
     tier = a["promo"]
     video = a.get("video", "none")
     if act.label:
+        from ..systems.development import notes_text, on_rejection, review_master, tier_for
         org = world.orgs[f"org:{act.label}"]
-        dr = Draws(world.seed, "label_approval", rec.id)
-        obs = craft_score(world, rec) + dr.normal("ear") * world.config["labels.ear_sigma"] + 0.2 * act.singles_power_o
-        world.emit("labels", "single_review", [org.id, rec.id, act.id], {"observed_quality": round(obs, 3)}, draws=dr.log)
-        if obs < 0.45:
-            return _reject(f"{org.name} doesn't hear a single in \"{rec.title}\" and won't release it as one.")
-        cap = "high" if obs > 0.66 or act.singles_power_o > 0.4 else "standard" if obs > 0.52 else "low"
+        n = world.flags.setdefault("single_reviews", {}).get(rec.id, 0)
+        world.flags["single_reviews"][rec.id] = n + 1
+        rv = review_master(world, org, act, rec, f"single_request{n}")
+        eid = world.emit("labels", "single_review", [org.id, rec.id, act.id],
+                         {k: rv[k] for k in ("score", "threshold", "approve", "craft", "commercial", "strengths",
+                                             "weaknesses", "fit")}, draws=rv["draws"])
+        if not rv["approve"]:
+            on_rejection(world, org, act, rec, rv, causes=[eid])
+            meet = (world.flags.get("development") or {}).get("meeting")
+            return _reject(f"{org.name} won't release \"{rec.title}\" as a single yet: {notes_text(rv)}. "
+                           f"A&R development meeting on {meet}.", review={k: rv[k] for k in (
+                               "strengths", "weaknesses", "fit", "remedies")})
+        cap = tier_for(rv, act)
         granted = PROMO[min(PROMO.index(tier), PROMO.index(cap))]
         rel = acts_sys.plan_single(world, m, act, rec, date, tier=granted)
+        rel.review = {k: rv[k] for k in ("score", "threshold", "approve", "margin", "craft", "commercial")}
         if video != "none" and not rec.video and labels_sys._video_era(world, m):
             labels_sys.commission_video(world, m, rec, org, video if PROMO.index(video) <= PROMO.index(granted) else granted)
         note = "" if granted == tier else f" (the label approved {granted} promotion, not {tier})"
@@ -401,6 +476,11 @@ def _cmd_gig(world, a):
 
 
 def _cmd_train(world, a):
+    from .wellbeing import resting, window
+    start, end = window(world, a["weeks"])
+    r = resting(world, _pid(world), start, end)
+    if r:
+        return _reject(f"you have protected time off {r['start']}..{r['end']}; book lessons after it")
     _commit(world, "training", a["weeks"], f"{a['skill']} training", False, skill=a["skill"],
             spend=float(a.get("spend_per_week", 100.0)))
     return _ok(f"Training {a['skill']} for {a['weeks']} weeks.")
@@ -432,6 +512,11 @@ def _cmd_set_day_job(world, a):
     job = world.flags.get("day_job")
     if not job:
         return _reject("you don't have a day job")
+    if a["active"] and not job.get("active"):
+        job["since"] = world.date.isoformat()
+        job.pop("until", None)
+    elif not a["active"] and job.get("active"):
+        job["until"] = world.date.isoformat()
     job["active"] = a["active"]
     return _ok("Kept the day job." if a["active"] else "Quit the day job.")
 
@@ -445,7 +530,18 @@ def _cmd_set_policy(world, a):
     from .delegation import policy
     pol = policy(world)
     pol.update(a)
-    return _ok("Standing orders updated: " + ", ".join(f"{k}={v}" for k, v in a.items()) + ".")
+    return _ok("Standing orders updated: " + ", ".join(f"{k}={v}" for k, v in a.items())
+               + ". Existing bookings are kept; use cancel_bookings to cancel them.")
+
+
+def _cmd_cancel_bookings(world, a):
+    from .wellbeing import clear_routine
+    kinds = ("gigs", "training") if a["kind"] == "all_routine" else (a["kind"],)
+    far = (world.date + dt.timedelta(days=3650)).isoformat()
+    out = clear_routine(world, _pid(world), world.date.isoformat(), far, kinds=kinds, reason="cancelled by player")
+    if not out["items"]:
+        return _reject("nothing of that kind is booked")
+    return _ok("Cancelled: " + "; ".join(out["items"]) + ".", cancelled=out)
 
 
 def _cmd_hire_manager(world, a):
@@ -459,57 +555,41 @@ def _cmd_fire_manager(world, a):
 
 
 def _cmd_rest(world, a):
-    c = _overlaps(world, world.date.isoformat(), (world.date + dt.timedelta(days=7 * a["weeks"])).isoformat())
+    """Protected time off: routine bookings inside the window are cancelled (and resume afterwards)."""
+    from .wellbeing import clear_routine, in_studio, window
+    start, end = window(world, a["weeks"])
+    pid = _pid(world)
+    studio = in_studio(world, pid, start, end)
+    if studio:
+        return _reject(f"you're booked in the studio until {studio['end']} ({studio['label']}); "
+                       "book the time off after the session")
+    c = _overlaps(world, start, end)
     if c:
-        return _reject(f"conflicts with {c['label']}")
+        return _reject(f"conflicts with {c['label']} ({c['start']}..{c['end']})")
+    keep = a.get("keep_bookings", False)
+    cancelled = {"club_nights": 0, "lesson_days": 0, "items": []} if keep else clear_routine(world, pid, start, end)
     _commit(world, "rest", a["weeks"], "time off", True)
-    return _ok(f"Taking {a['weeks']} weeks off.")
+    world.emit("schedule", "rest_booked", [pid], {"start": start, "end": end, "cancelled": cancelled["items"]})
+    job = (world.flags.get("day_job") or {}).get("active")
+    note = []
+    if cancelled["items"]:
+        note.append("cancelled " + "; ".join(cancelled["items"]))
+    if job:
+        note.append("the day job continues")
+    return _ok(f"Time off {start} to {end}" + (f" ({'; '.join(note)})" if note else "") + ".",
+               cancelled=cancelled)
 
 
 # ---------------------------------------------------------- weekly effects
 def weekly_player(world, market):
+    """Monday: account for the week that just elapsed, then let the team handle routine work."""
     pid = world.player.get("person")
     if not pid or world.player.get("market") != market:
         return
-    p = world.people[pid]
-    act = world.player_act
-    rt = world.markets[market]
+    from .wellbeing import account_week
+    account_week(world, market)
+    wb = world.people[pid].wellbeing
     today = world.date.isoformat()
-    wb = p.wellbeing
-    active = [c for c in world.commitments if c.get("who") == pid and not c.get("done")
-              and c["start"] <= today <= c["end"]]
-    load = 0.0
-    for c in active:
-        if c["kind"] == "gigs":
-            rec = np.array(act.recognition.get(market, [0.0] * rt.G))
-            local = float(rec.mean())
-            fee = rt.gig_fee(world.date) * (1 + 4 * local + 2 * act.live_buzz)
-            nights = c["nights"]
-            world.ledger.transfer(world.date, "ext:venues", pid, fee * nights, "gig_fees", "club dates")
-            from .delegation import pay_commission
-            pay_commission(world, fee * nights, "club dates")
-            perf = p.skills.get("performance", 0.5)
-            shock = rng.normal(world.seed, "gig_week", pid, today)
-            act.live_buzz = float(np.clip(act.live_buzz + 0.006 * nights * (perf + 0.2 * shock), 0, 1))
-            p.skills["performance"] = round(min(0.99, perf + 0.0015 * nights * (1 - perf)), 4)
-            load += 0.04 * nights
-        elif c["kind"] == "training":
-            s = c["skill"]
-            cur = p.skills.get(s, 0.3)
-            gain = 0.004 * (1 - cur) * (1 + c["spend"] / 300) ** 0.5
-            p.skills[s] = round(min(0.99, cur + gain), 4)
-            world.ledger.transfer(world.date, pid, "ext:coaches", c["spend"], "training", s)
-            load += 0.05
-        elif c["kind"] in ("radio_tour", "club_tour", "press_tour"):
-            load += 0.15
-            if c["kind"] == "club_tour":
-                act.live_buzz = min(1.0, act.live_buzz + 0.02)
-        elif c["kind"] == "rest":
-            load -= 0.25
-    if world.flags.get("day_job", {}).get("active"):
-        load += 0.12
-    wb["energy"] = round(float(np.clip(wb.get("energy", 0.8) + 0.06 - load, 0.05, 1)), 3)
-    wb["stress"] = round(float(np.clip(wb.get("stress", 0.2) + load * 0.5 - 0.05, 0, 1)), 3)
     if wb["energy"] < 0.2 and not world.flags.get("exhaustion_warned"):
         world.flags["exhaustion_warned"] = True
         world.add_news("You are exhausted; your voice and stage energy are suffering.", "wellbeing", [pid],

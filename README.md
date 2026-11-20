@@ -24,7 +24,9 @@ without disrupting each other.
 | Charts | Data-defined, era-gated methodologies: Hot 100, Top Pop Albums / Billboard 200, Hot Black / R&B Singles and Albums, AC, Album Rock, Hot Rap Singles; rank-report vs SoundScan/BDS measurement | Year-end charts, recurrent rules after 1991 |
 | Economics | Retail/dealer split, mechanicals, artist royalty account and recoupment, statements, advances, recording funds, living costs, gigs | Publishing deals, touring, merch, endorsements |
 | Narrator | Rich Markdown packet with embedded authoritative JSON, engine industry briefing, pacing ("next" = until something needs you), team/standing orders, validated decisions and proposals, number-claim rejection, real-person protection | HTTP/OpenAPI or MCP connection |
-| Delegation | Standing orders (club nights, lessons, rest), hireable managers who chase press, gigs, TV and showcases on commission | Richer team roles (lawyer, publicist, agent) |
+| Delegation | Standing orders (club nights, lessons, protected rest that cancels and resumes routine bookings), hireable managers who chase press, gigs, TV, showcases and a stalled label on commission | Richer team roles (lawyer, publicist, agent) |
+| Artist development (0.4) | One A&R review for every act (craft + commercial potential, label culture), notes on a pass, development meetings with remix/re-cut/release/new-song proposals the player approves, check-in cadence, patience warnings and drops | Option pickups, album delivery deadlines |
+| Saves (0.4) | Engine version stamping, refusal of other-version saves, snapshot-forward `migrate` with replay from checkpoint, platform-tolerant `outcome_hash` | Bridge support for migrated campaigns |
 | Markets | US pack | Korean late-1990s pack on the same core (next milestone), then UK and Japan |
 
 See [DESIGN.md](DESIGN.md) for the full design and [docs/calibration_v1.md](docs/calibration_v1.md)
@@ -47,6 +49,9 @@ seed 1988, `playtests/session1/`).
 5. Verify the industry keeps evolving independently when the player does nothing (a test exists; a
    longer-horizon report is planned).
 6. Then: the Korean late-1990s market pack on the same core.
+
+QA for engine 0.4 (Danielle playtest fixes): [docs/QA_REPORT_v0.4.md](docs/QA_REPORT_v0.4.md);
+calibration and continuity tools: `tools/label_calibration.py`, `tools/career_continuity.py`.
 
 ## Requirements
 Python 3.11+, `numpy`, `PyYAML`; `pytest` for tests (`pip install -r requirements.txt`).
@@ -77,6 +82,7 @@ python -m musicsim briefing campaigns/danielle          # engine-generated indus
 python -m musicsim charts  campaigns/danielle hot100 --n 40
 python -m musicsim why     campaigns/danielle rec:n01876 # provenance: true attributes, weekly exposure, decisions, draws
 python -m musicsim replay  campaigns/danielle           # rebuild from the command log and verify hashes
+python -m musicsim migrate campaigns/old_save           # continue an older-engine save (docs/MIGRATION.md)
 ```
 
 A campaign is a folder: `campaign.sqlite` (snapshot, command, event, chart and audit logs) plus

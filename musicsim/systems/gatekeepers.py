@@ -41,6 +41,7 @@ def radio_week(world, market: str):
     tiers = T.view("radio_tier")
     weeks = T.view("radio_weeks")
     peak = T.view("radio_peak")
+    share = T.view("radio_share")
     for f, fid in enumerate(rt.format_ids):
         reach = rt.format_reach[f] * N
         aud_total = reach.sum()
@@ -63,7 +64,7 @@ def radio_week(world, market: str):
                      + cfg["w_promo"] * promo + cfg["w_signal"] * signal
                      + cfg["w_act"] * act.singles_power_o
                      + cfg["noise"] * rng.normal(world.seed, "radio_taste", fid, sid, d.isoformat()))
-            on = tiers[i, f] > 0
+            on = tiers[i, f] > 0 and share[i, f] >= 0.99          # on the national playlist (not just regional)
             # burn: research falling well below its peak after a while on the playlist
             burn = on and weeks[i, f] >= cfg["min_weeks_before_drop"] and peak[i, f] > 0.02 \
                 and research < cfg["burn_drop"] * peak[i, f]
@@ -85,7 +86,6 @@ def radio_week(world, market: str):
             for s in playlist[cap:]:
                 drops.append(s)
             playlist = playlist[:cap]
-        share = T.view("radio_share")
         national = {s[1] for s in playlist}
         for s in drops:
             i = s[1]
@@ -118,7 +118,7 @@ def radio_week(world, market: str):
                 tiers[i, f] = 1
                 weeks[i, f] += 1
                 peak[i, f] = max(peak[i, f], s[5])
-                if not was:
+                if not was and not s[2] and weeks[i, f] <= 1:     # first pickup in this format, not a fallback
                     _log_radio(world, market, fid, "radio_regional_add", s, tier=1, share=share[i, f])
             elif tiers[i, f] > 0 and share[i, f] < 0.99:
                 tiers[i, f] = 0
@@ -248,7 +248,8 @@ def tv_week(world, market: str):
         for s in [x for x in scored if x[0] >= prog["booking_threshold"]][:slots]:
             score, sid, aid, draw_power, fit = s
             act = world.acts[aid]
-            perf = np.mean([world.people[m["person"]].skills.get("performance", 0.5)
+            from .condition import fitness
+            perf = np.mean([world.people[m["person"]].skills.get("performance", 0.5) * fitness(world, m["person"])
                             for m in act.members if m["person"] in world.people] or [0.5])
             shock = rng.normal(world.seed, "tv_stage", pid, sid, d.isoformat())
             impact = float(np.clip(0.55 + 0.8 * perf + 0.12 * shock, 0.3, 1.6))

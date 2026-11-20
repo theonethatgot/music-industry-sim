@@ -24,6 +24,9 @@ STOP_REASONS = {
     "certified": "a release was certified",
     "debt": "money trouble",
     "exhaustion": "exhaustion",
+    "label_meeting": "a development meeting with the label",
+    "label_warning": "the label warned that it is losing patience",
+    "dropped": "the label dropped the act",
 }
 
 

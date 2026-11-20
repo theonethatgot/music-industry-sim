@@ -80,7 +80,8 @@ def produce_recording(world, comp: Composition, act_id: str, producers: list[str
     time_factor = 1 - math.exp(-max(1, weeks) / 3.0)
     sigma = cfg["creative.noise"] * (1 + cfg["creative.ambition_variance"] * ambition * 5)
     nudge = cfg["creative.history_evidence_weight"] * (hist - 0.5) * 0.4 if hist is not None else 0.0
-    vocal = skill(world, lead, "vocal", genre, 0.5)
+    from .condition import fitness
+    vocal = skill(world, lead, "vocal", genre, 0.5) * fitness(world, lead)
     perf = sum(skill(world, m["person"], "performance", None, 0.5) for m in act.members) / max(1, len(act.members))
     attrs = {
         "production": _clip(prod * (0.62 + 0.23 * budget_factor + 0.15 * time_factor) + nudge + sigma * dr.normal("production")),

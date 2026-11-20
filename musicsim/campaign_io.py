@@ -18,9 +18,18 @@ from .narrator import packet as packet_mod
 from .player import commands as cmds
 from .player import proposals as props
 from .sim import advance as sim_advance
-from .world import World, arrays_to_blob, blob_to_arrays
+from .world import World, arrays_to_blob, blob_to_arrays, make_config
 
 DEFAULT_ADVANCE_DAYS = 28
+ENGINE_VERSION = __import__("musicsim").__version__
+
+
+class EngineVersionError(RuntimeError):
+    pass
+
+
+def _minor(v: str) -> str:
+    return ".".join(str(v).split(".")[:2])
 NEXT_EVENT_CAP_DAYS = 84          # "next": run until something needs the player, at most ~3 months
 
 
@@ -61,7 +70,11 @@ class Campaign:
         store.set_meta("character", ch)
         store.set_meta("seed", seed)
         store.set_meta("data_version", data_version())
-        store.set_meta("engine_version", __import__("musicsim").__version__)
+        store.set_meta("engine_version", ENGINE_VERSION)
+        import numpy
+        import platform
+        store.set_meta("runtime", {"python": platform.python_version(), "numpy": numpy.__version__,
+                                   "machine": platform.machine()})
         c = cls(path, store, world)
         c.make_packet()
         c._log("create", {"scenario": scenario.get("id"), "seed": seed, "character": ch.get("id")}, {})
@@ -71,9 +84,59 @@ class Campaign:
     def open(cls, path) -> "Campaign":
         path = Path(path)
         store = Store(path / "campaign.sqlite")
+        saved = store.get_meta("engine_version", "0.1.0")
+        if _minor(saved) != _minor(ENGINE_VERSION):
+            store.close()
+            raise EngineVersionError(
+                f"{path} was saved by engine {saved}; this is engine {ENGINE_VERSION}. Its history stays valid on "
+                f"engine {saved}. To continue it here, run `python -m musicsim migrate {path}` "
+                "(see docs/MIGRATION.md), or start a new campaign.")
         _, _, doc, blob = store.read_snapshot()
         world = World.from_state(doc, blob_to_arrays(blob))
         return cls(path, store, world)
+
+    @classmethod
+    def migrate(cls, path, note: str = "") -> dict:
+        """Snapshot-forward migration: continue an older campaign on this engine from its latest state.
+
+        Everything up to the migration point stays canon exactly as it happened (the old commands,
+        events, charts and packets are untouched). From the migration point the world runs on this
+        engine's rules and parameters. A checkpoint of the migrated state is stored so that replay
+        can verify every later command; earlier commands remain verifiable on the original engine."""
+        path = Path(path)
+        store = Store(path / "campaign.sqlite")
+        saved = store.get_meta("engine_version", "0.1.0")
+        if _minor(saved) == _minor(ENGINE_VERSION):
+            store.close()
+            return {"status": "noop", "reason": f"already on engine {saved}"}
+        date, old_hash, doc, blob = store.read_snapshot()
+        old_cfg = stable_hash(doc.get("config_tree", {}))
+        scenario = store.get_meta("scenario")
+        doc["config_tree"] = make_config(scenario).tree
+        flags = doc.setdefault("flags", {})
+        flags.setdefault("wellbeing_from", date)
+        seq = len(store.commands())
+        flags.setdefault("migrations", []).append({"from": saved, "to": ENGINE_VERSION, "date": date, "seq": seq,
+                                                   "old_state_hash": old_hash, "old_config_hash": old_cfg,
+                                                   "note": note})
+        _backfill_development(store, doc)
+        world = World.from_state(doc, blob_to_arrays(blob))
+        c = cls(path, store, world)
+        doc2, arrays = world.to_state()
+        h = world.state_hash()
+        blob2 = arrays_to_blob(arrays)
+        store.write_snapshot(world.date.isoformat(), h, doc2, blob2)
+        store.write_checkpoint(seq, ENGINE_VERSION, world.date.isoformat(), h, doc2, blob2)
+        history = store.get_meta("engine_history", [{"version": saved, "from_seq": 0}])
+        history.append({"version": ENGINE_VERSION, "from_seq": seq, "date": date})
+        store.set_meta("engine_history", history)
+        store.set_meta("engine_version", ENGINE_VERSION)
+        store.append_command(seq, date, "migrate", {"from": saved, "to": ENGINE_VERSION, "note": note},
+                             {"old_state_hash": old_hash, "old_config_hash": old_cfg}, h)
+        store.commit()
+        c.close()
+        return {"status": "migrated", "from": saved, "to": ENGINE_VERSION, "at_seq": seq, "date": date,
+                "old_state_hash": old_hash, "new_state_hash": h}
 
     def close(self):
         self.store.close()
@@ -164,9 +227,21 @@ class Campaign:
         ch = self.store.get_meta("character")
         seed = self.store.get_meta("seed")
         log = self.store.commands()
+        migrations = [e for e in log if e["kind"] == "migrate"]
         with tempfile.TemporaryDirectory() as tmp:
             store = Store(Path(tmp) / "replay.sqlite")
-            world = build_world(scenario, seed, ch)
+            verified_from = "scenario + seed"
+            if migrations:
+                m = migrations[-1]
+                cp = self.store.read_checkpoint(m["seq"])
+                world = World.from_state(cp["doc"], blob_to_arrays(cp["arrays"]))
+                prev = self.store.read_pass(world.pass_no)
+                if prev:
+                    store.write_pass(world.pass_no, prev["date"], prev)
+                log = [e for e in log if e["seq"] > m["seq"]]
+                verified_from = f"migration checkpoint at command {m['seq']} (engine {m['payload']['to']})"
+            else:
+                world = build_world(scenario, seed, ch)
             c = Campaign(Path(tmp) / self.id, store, world)
             c.path = Path(tmp) / self.id
             mismatches = []
@@ -190,7 +265,27 @@ class Campaign:
                     mismatches.append({"seq": entry["seq"], "kind": kind, "expected": entry["state_hash"], "got": h})
                     break
             store.close()
-        return {"commands": len(log), "checked": checked, "ok": not mismatches, "mismatches": mismatches}
+        return {"commands": len(log), "checked": checked, "ok": not mismatches, "mismatches": mismatches,
+                "verified_from": verified_from, "outcome_hash": self.world.outcome_hash()}
+
+
+def _backfill_development(store, doc):
+    """Carry the label's memory of earlier single reviews into the migrated state (from the event log)."""
+    act = doc.get("player", {}).get("act")
+    if not act or "development" in doc["flags"]:
+        return
+    revs = [e for e in store.events_for(act, limit=500) if e["type"] == "single_review"]
+    passed = [e for e in revs if e["data"].get("approve") is False or
+              ("observed_quality" in e["data"] and e["data"]["observed_quality"] < 0.45)]
+    if not passed:
+        return
+    last = max(passed, key=lambda e: e["id"])
+    rid = next((x for x in last["entities"] if x.startswith("rec:")), None)
+    title = doc["recordings"].get(rid, {}).get("title", rid)
+    doc["flags"]["development"] = {"rejections": len(passed), "last_review": {
+        "recording": rid, "title": title, "date": last["date"], "strengths": [], "weaknesses": [],
+        "fit": ["(reviewed by the earlier engine, which recorded only an overall score)"], "remedies": [],
+        "score": last["data"].get("observed_quality"), "threshold": 0.45}}
 
 
 def apply_submission(world, payload: dict, base: int):

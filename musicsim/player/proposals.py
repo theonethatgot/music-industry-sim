@@ -253,6 +253,10 @@ def _p_opportunity(world, prop, dr):
         return {"status": "accepted", "summary": "An interview ran; a little more of the public knows your name.",
                 "event": eid}
     if kind == "gig_offer":
+        from .wellbeing import resting
+        r = resting(world, _pid(world), world.date.isoformat(), world.date.isoformat())
+        if r:
+            return {"status": "rejected", "reason": f"the protagonist has protected time off until {r['end']}"}
         p = float(np.clip(0.3 + 1.2 * act.live_buzz + fame, 0.05, 0.95))
         if not dr.chance("offer", p):
             return {"status": "rejected", "reason": f"the promoter went with someone else (chance about {p:.0%})."}

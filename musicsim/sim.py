@@ -4,7 +4,7 @@ from __future__ import annotations
 import datetime as dt
 
 from .core import dates
-from .systems import acts, careers, charts, demand, finance, gatekeepers, labels, release
+from .systems import acts, careers, charts, demand, development, finance, gatekeepers, labels, release
 
 
 def step_day(world):
@@ -34,6 +34,7 @@ def weekly(world, m):
     labels.scout(world, m)
     labels.npc_offer_responses(world)
     acts.weekly(world, m)
+    development.npc_patience(world, m)
     acts.song_market(world, m)
     gatekeepers.radio_week(world, m)
     gatekeepers.video_week(world, m)
@@ -41,6 +42,7 @@ def weekly(world, m):
     release.roll_week_audit(world, m, (world.date - dt.timedelta(days=1)).isoformat())
     from .player import commands
     commands.weekly_player(world, m)
+    development.weekly(world, m)
 
 
 def _scheduled(world, market):
@@ -50,6 +52,12 @@ def _scheduled(world, market):
             continue
         if item["kind"] == "tv" and item.get("act") == world.player.get("act"):
             world.interrupts.append({"reason": "tv_performance", "program": item.get("program")})
+            item["done"] = True
+            continue
+        if item["kind"] == "label_meeting":
+            act = world.acts.get(item["act"])
+            if act and act.label:
+                development.meeting(world, market, act, item)
             item["done"] = True
             continue
         if item["kind"] == "showcase":

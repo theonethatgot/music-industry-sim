@@ -10,7 +10,7 @@ import numpy as np
 from ..core import dates, rng
 from ..core.rng import Draws
 from ..entities import Release
-from .creative import craft_score, produce_recording, write_composition
+from .creative import produce_recording, write_composition
 
 LEAD_DAYS = 56   # how far ahead intents are prepared
 
@@ -235,9 +235,10 @@ def _fictional_cycle(world, market, act):
     planned = [r for r in world.releases.values() if r.act == act.id and r.status == "planned"]
     if planned:
         return
-    last = dates.parse(act.last_release) if act.last_release else None
+    marks = [x for x in (act.last_release, act.flags.get("last_attempt")) if x]
+    last = dates.parse(max(marks)) if marks else None
     wk = (today - last).days / 7 if last else 999
-    jitter = rng.uniform(world.seed, "cadence", act.id, act.last_release or "none")
+    jitter = rng.uniform(world.seed, "cadence", act.id, max(marks) if marks else "none")
     if wk < act.cadence_weeks * (0.7 + 0.6 * jitter):
         return
     my_singles = [r for r in world.releases.values() if r.act == act.id and r.kind == "single" and r.status == "released"]
@@ -262,14 +263,18 @@ def _fictional_cycle(world, market, act):
                             payer=org.id)
     rec.status = "done"
     rec.completed = today.isoformat()
-    # A&R listens (noisy) and may shelve weak material
-    obs = craft_score(world, rec) + rng.normal(world.seed, "anr_listen", rec.id) * world.config["labels.ear_sigma"]
-    if obs < 0.42 and rng.chance(world.seed, 0.6, "shelve", rec.id):
-        world.emit("labels", "shelved", [org.id, act.id, rec.id], {"observed_quality": round(obs, 3)})
-        act.last_release = today.isoformat()
+    # A&R listens (the same review the protagonist's label uses) and may shelve weak material
+    from .development import review_master, tier_for
+    rv = review_master(world, org, act, rec, "single")
+    act.flags["last_attempt"] = today.isoformat()
+    study = world.config.tree["development"].get("study_release_all")
+    if not rv["approve"] and not study:
+        world.emit("labels", "shelved", [org.id, act.id, rec.id], {"score": rv["score"], "threshold": rv["threshold"]},
+                   draws=rv["draws"])
         return
-    tier = "high" if obs > 0.7 and act.singles_power_o > 0.3 else "standard" if obs > 0.5 or size > 0.8 else "low"
-    plan_single(world, market, act, rec, release_day(world, market, today + dt.timedelta(days=35)), tier=tier)
+    tier = ("standard" if study else tier_for(rv, act)) if rv["approve"] or study else "low"
+    rel = plan_single(world, market, act, rec, release_day(world, market, today + dt.timedelta(days=35)), tier=tier)
+    rel.review = {k: rv[k] for k in ("score", "threshold", "approve", "margin", "craft", "commercial")}
 
 
 def _plan_npc_album(world, market, act, singles):

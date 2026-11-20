@@ -298,6 +298,7 @@ def add_protagonist(world, scenario, ch: dict):
                      "demo_quality": circ.get("demo", {}).get("quality", 0.45)})
     world.acts[aid] = act
     world.player = {"person": pid, "act": aid, "market": market}
+    world.flags["wellbeing_from"] = world.date.isoformat()
     world.ledger.transfer(world.date, "ext:capital", pid, float(circ.get("cash", 1000)), "savings", "starting cash")
     if circ.get("day_job"):
         world.flags["day_job"] = dict(circ["day_job"], active=True)

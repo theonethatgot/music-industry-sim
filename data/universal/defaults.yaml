@@ -104,3 +104,38 @@ finance:
 narrator:
   max_digest_items: 40
   max_news_items: 14
+
+wellbeing:                 # daily relaxation toward a workload-dependent target (tier C, to calibrate)
+  base_target: 0.85        # energy a person settles at with no workload
+  rest_target: 0.95        # ... on protected days off
+  relax_rate: 0.06         # share of the gap closed per ordinary day
+  rest_rate: 0.12          # ... per day off
+  load: {day_job: 0.20, gig_night: 0.06, training: 0.05, recording: 0.10, tour: 0.30}
+  overload_above: 0.45     # workload beyond this wears a person down faster (nonlinear)
+  overload_penalty: 0.8
+  stress_base: 0.15
+  stress_load: 0.9         # stress per unit of workload above stress_free_load
+  stress_free_load: 0.30
+  stress_debt: 0.15
+  stress_rest_relief: 0.08
+  stress_rate: 0.05
+  exhausted_below: 0.25    # standing orders book rest below this
+
+development:               # A&R review and artist development (tier C, see docs/QA_REPORT_v0.4.md)
+  threshold: 0.575         # review score needed to green-light a single (calibrated: docs/QA_REPORT_v0.4.md)
+  commercial_weight: 0.68   # share of the review given to commercial potential (vs craft), shifted by label risk
+  track_record_weight: 0.15
+  focus_weight: 0.10
+  size_strictness: 0.03    # bigger labels hold new singles to a slightly higher bar
+  risk_leniency: 0.06      # risk-taking labels a slightly lower one
+  meeting_after_rejection_days: [6, 11]
+  first_checkin_weeks: 8   # after signing (or the last single) with nothing scheduled
+  checkin_weeks: 8         # cadence of follow-up meetings while nothing is moving
+  remix_fund_share: 0.6    # most of the remaining recording fund the A&R department will put into a remix
+  remix_fee_share: 0.4     # a remix fee is a fraction of a producer's full production fee
+  remix_max_studio: 15000
+  label_pitches: 2
+  patience_days: 330       # nothing releasable this long (scaled up by track record) -> label may drop the act
+  warning_share: 0.7
+  drop_hazard_weekly: 0.06
+  study_release_all: false # calibration only: release vetoed NPC singles anyway and record the verdict

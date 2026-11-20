@@ -1,5 +1,8 @@
 # First-session playtest: US, autumn 1988
 
+> Engine 0.4 note: this package was generated on engine 0.1. A save made then must be migrated before it
+> can continue on 0.4 (see `docs/MIGRATION.md`); `playtests/session1` regenerated today would differ.
+
 The goal is to judge whether this feels like an immersive, autonomous, causally believable music
 career, not just reproducible statistics. Nothing about the career is pre-arranged. The seed was
 fixed (1988) before the campaign was generated, and the start is the default scenario.
@@ -69,7 +72,8 @@ the story who isn't in the packet.
 The engine simulates every day, but a pass ends only when the requested time is up or **something
 needs the player**: an offer, the showcase, a finished recording, a release, a chart entry, Top 40,
 Top 10 or #1, a TV booking or performance day, a certification, the label pushing harder, money
-trouble, exhaustion. Each packet's *Pacing* section says how many days passed and why it stopped.
+trouble, exhaustion, and (engine 0.4) a label development meeting, a label patience warning, or being
+dropped. Each packet's *Pacing* section says how many days passed and why it stopped.
 ChatGPT should give that moment a full scene and summarise the routine before it.
 
 `"advance": "next"` (the usual choice) runs until the next such moment, at most about three months.

@@ -258,6 +258,8 @@ def build(world, store, campaign_id: str, since: str | None) -> dict:
             "guidance": briefing.pacing(world, since, [])["guidance"]},
         "team": briefing.team(world, since),
         "industry_landscape": briefing.landscape(world, m) if with_brief else None,
+        "label_development": _development(world, act),
+        "last_week": world.flags.get("last_week"),
         "charts": charts, "news": [{k: n[k] for k in ("date", "text", "kind", "tag")} for n in news],
         "upcoming_releases_announced": upcoming[:10],
         "people": people[:14],
@@ -278,6 +280,20 @@ def build(world, store, campaign_id: str, since: str | None) -> dict:
         ],
     }
     return packet
+
+
+def _development(world, act):
+    if not act.label:
+        return None
+    st = world.flags.get("development") or {}
+    return {"next_meeting": st.get("meeting"), "next_checkin": st.get("next_checkin"),
+            "singles_passed_on": st.get("rejections", 0), "last_review": st.get("last_review"),
+            "last_meeting": st.get("last_meeting"), "recording_fund_left": round(_fund_left(world, act))}
+
+
+def _fund_left(world, act):
+    from ..systems.development import _fund_left as f
+    return f(world, act)
 
 
 # ------------------------------------------------------------------ markdown
@@ -326,6 +342,34 @@ def to_markdown(pk: dict) -> str:
         w(f"- Handled for you: {x}")
     for x in tm["what_people_are_telling_you"]:
         w(f"- What people are telling you: {x}")
+    D = pk.get("label_development")
+    if D:
+        w("\n## Your label and the record")
+        w(f"- Recording fund left (estimate): ${D['recording_fund_left']:,.0f}; singles the label has passed on: "
+          f"{D['singles_passed_on']}")
+        if D.get("last_review"):
+            r = D["last_review"]
+            w(f"- Last A&R verdict ({r['date']}, \"{r['title']}\"): likes {', '.join(r['strengths']) or 'little'}; "
+              f"worried about {', '.join(r['weaknesses'] + r['fit']) or 'nothing specific'}; suggests "
+              f"{', '.join(x.replace('_', ' ') for x in r['remedies'])}")
+        if D.get("last_meeting"):
+            lm = D["last_meeting"]
+            w(f"- Last development meeting {lm['date']}: " + "; ".join(
+                f"\"{x['title']}\" {x['verdict']} ({x['notes']})" for x in lm["reviews"]))
+            for prop in lm["proposals"]:
+                if prop.get("offer_id"):
+                    w(f"  - Proposal `{prop['offer_id']}`: {prop['action'].replace('_', ' ')} \"{prop.get('title', '')}\""
+                      + (f" with {prop['producer_name']} (fee ${prop['fee']:,.0f} + ${prop['budget']:,.0f} studio, "
+                         "recoupable)" if prop.get("producer_name") else "")
+                      + (f" at {prop['promo']} promotion" if prop.get("promo") else "")
+                      + " — accept with accept_offer, or ignore")
+                else:
+                    w("  - A&R sent songs: " + ", ".join(f"\"{x['title']}\" by {x['writer']} `{x['offer_id']}`"
+                                                        for x in prop.get("songs", [])))
+        if D.get("next_meeting"):
+            w(f"- Next A&R meeting: {D['next_meeting']}")
+        elif D.get("next_checkin"):
+            w(f"- Label check-in due around {D['next_checkin']}")
     F = pk["finances"]
     w(f"\n## Money\nCash: **${F['cash']:,.2f}** · this period: +${F['period_income']:,.0f} / −${F['period_spending']:,.0f}"
       f" · lifestyle: {F['lifestyle']}" + (f" · day job: {F['day_job']['title']} "

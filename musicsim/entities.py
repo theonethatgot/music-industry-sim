@@ -160,6 +160,7 @@ class Release(Serial):
     historical: bool = False
     intent: str | None = None
     weekly: list = field(default_factory=list)        # [{week_end, units}]
+    review: dict = field(default_factory=dict)        # the label's A&R verdict when it was green-lit
 
 
 @dataclass

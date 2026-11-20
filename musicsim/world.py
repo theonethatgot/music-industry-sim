@@ -143,6 +143,32 @@ class World:
             w.albums[m].load_state(f"albums.{m}", doc["albums"][m], arrays)
         return w
 
+    def outcome_hash(self) -> str:
+        """Platform-tolerant fingerprint: like state_hash but with floats rounded to ~6 significant digits.
+
+        NumPy's transcendental functions can differ in the last bit between CPUs/builds, so the exact
+        state_hash is only comparable on one platform. This fingerprint compares outcomes across machines
+        (it can still differ if a last-bit difference happens to flip a threshold)."""
+        doc, arrays = self.to_state()
+
+        def q(x):
+            if isinstance(x, float):
+                return float(f"{x:.6g}")
+            if isinstance(x, dict):
+                return {k: q(v) for k, v in x.items()}
+            if isinstance(x, list):
+                return [q(v) for v in x]
+            return x
+        h = hashlib.sha256()
+        h.update(json.dumps(q(doc), sort_keys=True, default=str).encode())
+        for k in sorted(arrays):
+            a = arrays[k]
+            if a.dtype.kind == "f":
+                a = np.array([float(f"{v:.6g}") for v in a.ravel()], dtype=np.float64)
+            h.update(k.encode())
+            h.update(np.ascontiguousarray(a).tobytes())
+        return h.hexdigest()[:20]
+
     def state_hash(self) -> str:
         doc, arrays = self.to_state()
         h = hashlib.sha256()

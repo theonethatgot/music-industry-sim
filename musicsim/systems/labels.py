@@ -224,8 +224,9 @@ def scout(world, market: str):
 
 def showcase(world, market: str, act, item: dict):
     """An act performs for invited A&R staff; each attending label evaluates independently."""
-    perf = np.mean([world.people[m["person"]].skills.get("performance", 0.5) for m in act.members
-                    if m["person"] in world.people] or [0.5])
+    from .condition import fitness
+    perf = np.mean([world.people[m["person"]].skills.get("performance", 0.5) * fitness(world, m["person"])
+                    for m in act.members if m["person"] in world.people] or [0.5])
     dr = Draws(world.seed, "showcase", act.id, item["date"])
     night = float(np.clip(perf + 0.12 * dr.normal("night"), 0, 1))
     attending = []

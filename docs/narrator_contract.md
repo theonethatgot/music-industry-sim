@@ -86,12 +86,31 @@ packet's *Pacing* section says why it stopped.
   - `"1m"` to `"3m"` for deliberately quiet periods (writing, touring clubs, waiting out a contract).
   - Leave `advance` out if the player still has to decide something.
 
+### Label development (signed artists)
+
+When a label passes on a single, the packet's *Your label and the record* section gives the A&R
+notes (what they like, what worries them, what they suggest) and the date of a **development
+meeting**. The clock stops for that meeting. At the meeting the label re-hears the unreleased
+masters and may propose concrete steps: release a master it now likes, a **remix** with a named
+producer, a **re-cut vocal**, or new songs from its writers. Each proposal is an `offer:` id the
+player may accept with `accept_offer` or simply ignore. The label never acts on them without the
+player. If nothing releasable emerges for many months, the label warns, and it may eventually drop
+the act. Dramatise these meetings: who is in the room, what they really think, how the
+protagonist feels.
+
 ## 5. Delegation (routine work without constant input)
 
 The protagonist's team handles routine work under **standing orders** shown in each packet:
 keeping club nights booked, lessons, a week off when exhausted, and (once there is a manager)
-chasing press, better-paid shows, TV bookers and showcases. These run every simulated week and
-are reported under *Handled for you*. Narrate them in passing.
+chasing press, better-paid shows, TV bookers, showcases and, for a signed client with no single
+out, pressing the label for meetings and bringing in songs. These run every simulated week and are
+reported under *Handled for you*. Narrate them in passing.
+
+Time off is **protected**: club dates and lessons inside the window are cancelled (and resume
+afterwards), and no manager books shows into it. A day job continues unless the player quits it,
+which limits how much a week off restores. Each Monday the engine reports what last week's rest
+actually did ("energy low → moderate"). Narrate recovery as gradual. Use `cancel_bookings` to
+cancel routine bookings outright; changing standing orders does not cancel what is already booked.
 
 These always come back to the player: contracts, recording sessions, releases, career changes,
 large personal spending and public statements. When one is pending, put it in the story and **ask
